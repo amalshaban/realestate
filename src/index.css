@@ -1,0 +1,361 @@
+body{
+    font-family: Montserrat;
+    background: #F6F4F4 !important;
+      --primary-color: #0088BD;
+}
+
+.container-fluid-no-padding {
+    padding-left: 0 !important; 
+    padding-right: 0 !important;
+  }
+.signupform{
+    background-color: #F9F9F9;
+    padding: 15px;
+margin-top: 10px;
+border-radius: 15px;
+}
+
+/*CONTACTBAR*/
+  .contactbar{
+    background-color: #E7E6E6;
+    padding: 0.4rem 5rem;
+  }
+  .contactbar i{
+    background-color:rgba(17, 151, 208, 0.05);
+    border-radius: 5px;
+    margin-top: 7px;
+  }
+
+/*NAVBAR*/
+.navbar{
+    padding: 0.5rem 5rem !important;
+}
+.nav-link{
+    border-bottom: 2px solid var(--primary-color);
+}
+.nav-item{
+font-family: Montserrat;
+font-weight: 500;
+font-size: 20px;
+line-height: 100%;
+letter-spacing: 0%;
+}
+.nav-item button{
+    background-color: rgba(255,255,255,0.5);
+    border-bottom-left-radius: none !important;
+    border-top-left-radius: none !important;
+    
+}
+.navbar .btn{
+    background-color: var(--primary-color);
+}
+
+
+
+
+.form-select{
+    border: none !important;
+    background: transparent !important;
+}
+.registerpannel{
+    padding: 3rem;
+    text-align: center;
+}
+.registerpannel img{
+    background: #f6f6f6;
+    padding: 3rem;
+    width: 70px;
+    border-radius: 15px;
+}
+.registerpannel button{
+    background-color: transparent !important;
+    border-radius: 15px;
+}
+
+
+
+
+
+/*SLIDER*/
+.slidersection{
+background: url("../src/assets/imgs/42d14fb9c09c8b85a9c0b2bd635dd29f5e10a062.jpg");
+height: 100vh;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+width: 100%;
+}
+.overlap-img{
+    position: relative;
+    width: 120%;
+}
+.slidertext{
+    padding-top: 7rem;
+    padding-bottom: 3rem;
+  
+    text-align: center;
+    color: white;
+    
+}
+.slidertext h1{
+    font-size: 38px;
+    line-height: 100%;
+    text-align: center;
+    letter-spacing: 0%;
+    font-weight: 400;
+}
+.slidertext span{
+    color: var(--primary-color);
+}
+
+.btn{
+    color: white !important;
+}
+.btn-outline-info{
+    color: #31D2F2 !important;
+}
+/*SEARCH SECTION*/
+.searchsection{
+
+    border-bottom: none;
+    margin: 0 auto;
+    border-radius: 15px;
+}
+
+.searchsection .nav-link{
+    font-size: 20px;
+    background-color: rgba(255,255,255,0.5);
+}
+.searchform{ 
+    background: white;
+    padding: 15px;
+    border-top-left-radius: 0;  
+    border-top-right-radius: 50px;   
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px; 
+    border: 1px solid #dee2e6;
+}
+.searchform .nav-link{
+text-decoration: none;
+font-size:13px;
+}
+.searchform label{
+    font-size: 13px;
+}
+.nav-item button{
+
+}
+.searchform button{
+    background-color: var(--primary-color);
+    color: white;  
+    font-size: large;
+    border-top-left-radius: 0;  
+    border-top-right-radius: 50px;   
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 50px; 
+    padding: auto 0;
+    width: 100%;
+    height: 100%;
+}
+.searchSelect{
+    border: none;
+    width: 90%;
+}
+select:focus {
+  outline: none;
+}
+
+
+
+
+/*SERVICES*/
+.leftServ{
+padding: 5rem;
+}
+.rightserv{
+    padding: 5rem;
+}
+.rightserv h6{
+    color: blue;
+}
+.rightserv img{
+    color: blue;
+    padding: 10px;
+    background: #dee2e6;
+    border-radius: 50%;
+
+}
+/*NEW PROPERTIES*/
+.newproperties{
+    background-color: #f6f6f6;
+    padding: 5rem;
+}
+
+.newproperties a{
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    padding-right: 2rem;
+ padding-top: 0;
+}
+.headertxtstyle{
+background-image: url("../src/assets/imgs/bgheader.svg") ;
+background-repeat: no-repeat;
+background-size: contain;
+background-position: top left;
+padding: 1rem 3rem;
+}
+.newproperties p{
+    color: #1D1B20;
+    font-weight: bold;
+    font-size: 20px;
+
+}
+.allproperties{
+
+    padding: 3rem 0;
+}
+.newproperties .card{
+    border: 1px solid #1197D099;
+    border-radius: 1rem;
+    position: relative;
+    
+    overflow: hidden; 
+}
+.newproperties .card .card-body h6, p{
+    font-weight: 400 !important;
+
+}
+.newproperties .card .card-body a{
+    color: white;
+padding: 1rem 3rem !important;
+border-radius: 10px;
+}
+.cardicons .share{
+    position: absolute;
+    top: 7%;
+    left: 30px;
+    color: white;
+    font-size: 25px;
+    position: absolute; 
+    display: flex;
+    
+}
+.cardicons .heart{
+    position: absolute;
+    top: 7%;
+    right: 30px;
+    color: white;
+    font-size: 25px;
+    background-color: #1197D0;
+    padding: 0.5rem;
+    border-radius: 50%;
+    position: absolute; 
+    display: flex;
+}
+.cardicons .camera{
+    opacity: 90%;
+    border-radius: 5px;
+    position: absolute; 
+    display: flex;
+    top: 45%;
+    right: 30px;
+    color: white;
+    font-size: 15px;
+    background-color: #1D1B20;
+    padding: 0.3rem ;
+    
+}
+
+
+
+
+
+/*FOOTER*/
+.footer{
+    background-color: #E4E4E4;
+
+}
+.footerlink{
+    text-decoration: none;
+    margin: 0 3rem;
+    font-size: 18px;
+}
+.footer .social img{
+    width: 20px;
+}
+.footer .social i{
+    font-size: 20px;
+    margin-right: 1rem;
+}
+.footer .social .f{
+    color: #1877F2;
+}
+.footer .social .l{
+    color: #0076B2;
+}
+.footer ul li{
+    text-decoration: none;
+    color:#1197D0;
+    font-size: 13px;
+}
+.footer input{
+   font-size: 13px;
+   padding: 13px 0 13px 10px;
+   background-color: transparent;
+   border-bottom: 1px solid #C0C0C0;
+}
+
+
+.profile{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid #0076B2;
+    padding: 2px;
+    margin: 0 1rem;
+}
+
+
+.passInput{
+    position: relative;
+}
+.passInput input{
+    padding-right: 60px;
+}
+.passInput button{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: transparent;
+}
+
+
+
+
+
+.center{
+  display: flex;
+  justify-content: center;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+span {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+}
+
+label {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+}
+
+p {
+  font-family: "Inter", sans-serif;
+  font-weight: 300;
+  color: #c0c0c0;
+}

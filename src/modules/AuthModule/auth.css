@@ -1,0 +1,77 @@
+.main-content{
+    background: url("../../assets/imgs/authbg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-bottom: 5rem;
+    
+}
+.auth-content{
+    background-color: #F9F9F9;
+
+    border-radius: 20px;
+    margin: 5rem auto;
+}
+.auth-right{
+height: 100vh;
+}
+
+
+.left-auth{
+    background: url("../../assets/imgs/authbg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 5rem 0 0 0;
+}
+
+
+.icon-card {
+  border: 1px solid #dee2e6;
+  border-radius: 15px;
+  background-color: #ffffff57;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+   
+}
+
+.icon-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.icon-label-fly {
+  position: absolute;
+ 
+top: 0;
+bottom:0;
+left:0;
+right:0;
+padding-top: 2rem;
+  transform: translateX(-50%) translateY(10px);
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 6px;
+  font-size: 18px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease-in-out;
+}
+.icon-card:hover .icon-label-fly {
+  opacity: 1;
+  transform: translateX(0%) translateY(0);
+}
+
+.links{
+  opacity: 0;
+}
