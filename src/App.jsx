@@ -3,7 +3,7 @@ import "./App.css";
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter,createHashRouter, RouterProvider } from "react-router-dom";
 import MasterLayout from "./modules/SharedModule/MasterLayout/MasterLayout";
 import Home from "./modules/SharedModule/Home/Home.jsx";
 import LogIn from "./modules/AuthModule/LogIn/LogIn.jsx"
@@ -17,7 +17,6 @@ import SignUpAgent from "./modules/AuthModule/SignUpAgent/SignUpAgent.jsx";
 import AuthContextProvider from "./modules/AuthModule/context/AuthContext.jsx";
 import NavBar from "./modules/SharedModule/NavBar/NavBar.jsx";
 import ProtectedRoute from "./modules/SharedModule/ProtectedRoute/ProtectedRoute.jsx";
-
 
 import MultiStepForm from "./modules/AuthModule/AgentRegProccess/MultiStepForm.jsx"
 import Step1 from "./modules/AuthModule/AgentRegProccess/Step1.jsx";
@@ -38,7 +37,7 @@ import PropertyReview from "./modules/PropertiesModule/AddProperty/PropertyRevie
 function App() {
   
  
-  const routes = createBrowserRouter([
+  const routes = createHashRouter([
     {
       path: "",
       element:
