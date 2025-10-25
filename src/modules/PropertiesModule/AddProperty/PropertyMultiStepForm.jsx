@@ -9,6 +9,7 @@ import '/src/MultiStepForm.css';
 
 import { AuthContext } from '../../AuthModule/context/AuthContext';
 import GeneralInfo from './GeneralInfo';
+import PhotosandVideos from './PhotosandVideos';
 
 
 const MultiStepForm = () => {
@@ -18,50 +19,52 @@ const {loginData} = useContext(AuthContext);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-   title : '',
-   titleAr : '',
-   description : '',
-   descriptionAr : '',
-   price : '',
-   isNegotiable: '',
-   area: '',
-   bedrooms: '',
-   bathrooms: '',
-   livingRooms: '',
-   kitchens: '',
-   floorNumber:'',
-   totalFloors:'',
-   apartmentNumber:'',
-   hasElevator:'',
-   hasParking:'',
-   parkingSpaces:'',
-   buildYear:'',
-   address:'',
-   addressDescription:'',
-   locationDescription:'',
-   countryId:'',
-   cityId:'',
-   districtId:'',
-   realStateTypeId:'',
-   realStatePurposeId:'',
-   realStateRentTypeId:'',
-   contactPhone:'',
-   contactEmail:'',
-   videoUrl:'',
-   threeDTour:'',
-   isFeatured:'',
-   amenities:'',
-   images:[
-    {
-      imageUrl:'',
-      imageTitle:'',
-      imageDescription:'',
-      isMainImage:'',
-      displayOrder:'',
-      imageType:'',
-    }
-   ]
-   
+    
+    title:'',
+    titleAr: '',
+    description: '',
+    descriptionAr:  '',
+    price:  '',
+    isNegotiable: '',
+    realStateTypeId: '',
+    realStatePurposeId: '',
+    realStateRentTypeId: '',
+
+
+    area: '',
+    bedrooms: '',
+    livingRooms:  '',
+    kitchens: '',
+    hasElevator: true,
+    hasParking: true,
+    parkingSpaces: 0,
+    buildYear: 2030,
+    address: '',
+    addressDescription: '',
+
+
+    locationDescription: '',
+    countryId: '',
+    cityId: '',
+    districtId: '',
+    contactPhone: '',
+    contactEmail: '',
+    totalFloors: '',
+    apartmentNumber:  '',
+    floorNumber: '',
+
+
+    images:{
+      imageUrl: [],
+      imageTitle: '',
+      imageDescription: '',
+      isMainImage: false,
+      displayOrder: '',
+      imageType: ''    },
+   videoUrl: '',
+   threeDTour: '',
+   isFeatured: '',
+   amenities: []
   });
 
   const nextStep = () => {
@@ -94,13 +97,15 @@ const {loginData} = useContext(AuthContext);
     // Logic for logged-in users
     switch (currentStep) {
       case 1:
-        return <GeneralInfo formData={formData} savePartialData={savePartialData} nextStep={nextStep} prevStep={prevStep} />;
+        return <Step1 formData={formData} savePartialData={savePartialData} nextStep={nextStep} prevStep={prevStep} />;
       case 2:
-        return <Step2 formData={formData} savePartialData={savePartialData} nextStep={nextStep} prevStep={prevStep} />;
-      case 3:
-        return <Step3 formData={formData} prevStep={prevStep} />;
-     case 4:
-        return <Step4 formData={formData} prevStep={prevStep} />;
+        return <Step2 formData={formData}  savePartialData={savePartialData} nextStep={nextStep}  prevStep={prevStep} />;
+     case 3:
+        return <Step3 formData={formData}  savePartialData={savePartialData} nextStep={nextStep}  prevStep={prevStep} />;
+    case 4:
+        return <Step4 formData={formData}  savePartialData={savePartialData} nextStep={nextStep}  prevStep={prevStep} />;
+    case 5:
+        return <Review formData={formData}  prevStep={prevStep} />;
       default:
         return <h2>تم الإرسال</h2>;
     }
@@ -108,7 +113,7 @@ const {loginData} = useContext(AuthContext);
 };
     
     
-const totalSteps = loginData ? 3 : 4;
+const totalSteps = loginData ? 5 : 6;
 console.log(totalSteps);
  return (
     <div className="form-container">
@@ -133,12 +138,12 @@ console.log(totalSteps);
           );
         })}
       </div>
-      <h2>Register as Agent</h2>
+      <h2>Fill in property Data</h2>
     <p className="text-mute">You can always change them later.</p>
       <div className="form-step">
         {renderStepContent()}
       </div>
-
+ 
     </div>
   );
 };

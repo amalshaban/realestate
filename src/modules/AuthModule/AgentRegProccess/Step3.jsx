@@ -128,248 +128,183 @@ const onSubmit = (data) => {
   return (
     <div className=''>
       <h3>Branch Data</h3>
-    <form autocomplete="off" onSubmit={handleSubmit(onSubmit)}>
+    <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
 
-      <div className="d-flex justify-content-between">
-               <input
-     type="text" className="mt-1 me-1 form-control" placeholder='id'
-    {...register("id", {required:'id is required !!'})}
-    />
-  {errors.id && (
-    <span className='text-danger'>{errors.id.message}</span>
-  )} 
-
-
-   <input
-     type="text" className="mt-1 form-control" placeholder='agentId'
-    {...register("agentId", {required:'agentId is required !!'})}
-    />
-  {errors.agentId && (
-    <span className='text-danger'>{errors.agentId.message}</span>
-  )} 
-
-      </div>
-    
-
-      <div className="d-flex justify-content-between">
-   <input
-     type="text" className="mt-1 me-1 form-control" placeholder='branchName'
-    {...register("branchName", {required:'branchName is required !!'})}
-    />
-  {errors.branchName && (
-    <span className='text-danger'>{errors.branchName.message}</span>
-  )} 
-     {/* <input
-     type="text" className="mt-1 form-control" placeholder='countryId'
-    {...register("countryId", {required:'countryId is required !!'})}
-    />
-  {errors.countryId && (
-    <span className='text-danger'>{errors.countryId.message}</span>
-  )}  */}
-
-  <select className='' 
-       {...register("countryId", {
-            required: 'countryId is required !!',
-           validate: value => value !== 0 || 'Please select a country' 
-                        })}
-                        >
-  <option value={0}>select Country</option>
-        {countries.map((country) => 
-          <option key={country.id} value={country.id}>
-            {country.name}
-          </option>
-        )}
-      </select>
- {errors.countryId && (
-    <span className='text-danger'>{errors.countryId.message}</span>
-  )}
-  
-      </div>
-  
-
-  
-      <div className="d-flex justify-content-between">
-           
-
-  <select className='' 
-   {...register("cityId", {
-                            required: 'cityId is required !!',
-                            validate: value => value !== 0 || 'Please select a city'
-                        })}
-                        disabled={!watchedCountryId || watchedCountryId === 0} 
-                   
-  >
-         <option value={0}>select City</option>
-        {cities.map((city) => 
-          <option key={city.id} value={city.id}>
-            {city.name}
-          </option>
-        )}
-      </select>
-       {errors.cityId && (
-    <span className='text-danger'>{errors.cityId.message}</span>
-  )}
-
-  <select className=''
-    {...register("districtId", {
-                            required: 'districtId is required !!',
-                            validate: value => value !== 0 || 'Please select a district'
-                        })}
-                        disabled={!watchedCityId || watchedCityId === 0}
-  >
-           <option value={0}>select District</option>
-        {districts.map((district) => 
-          <option key={district.id} value={district.id}>
-            {district.name}
-          </option>
-        )}
-      </select>
-  {errors.districtId && (
-    <span className='text-danger'>{errors.districtId.message}</span>
-  )} 
-
-      </div>
-  
-
-
+  {/* Row 1 */}
   <div className="d-flex justify-content-between">
-
-         <input
-     type="text" className="mt-1 me-1 form-control" placeholder='addressAr'
-    {...register("addressAr", {required:'addressAr is required !!'})}
+    <input
+      type="text"
+      className={`mt-1 me-1 form-control ${errors.id ? 'input-error' : ''}`}
+      placeholder={errors.id ? errors.id.message : 'id'}
+      {...register("id", { required: 'id is required !!' })}
     />
-  {errors.addressAr && (
-    <span className='text-danger'>{errors.addressAr.message}</span>
-  )} 
 
-     <input
-     type="text" className="mt-1 form-control" placeholder='addressEn'
-    {...register("addressEn", {required:'addressEn is required !!'})}
+    <input
+      type="text"
+      className={`mt-1 form-control ${errors.agentId ? 'input-error' : ''}`}
+      placeholder={errors.agentId ? errors.agentId.message : 'agentId'}
+      {...register("agentId", { required: 'agentId is required !!' })}
     />
-  {errors.addressEn && (
-    <span className='text-danger'>{errors.addressEn.message}</span>
-  )} 
   </div>
-  
 
+  {/* Row 2 */}
   <div className="d-flex justify-content-between">
-     <input
-     type="text" className="mt-1 me-1 form-control" placeholder='shortAddress'
-    {...register("shortAddress", {required:'shortAddress is required !!'})}
+    <input
+      type="text"
+      className={`mt-1 me-1 form-control ${errors.branchName ? 'input-error' : ''}`}
+      placeholder={errors.branchName ? errors.branchName.message : 'branchName'}
+      {...register("branchName", { required: 'branchName is required !!' })}
     />
-  {errors.shortAddress && (
-    <span className='text-danger'>{errors.shortAddress.message}</span>
-  )} 
 
-     <input
-     type="text" className="mt-1 form-control" placeholder='buildingNo'
-    {...register("buildingNo", {required:'buildingNo is required !!'})}
-    />
-  {errors.buildingNo && (
-    <span className='text-danger'>{errors.buildingNo.message}</span>
-  )} 
+    <select
+      className={`mt-1 form-control ${errors.countryId ? 'input-error' : ''}`}
+      {...register("countryId", {
+        required: 'countryId is required !!',
+        validate: value => value !== "0" || 'Please select a country'
+      })}
+    >
+      <option value="0">Select Country</option>
+      {countries.map((country) => (
+        <option key={country.id} value={country.id}>{country.name}</option>
+      ))}
+    </select>
   </div>
-    
 
-
+  {/* Row 3 */}
   <div className="d-flex justify-content-between">
-            <input
-     type="text" className="mt-1 me-1 form-control" placeholder='additonalNo'
-    {...register("additonalNo", {required:'additonalNo is required !!'})}
-    />
-  {errors.additonalNo && (
-    <span className='text-danger'>{errors.additonalNo.message}</span>
-  )} 
+    <select
+      className={`mt-1 me-1 form-control ${errors.cityId ? 'input-error' : ''}`}
+      {...register("cityId", {
+        required: 'cityId is required !!',
+        validate: value => value !== "0" || 'Please select a city'
+      })}
+      disabled={!watchedCountryId || watchedCountryId === 0}
+    >
+      <option value="0">Select City</option>
+      {cities.map((city) => (
+        <option key={city.id} value={city.id}>{city.name}</option>
+      ))}
+    </select>
 
-      <input
-     type="text" className="mt-1 form-control" placeholder='zipeCode'
-    {...register("zipeCode", {required:'zipeCode is required !!'})}
-    />
-  {errors.zipeCode && (
-    <span className='text-danger'>{errors.zipeCode.message}</span>
-  )} 
+    <select
+      className={`mt-1 form-control ${errors.districtId ? 'input-error' : ''}`}
+      {...register("districtId", {
+        required: 'districtId is required !!',
+        validate: value => value !== "0" || 'Please select a district'
+      })}
+      disabled={!watchedCityId || watchedCityId === 0}
+    >
+      <option value="0">Select District</option>
+      {districts.map((district) => (
+        <option key={district.id} value={district.id}>{district.name}</option>
+      ))}
+    </select>
   </div>
 
 
 
+
+{/* Row 4 */}
   <div className="d-flex justify-content-between">
-             <input
-     type="text" className="mt-1 me-1 form-control" placeholder='landlinePhone'
-    {...register("landlinePhone", {required:'landlinePhone is required !!'})}
+    <input
+      type="text"
+      className={`mt-1 me-1 form-control ${errors.addressAr ? 'input-error' : ''}`}
+      placeholder={errors.addressAr ? errors.addressAr.message : 'addressAr'}
+      {...register("addressAr", { required: 'addressAr is required !!' })}
     />
-  {errors.landlinePhone && (
-    <span className='text-danger'>{errors.landlinePhone.message}</span>
-  )} 
 
-      <input
-     type="text" className="mt-1 form-control" placeholder='mobilePhone'
-    {...register("mobilePhone", {required:'mobilePhone is required !!'})}
+    <input
+      type="text"
+      className={`mt-1 form-control ${errors.addressEn ? 'input-error' : ''}`}
+      placeholder={errors.addressEn ? errors.addressEn.message : 'addressEn'}
+      {...register("addressEn", { required: 'addressEn is required !!' })}
     />
-  {errors.mobilePhone && (
-    <span className='text-danger'>{errors.mobilePhone.message}</span>
-  )} 
-
   </div>
- 
-
-
- 
+{/* Row 5 */}
   <div className="d-flex justify-content-between">
-             <input
-     type="text" className="mt-1 me-1 form-control" placeholder='email'
-    {...register("email", {required:'email is required !!'})}
+    <input
+      type="text"
+      className={`mt-1 me-1 form-control ${errors.shortAddress ? 'input-error' : ''}`}
+      placeholder={errors.shortAddress ? errors.addressAr.message : 'shortAddress'}
+      {...register("shortAddress", { required: 'shortAddress is required !!' })}
     />
-  {errors.email && (
-    <span className='text-danger'>{errors.email.message}</span>
-  )} 
 
-      <input
-     type="text" className="mt-1 form-control" placeholder='whatsApp'
-    {...register("whatsApp", {required:'whatsApp is required !!'})}
+    <input
+      type="text"
+      className={`mt-1 form-control ${errors.buildingNo ? 'input-error' : ''}`}
+      placeholder={errors.buildingNo ? errors.buildingNo.message : 'buildingNo'}
+      {...register("buildingNo", { required: 'buildingNo is required !!' })}
     />
-  {errors.whatsApp && (
-    <span className='text-danger'>{errors.whatsApp.message}</span>
-  )} 
-  
-  </div>
- 
- 
-  <div className="d-flex justify-content-between">
-              <input
-     type="text" className="mt-1 form-control" placeholder='isMain'
-    {...register("isMain", {required:'isMain is required !!'})}
-    />
-  {errors.isMain && (
-    <span className='text-danger'>{errors.isMain.message}</span>
-  )} 
   </div>
 
 
+{/* Row 6 */}
+  <div className="d-flex justify-content-between">
+    <input
+      type="text"
+      className={`mt-1 me-1 form-control ${errors.additonalNo ? 'input-error' : ''}`}
+      placeholder={errors.additonalNo ? errors.additonalNo.message : 'additonalNo'}
+      {...register("additonalNo", { required: 'additonalNo is required !!' })}
+    />
 
- <div className="navigation">
-      <button onClick={prevStep}>Previous</button>
-      <button type='submit'>Next</button>
-      </div>
-    </form>
-      {/* <input className='mt-1' name="id" placeholder="id" value={local.id} onChange={handleChange} />
-      <input  className='mt-1' name="agentId" placeholder="agentId" value={local.agentId} onChange={handleChange} />
-      <input  className='mt-1' name="branchName" placeholder="branchName" value={local.branchName} onChange={handleChange} />
-      <input className='mt-1'  name="countryId" placeholder="countryId" value={local.countryId} onChange={handleChange} />
-      <input className='mt-1'  name="cityId" placeholder="cityId" value={local.cityId} onChange={handleChange} />
-      <input className='mt-1'  name="districtId" placeholder="districtId" value={local.districtId} onChange={handleChange} />
-      <input  className='mt-1' name="addressAr" placeholder="addressAr" value={local.addressAr} onChange={handleChange} />
-      <input  className='mt-1' name="addressEn" placeholder="addressEn" value={local.addressEn} onChange={handleChange} />
-      <input  className='mt-1' name="shortAddress" placeholder="shortAddress" value={local.shortAddress} onChange={handleChange} />
-      <input className='mt-1'  name="buildingNo" placeholder="buildingNo" value={local.buildingNo} onChange={handleChange} />
-      <input  className='mt-1' name="additonalNo" placeholder="additonalNo" value={local.additonalNo} onChange={handleChange} />
-      <input  className='mt-1' name="zipeCode" placeholder="zipeCode" value={local.zipeCode} onChange={handleChange} />
-      <input  className='mt-1' name="landlinePhone" placeholder="landlinePhone" value={local.landlinePhone} onChange={handleChange} />
-      <input  className='mt-1' name="mobilePhone" placeholder="mobilePhone" value={local.mobilePhone} onChange={handleChange} />
-      <input  className='mt-1' name="email" placeholder="email" value={local.email} onChange={handleChange} />
-      <input  className='mt-1' name="whatsApp" placeholder="whatsApp" value={local.whatsApp} onChange={handleChange} />
-      <input  className='mt-1' name="isMain" placeholder="isMain" value={local.isMain} onChange={handleChange} />
-       */}
-      
+    <input
+      type="text"
+      className={`mt-1 form-control ${errors.zipeCode ? 'input-error' : ''}`}
+      placeholder={errors.zipeCode ? errors.zipeCode.message : 'zipeCode'}
+      {...register("zipeCode", { required: 'zipeCode is required !!' })}
+    />
+  </div>
+
+{/* Row 7 */}
+  <div className="d-flex justify-content-between">
+    <input
+      type="text"
+      className={`mt-1 me-1 form-control ${errors.landlinePhone ? 'input-error' : ''}`}
+      placeholder={errors.landlinePhone ? errors.landlinePhone.message : 'landlinePhone'}
+      {...register("landlinePhone", { required: 'landlinePhone is required !!' })}
+    />
+
+    <input
+      type="text"
+      className={`mt-1 form-control ${errors.mobilePhone ? 'input-error' : ''}`}
+      placeholder={errors.mobilePhone ? errors.mobilePhone.message : 'mobilePhone'}
+      {...register("mobilePhone", { required: 'mobilePhone is required !!' })}
+    />
+  </div>
+
+
+  {/* Row 8 */}
+  <div className="d-flex justify-content-between">
+    <input
+      type="text"
+      className={`mt-1 me-1 form-control ${errors.email ? 'input-error' : ''}`}
+      placeholder={errors.email ? errors.email.message : 'email'}
+      {...register("email", { required: 'email is required !!' })}
+    />
+
+    <input
+      type="text"
+      className={`mt-1 form-control ${errors.whatsApp ? 'input-error' : ''}`}
+      placeholder={errors.whatsApp ? errors.whatsApp.message : 'whatsApp'}
+      {...register("whatsApp", { required: 'whatsApp is required !!' })}
+    />
+  </div>
+ {/* Row 8 */}
+  <div className="d-flex justify-content-between">
+    <input
+      type="text"
+      className={`mt-1 me-1 form-control ${errors.isMain ? 'input-error' : ''}`}
+      placeholder={errors.isMain ? errors.isMain.message : 'isMain'}
+      {...register("isMain", { required: 'isMain is required !!' })}
+    />
+  </div>
+
+  <div className="navigation mt-3">
+    <button type="button" onClick={prevStep} className="btn btn-secondary me-2">Previous</button>
+    <button type="submit" className="btn btn-primary">Next</button>
+  </div>
+</form>
+
     </div>
   );
 };

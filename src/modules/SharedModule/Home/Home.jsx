@@ -1,5 +1,5 @@
 import React, {  useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import Search from "../Search/Search.jsx";
 // import cardimg from "../../../assets/imgs/7da51552e8fc95cb3bd8bf2bf2d6ce580258031a.jpg";
@@ -37,8 +37,10 @@ export default function Home() {
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
-
-
+const navigate = useNavigate()
+const navigateProperty =()=>{
+  navigate('/properties/addproperty')
+}
   return (
     <>
     
@@ -155,6 +157,7 @@ export default function Home() {
         <div className="row">
           <div className="col-md-6">
           <h3 className="headertxtstyle">New Properties</h3>
+          <button onClick={navigateProperty} className="btn btn-primary">new property</button>
           </div>
           <div className=" col-md-6 text-end">  
             <a href="" className="">

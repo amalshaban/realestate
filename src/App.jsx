@@ -94,7 +94,7 @@ function App() {
       errorElement: <NotFound />,
       element:  <PropertyLayout />,
       children: [
-        { index: "true", element: <ViewProperties /> },
+        { index: true, element: <ViewProperties /> },
         { path: "viewproperties", element: <ViewProperties /> },
         { path: "editProperty", element: <EditProperty /> },
         { path: "deleteProperty", element: <DeleteProperty /> },

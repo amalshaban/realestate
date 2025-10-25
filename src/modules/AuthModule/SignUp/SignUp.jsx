@@ -115,51 +115,46 @@ try {
               </div>
               <div className="col-md-6">
     <label htmlFor="inputFirstName" className="form-label">First Name</label>
-    <input type="text" className="form-control" placeholder='Ahmed' id="inputFirstName"
-    
+    <input type="text"   className={`mt-1 form-control ${errors.firstName ? 'input-error' : ''}`}
+    placeholder={errors.firstName ? errors.firstName.message : ' firstName'}
     {...register("firstName", {required:'firstName is required !'})}
     />
+
   </div>
-  {errors.firstName && (
-    <span className='text-danger'>{errors.firstName.message}</span>
-  )} 
+ 
+  
   <div className="col-md-6">
     <label htmlFor="inputLastName" className="form-label">Last Name</label>
-    <input type="text" className="form-control" placeholder='Ali' id="inputLastName"
-    
+    <input type="text"   className={`mt-1 form-control ${errors.lastName ? 'input-error' : ''}`}
+    placeholder={errors.lastName ? errors.lastName.message : ' firstName'}
     {...register("lastName", {required:'lastName is required !'})}
     />
   </div>
-  {errors.lastName && (
-    <span className='text-danger'>{errors.lastName.message}</span>
-  )} 
+ 
   <div className="col-md-6">
     <label htmlFor="inputEmail4" className="form-label">Email</label>
-    <input type="email" className="form-control" placeholder='Ahmed@gmail.com' id="inputEmail4"
-    
-    {...register("email", EmailValidation)}
+       <input type="text"   className={`mt-1 form-control ${errors.email ? 'input-error' : ''}`}
+    placeholder={errors.email ? errors.email.message : ' email'}
+    {...register("email", {required:'email is required !'})}
     />
   </div>
-   {errors.email && (
-    <span className='text-danger'>{errors.email.message}</span>
-  )}
+   
   <div className="col-md-6">
     <label htmlFor="inputPhoneNumber" className="form-label">Phone Number</label>
-    <input type="text" className="form-control" placeholder='564 892 6534' id="inputPhoneNumber"
-    
-    {...register("phone", {required:'Phone is required !'})}
+     <input type="text"   className={`mt-1 form-control ${errors.phone ? 'input-error' : ''}`}
+    placeholder={errors.phone ? errors.phone.message : ' phone'}
+    {...register("phone", {required:'phone is required !'})}
     />
   </div>
-   {errors.phone && (
-    <span className='text-danger'>{errors.phone.message}</span>
-  )}
-  <div className="col-md-6 passInput">
+ 
+   <div className="col-md-12">
     <label htmlFor="inputPassword4" className="form-label">Password</label>
-    <input  type={`${isPasswordVisible?"text" : "password"  }`}
+    <div className="passInput">
+
+ <input type={`${isPasswordVisible?"text" : "password"  }`}
      className="form-control form-input"
     placeholder='*******' id="inputPassword"
-    
-    {...register("password", PasswordValidation)}
+    {...register("password", 'PasswordValidation')}
     />
      <button
                   onMouseDown={(e) => e.preventDefault()}
@@ -180,10 +175,12 @@ try {
                   ></i>
                   
      </button>
+    </div>
   </div>
    {errors.password && (
     <span className='text-danger'>{errors.password.message}</span>
   )}
+  
   {/* <div className="col-md-6">
     <label htmlFor="inputPassword4" className="form-label">Confirm Password</label>
     <input type="password" className="form-control" placeholder='*******' id="inputPassword4"
@@ -222,14 +219,12 @@ try {
         <>
          <div className="col-md-6">
     <label htmlFor="inputFirstName" className="form-label"> photo </label>
-    <input type="file" className="form-control" placeholder='Upload Image' id="inputFirstName"
-    
-    {...register("photo", {required:'image is required !'})}
+    <input type="text"   className={`mt-1 form-control ${errors.photo ? 'input-error' : ''}`}
+    placeholder={errors.photo ? errors.photo.message : ' photo'}
+    {...register("photo", {required:'photo is required !'})}
     />
   </div>
-  {errors.photo && (
-    <span className='text-danger'>{errors.photo.message}</span>
-  )} 
+
     <button type="submit" className="btn btn-info px-4">Update</button>
     <button onClick={handleClickAgent} className="btn btn-outline-info mx-2 px-4">Upgrade to Agent</button>
         </>

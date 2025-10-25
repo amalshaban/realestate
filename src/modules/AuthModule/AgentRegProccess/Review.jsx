@@ -4,6 +4,7 @@ import { USERS_URLs } from '../../../constants/EndPoints';
 import { Authorization } from '../../../constants/Validations';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Review = ({ formData, prevStep }) => {
 
@@ -18,6 +19,7 @@ const Review = ({ formData, prevStep }) => {
 const {loginData} = useContext(AuthContext);
 
 
+const navigate = useNavigate();
 
  
   const handleSubmit = async () => {
@@ -58,7 +60,6 @@ payload.append('agentBranch.whatsApp', formData.agentBranch.whatsApp);
 payload.append('agentBranch.isMain', formData.agentBranch.isMain);
 
 
-
    try {
   let response = await axios.post(USERS_URLs.AgentRegister,  payload, {
     headers: {
@@ -68,7 +69,9 @@ payload.append('agentBranch.isMain', formData.agentBranch.isMain);
       }
   })
  
+  
   toast.success( response?.data?.message ||  "congratulations, your account was created successfully !");
+navigate('/home');
 } catch (error) {
     toast.error(error.response?.data || error.message ||'Error in sending Data');
 }
@@ -122,6 +125,7 @@ payload.append('agentBranch.isMain', formData.agentBranch.isMain);
 
 
   return (
+    <>
     <div>
       <h3 className='text-danger'>Revise Your Data</h3>
 <div className="">
@@ -159,13 +163,14 @@ payload.append('agentBranch.isMain', formData.agentBranch.isMain);
 </div>
     
 
-      <div className="navigation">
+     
+     
+    </div>
+ <div className="navigation">
           <button onClick={prevStep}>Go Back</button>
         <button onClick={handleSubmit}>Submit</button>
       </div>
-     
-    </div>
-
+      </>
 
 
 

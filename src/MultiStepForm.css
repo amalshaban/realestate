@@ -13,7 +13,12 @@ h2 {
 }
 
 .form-step {
-  margin-bottom: 1.5rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 label {
@@ -136,5 +141,16 @@ button:disabled {
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
+}
+
+
+.input-error {
+  border-color: #dc3545 !important;
+  color: #dc3545 !important;
+}
+
+.input-error::placeholder {
+  color: #dc3545 !important;
+  opacity: 1;
 }
 

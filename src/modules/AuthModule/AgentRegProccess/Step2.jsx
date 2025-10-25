@@ -34,66 +34,64 @@ const Step2 = ({ formData, savePartialData, nextStep, prevStep }) => {
     <div>
       <h3>Company Data</h3>
       
-    <form autocomplete="off" onSubmit={handleSubmit(onSubmit)}>
+   <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
 
-    <input
-     type="text" className="mt-1 form-control" placeholder='اسم الشركة'
-    {...register("nameAr", {required:'ادخل اسم الشركة من فضلك !!'})}
-    />
-  {errors.nameAr && (
-    <span className='text-danger'>{errors.nameAr.message}</span>
-  )} 
+  {/* اسم الشركة بالعربي */}
+  <input
+    type="text"
+    className={`mt-1 form-control ${errors.nameAr ? 'input-error' : ''}`}
+    placeholder={errors.nameAr ? errors.nameAr.message : 'اسم الشركة'}
+    {...register("nameAr", { required: 'ادخل اسم الشركة من فضلك !!' })}
+  />
 
-    <input
-     type="text" className="mt-1 form-control" placeholder='Company Name'
-    {...register("nameEn", {required:'Company Name is required !!'})}
-    />
-  {errors.nameEn && (
-    <span className='text-danger'>{errors.nameEn.message}</span>
-  )} 
+  {/* اسم الشركة بالإنجليزي */}
+  <input
+    type="text"
+    className={`mt-1 form-control ${errors.nameEn ? 'input-error' : ''}`}
+    placeholder={errors.nameEn ? errors.nameEn.message : 'Company Name'}
+    {...register("nameEn", { required: 'Company Name is required !!' })}
+  />
 
-   <input
-     type="text" className="mt-1 form-control" placeholder='Cr'
-    {...register("cr", {required:'Cr is required !!'})}
-    />
-  {errors.cr && (
-    <span className='text-danger'>{errors.cr.message}</span>
-  )} 
+  {/* CR */}
+  <input
+    type="text"
+    className={`mt-1 form-control ${errors.cr ? 'input-error' : ''}`}
+    placeholder={errors.cr ? errors.cr.message : 'Cr'}
+    {...register("cr", { required: 'Cr is required !!' })}
+  />
 
-   <input
-     type="text" className="mt-1 form-control" placeholder='fal'
-    {...register("fal", {required:'fal is required !!'})}
-    />
-  {errors.fal && (
-    <span className='text-danger'>{errors.fal.message}</span>
-  )} 
+  {/* FAL */}
+  <input
+    type="text"
+    className={`mt-1 form-control ${errors.fal ? 'input-error' : ''}`}
+    placeholder={errors.fal ? errors.fal.message : 'fal'}
+    {...register("fal", { required: 'fal is required !!' })}
+  />
 
-   <input
-     type="date" className="mt-1 form-control" placeholder='falExpiryDate'
-    {...register("falExpiryDate", {required:'falExpiryDate is required !!'})}
-    />
-  {errors.falExpiryDate && (
-    <span className='text-danger'>{errors.falExpiryDate.message}</span>
-  )}  
-  
-   <input
-     type="file" className="mt-1 form-control" placeholder='logo'
-     onChange={(e) =>
-      savePartialData({ logo:
-        e.target.files[0]
-      })
-     }
-    {...register("logo", {required:'logo is required !!'})}
-    />
-  {errors.logo && (
-    <span className='text-danger'>{errors.logo.message}</span>
-  )} 
-  
-  <div className="navigation">
-      <button onClick={prevStep}>Previous</button>
-      <button type='submit'>Next</button>
-      </div>
-    </form>
+  {/* تاريخ انتهاء FAL */}
+  <input
+    type="date"
+    className={`mt-1 form-control ${errors.falExpiryDate ? 'input-error' : ''}`}
+    placeholder={errors.falExpiryDate ? errors.falExpiryDate.message : 'falExpiryDate'}
+    {...register("falExpiryDate", { required: 'falExpiryDate is required !!' })}
+  />
+
+  {/* اللوجو */}
+  <input
+    type="file"
+    className={`mt-1 form-control ${errors.logo ? 'input-error' : ''}`}
+    onChange={(e) => savePartialData({ logo: e.target.files[0] })}
+    {...register("logo", { required: 'logo is required !!' })}
+    placeholder={errors.logo ? errors.logo.message : 'logo'}
+  />
+
+  <div className="navigation mt-3 d-flex justify-content-between">
+    <button type="button" onClick={prevStep} className="btn btn-secondary">Previous</button>
+    <button type="submit" className="btn btn-primary">Next</button>
+  </div>
+
+</form>
+
 {/*   
 
       <input className='mt-1' name="nameAr" placeholder=" اسم الشركة" value={local.nameAr} onChange={handleChange} />

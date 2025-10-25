@@ -1,3 +1,4 @@
+import { Authorization } from "./Validations";
 
 
 
@@ -9,6 +10,10 @@ export const USERS_URLs = {
   Update: `${baseURL}/Api/Account/UpdateProfilePhoto`,
   AgentRegister :  `${baseURL}/Api/Agent/Register`,
   Profile : `${baseURL}/Api/Agent/Profile`
+};
+
+export const PROPERTIES_URLS = {
+  addproperty: `${baseURL}/api/agent/property/add`,
 };
 
 export const LOCATIONS_URLs = {

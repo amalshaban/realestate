@@ -75,3 +75,7 @@ padding-top: 2rem;
 .links{
   opacity: 0;
 }
+
+.input-error{
+  color : red;
+}

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify';
 import { apiKey ,  EmailValidation, PasswordValidation} from '../../../constants/Validations.js';
 import {  USERS_URLs } from '../../../constants/EndPoints.js';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
@@ -15,8 +15,7 @@ export default function LogIn() {
     const toggleVisibility = (setterFunction) => {
       setterFunction((prevState) => !prevState);
     };
-
-  
+const navigate = useNavigate();
   let {
       register,
       handleSubmit,
@@ -37,7 +36,9 @@ export default function LogIn() {
     console.log('Success:', response);
       sessionStorage.setItem('token', response.data.token);
       toast.success("Welcome Back !");
-      window.location.reload();
+      
+      navigate('/home');
+    window.location.reload();
       console.log(response.data.token);
     
   } catch (error) {
@@ -89,11 +90,6 @@ export default function LogIn() {
                   
      </button>
     </div>
-   
-     
-      
-          
-    
   </div>
    {errors.password && (
     <span className='text-danger'>{errors.password.message}</span>
