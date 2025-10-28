@@ -125,11 +125,11 @@ function App() {
 
   <AuthContextProvider>
       <ToastContainer />
-      <HashRouter>
+      
       <RouterProvider router = {routes}>
     <NavBar/>
     </RouterProvider>
-    </HashRouter>
+    
   </AuthContextProvider>
   </>);
 }
