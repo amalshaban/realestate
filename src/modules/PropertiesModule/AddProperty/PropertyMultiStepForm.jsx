@@ -92,24 +92,21 @@ const {loginData} = useContext(AuthContext);
  
 
   
-    const renderStepContent = () => {
-    if (loginData) {
-    // Logic for logged-in users
-    switch (currentStep) {
-      case 1:
-        return <Step1 formData={formData} savePartialData={savePartialData} nextStep={nextStep} prevStep={prevStep} />;
-      case 2:
-        return <Step2 formData={formData}  savePartialData={savePartialData} nextStep={nextStep}  prevStep={prevStep} />;
-     case 3:
-        return <Step3 formData={formData}  savePartialData={savePartialData} nextStep={nextStep}  prevStep={prevStep} />;
+   const renderStepContent = () => {
+  switch (currentStep) {
+    case 1:
+      return <Step1 formData={formData} savePartialData={savePartialData} nextStep={nextStep} prevStep={prevStep} />;
+    case 2:
+      return <Step2 formData={formData} savePartialData={savePartialData} nextStep={nextStep} prevStep={prevStep} />;
+    case 3:
+      return <Step3 formData={formData} savePartialData={savePartialData} nextStep={nextStep} prevStep={prevStep} />;
     case 4:
-        return <Step4 formData={formData}  savePartialData={savePartialData} nextStep={nextStep}  prevStep={prevStep} />;
+      return <Step4 formData={formData} savePartialData={savePartialData} nextStep={nextStep} prevStep={prevStep} />;
     case 5:
-        return <Review formData={formData}  prevStep={prevStep} />;
-      default:
-        return <h2>تم الإرسال</h2>;
-    }
-  } 
+      return <Review formData={formData} prevStep={prevStep} />;
+    default:
+      return <h2>تم الإرسال</h2>;
+  }
 };
     
     
