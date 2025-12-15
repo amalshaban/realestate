@@ -22,7 +22,10 @@ export default function NavBar() {
     const changeLanguage = (lng) => {
       i18n.changeLanguage(lng);
     }
-
+   const handleClick = () => { 
+    navigate('/auth/signup', { replace: true }); 
+    window.location.reload();
+};
 
      
       const [activeTab, setActiveTab] = useState('home'); 
@@ -124,7 +127,7 @@ if (photo === "") {
        
       {loginData ?
         <div> 
-         Welcome,  <Link to="/auth/signup">{name} </Link>
+         Welcome,  <button onClick={handleClick}>{name} </button>
           { <img className='profile' src={photoLink} alt="Profile" />}
            <button className="btn btn-outline-info px-3" onClick={logOut} >LogOut</button>
         </div>

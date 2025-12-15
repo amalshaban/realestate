@@ -25,7 +25,7 @@ headers: {
   Authorization: `Bearer ${sessionStorage.token}`,
   'apiKey': apiKey,
   "Content-Type": 'multipart/form-data',
-      // 'Accept-Language': browserLanguage
+     'Accept-Language': 'browserLanguage',
     } };
 
 export const EmailValidation = {

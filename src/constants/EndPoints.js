@@ -14,6 +14,8 @@ export const USERS_URLs = {
 
 export const PROPERTIES_URLS = {
   addproperty: `${baseURL}/api/agent/property/add`,
+  allProperties: `${baseURL}/Api/Agent/properties`,
+  // propertyDetails: `${baseURL}/api/agent/property/${propertyId}`,
 };
 
 export const LOCATIONS_URLs = {

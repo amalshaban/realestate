@@ -3,7 +3,7 @@ import "./App.css";
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
-import { createBrowserRouter,createHashRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter,createHashRouter, HashRouter, RouterProvider } from "react-router-dom";
 import MasterLayout from "./modules/SharedModule/MasterLayout/MasterLayout";
 import Home from "./modules/SharedModule/Home/Home.jsx";
 import LogIn from "./modules/AuthModule/LogIn/LogIn.jsx"
@@ -34,6 +34,7 @@ import Location from "./modules/PropertiesModule/AddProperty/Location.jsx"
 import AreaandDesc from "./modules/PropertiesModule/AddProperty/AreaandDesc.jsx"
 import PhotosandVideos from "./modules/PropertiesModule/AddProperty/PhotosandVideos.jsx"
 import PropertyReview from "./modules/PropertiesModule/AddProperty/PropertyReview.jsx"
+import PropertyDetails from "./modules/PropertiesModule/PropertyDetails/PropertyDetails.jsx";
 function App() {
   
  
@@ -45,7 +46,7 @@ function App() {
       ,
       errorElement: <NotFound />,
       children: [
-        { index: "true", element: <Home /> },
+        { index: true, element: <Home /> },
         { path: "home", element:  <Home /> },
       ],
     },
@@ -54,7 +55,7 @@ function App() {
       errorElement: <NotFound />,
       element: <MasterLayout />,
       children: [
-        { index: "true", element: <LogIn /> },
+        { index: true, element: <LogIn /> },
         { path: "login", element: <LogIn /> },
       
         { path: "join" , element: <Join/>,
@@ -84,7 +85,7 @@ function App() {
         <AgentPannel />
       </ProtectedRoute> ,
       children: [
-        { index: "true", element: <AgentPannel /> },
+        { index: true, element: <AgentPannel /> },
         { path: "sidebar", element: <SideBar /> },
         { path: "agentlist", element: <AgentList /> },
       ],
@@ -96,16 +97,17 @@ function App() {
       children: [
         { index: true, element: <ViewProperties /> },
         { path: "viewproperties", element: <ViewProperties /> },
+        { path: "property/:id", element: <PropertyDetails />},
         { path: "editProperty", element: <EditProperty /> },
         { path: "deleteProperty", element: <DeleteProperty /> },
         { path: "addproperty", element: <AddProperty />,
           children: [
             
         { index: "propertymultistepform", element: <PropertyMultiStepForm /> },
-        { index: "location", element: <Location /> },
-        { index: "areaanddescrp", element: <AreaandDesc /> },
-        { index: "photosandvideos", element: <PhotosandVideos /> },
-        { index: "propertyreview", element: <PropertyReview /> },
+        { path: "location", element: <Location /> },
+        { path: "areaanddescrp", element: <AreaandDesc /> },
+        { path: "photosandvideos", element: <PhotosandVideos /> },
+        { path: "propertyreview", element: <PropertyReview /> },
           ]
          },
       ],
@@ -122,15 +124,13 @@ function App() {
 
   return (
   <>
-
-  <AuthContextProvider>
+      <AuthContextProvider>
       <ToastContainer />
-      
       <RouterProvider router = {routes}>
-    <NavBar/>
-    </RouterProvider>
-    
-  </AuthContextProvider>
+      <NavBar/>
+      </RouterProvider>    
+      </AuthContextProvider>
+
   </>);
 }
 

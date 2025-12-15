@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import Step1 from './GeneralInfo';
-import Step2 from './Location';
-import Step3 from './AreaandDesc';
-import Step4 from './PhotosandVideos';
+// import Step2 from './Location';
+// import Step3 from './AreaandDesc';
+// import Step4 from './PhotosandVideos';
 import Review from './PropertyReview';
 
 import '/src/MultiStepForm.css';
@@ -110,7 +110,7 @@ const {loginData} = useContext(AuthContext);
 };
     
     
-const totalSteps = loginData ? 5 : 6;
+const totalSteps = loginData ? 1 : 2;
 console.log(totalSteps);
  return (
     <div className="form-container">

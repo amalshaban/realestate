@@ -38,7 +38,7 @@ export default function AgentList() {
   useEffect(() => {
     const getRealEstateTypes = async () => {
       try {
-        let response = await axios.get('https://realstate.niledevelopers.com/Api/General/RealStateTypes', {
+        let response = await axios.get('https://realstate.niledevelopers.com/Api/Agent/Profile', {
           headers: {
             apiKey: apiKey,
             Authorization: `Bearer ${sessionStorage.token}`,

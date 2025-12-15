@@ -29,54 +29,59 @@ const Review = ({ formData, prevStep }) => {
       payload.append('title', formData.title || '');
       payload.append('titleAr', formData.titleAr || '');
       payload.append('description', formData.description || '');
-      payload.append('descriptionAr', formData.descriptionAr || '');
+     // payload.append('descriptionAr', formData.descriptionAr || '');
       payload.append('price', formData.price || '');
       payload.append('isNegotiable', formData.isNegotiable ? 'true' : 'false');
-      payload.append('realStateTypeId', formData.realStateTypeId || '');
+     payload.append('realStateTypeId', formData.realStateTypeId || '');
       payload.append('realStatePurposeId', formData.realStatePurposeId || '');
-      payload.append('realStateRentTypeId', formData.realStateRentTypeId || '');
+     payload.append('realStateRentTypeId', formData.realStateRentTypeId || '');
 
       // Area details
-      payload.append('area', formData.area || '');
-      payload.append('bedrooms', formData.bedrooms || '');
-      payload.append('bathrooms', formData.bathrooms || '');
-      payload.append('livingRooms', formData.livingRooms || '');
-      payload.append('kitchens', formData.kitchens || '');
-      payload.append('floorNumber', formData.floorNumber || '');
-      payload.append('totalFloors', formData.totalFloors || '');
-      payload.append('apartmentNumber', formData.apartmentNumber || '');
+     // payload.append('area', formData.area || '');
+     // payload.append('bedrooms', formData.bedrooms || '');
+     // payload.append('bathrooms', formData.bathrooms || '');
+     // payload.append('livingRooms', formData.livingRooms || '');
+     // payload.append('kitchens', formData.kitchens || '');
+      // payload.append('floorNumber', formData.floorNumber || '');
+      // payload.append('totalFloors', formData.totalFloors || '');
+      // payload.append('apartmentNumber', formData.apartmentNumber || '');
 
 
-      payload.append('hasElevator', formData.hasElevator ? 'true' : 'false');
-      payload.append('hasParking', formData.hasParking ? 'true' : 'false');
-      payload.append('parkingSpaces', formData.parkingSpaces || '');
-      payload.append('buildYear', formData.buildYear || '');
-      payload.append('address', formData.address || '');
-      payload.append('addressDescription', formData.addressDescription || '');
-      payload.append('locationDescription', formData.locationDescription || '');
-      payload.append('countryId', formData.countryId || '');
+     // payload.append('hasElevator', formData.hasElevator ? 'true' : 'false');
+     // payload.append('hasParking', formData.hasParking ? 'true' : 'false');
+     // payload.append('parkingSpaces', formData.parkingSpaces || '');
+     // payload.append('buildYear', formData.buildYear || '');
+     // payload.append('address', formData.address || '');
+     // payload.append('addressDescription', formData.addressDescription || '');
+     // payload.append('locationDescription', formData.locationDescription || '');
+     payload.append('countryId', formData.countryId || '');
       payload.append('cityId', formData.cityId || '');
       payload.append('districtId', formData.districtId || '');
       payload.append('contactPhone', formData.contactPhone || '');
-      payload.append('contactEmail', formData.contactEmail || '');
+     // payload.append('contactEmail', formData.contactEmail || '');
 
 
+      payload.append('AgentId', formData.AgentId || '');
+      payload.append('InsertedBy', formData.InsertedBy || '');
+      payload.append('IsActive', formData.IsActive || '');
+      payload.append('InsertedDate', formData.InsertedDate || '');
+      payload.append('LocationDiscription', formData.LocationDiscription || '');
 
 
       // Images and videos with validation
-      if (formData.images?.imageUrl?.[0] instanceof File) {
-        payload.append('images.imageUrl', formData.images.imageUrl[0]);
-      }
-      payload.append('images.imageTitle', formData.images?.imageTitle || '');
-      payload.append('images.imageDescription', formData.images?.imageDescription || '');
-      payload.append('images.isMainImage', formData.images?.isMainImage ? 'true' : 'false');
-      payload.append('images.displayOrder', formData.images?.displayOrder || '');
-      payload.append('images.imageType', formData.images?.imageType || '');
+      //if (formData.images?.imageUrl?.[0] instanceof File) {
+        // payload.append('images.imageUrl', formData.images.imageUrl[0]);
+     // }
+      // payload.append('images.imageTitle', formData.images?.imageTitle || '');
+      // payload.append('images.imageDescription', formData.images?.imageDescription || '');
+      // payload.append('images.isMainImage', formData.images?.isMainImage ? 'true' : 'false');
+      // payload.append('images.displayOrder', formData.images?.displayOrder || '');
+      // payload.append('images.imageType', formData.images?.imageType || '');
 
       // Additional features
-      payload.append('videoUrl', formData.videoUrl || '');
-      payload.append('threeDTour', formData.threeDTour || '');
-      payload.append('isFeatured', formData.isFeatured ? 'true' : 'false');
+      // payload.append('videoUrl', formData.videoUrl || '');
+     // payload.append('threeDTour', formData.threeDTour || '');
+     // payload.append('isFeatured', formData.isFeatured ? 'true' : 'false');
 
       // Handle amenities array
       if (Array.isArray(formData.amenities)) {

@@ -1,17 +1,18 @@
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState, createContext } from "react";
 import NavBar from "../../SharedModule/NavBar/NavBar";
+import { useNavigate } from "react-router-dom";
 
 
 export const AuthContext = createContext(null);
 
 export default function AuthContextProvider(props){
 
-  
   let [loginData, setLoginData ]= useState(null);
    const logOut = () => {
        sessionStorage.removeItem('token');
        setLoginData("");
+       
       };
   let saveLoginData=() => {
     let encodedToken = sessionStorage.getItem('token');

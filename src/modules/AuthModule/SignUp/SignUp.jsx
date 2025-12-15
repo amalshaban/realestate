@@ -50,9 +50,7 @@ let {
   } = useForm();
   let onSubmit = async (data) =>{
 
-             let userData = loginData ? appendToFormData(data) : '';
-
-     
+             let userData = loginData ? appendToFormData(data) : '';   
 try {
 {
   
