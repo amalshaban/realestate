@@ -1,19 +1,20 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { PROPERTIES_URLS } from '../../../constants/EndPoints';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../AuthModule/context/AuthContext';
+import { AuthorizedToken } from '../../../constants/Validations';
 
 const Review = ({ formData, prevStep }) => {
-  const [browserLanguage, setBrowserLanguage] = useState(null);
+  //const [browserLanguage, setBrowserLanguage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { loginData } = useContext(AuthContext);
-  const apiKey = 'Home@@3040';
+ // const apiKey = 'Home@@3040';
 
-  useEffect(() => {
-    const language = navigator.language || navigator.userLanguage; 
-    setBrowserLanguage(language);
-  }, []);
+  // useEffect(() => {
+  //   const language = navigator.language || navigator.userLanguage; 
+  //   setBrowserLanguage(language);
+  // }, []);
 
   const handleSubmit = async () => {
     if (!formData) {
@@ -21,67 +22,56 @@ const Review = ({ formData, prevStep }) => {
       return;
     }
 
+    // Log final merged formData to help debugging
+    console.log('Review formData:', formData);
+
+    // Prepare values (no client-side blocking)
+
     setIsSubmitting(true);
     const payload = new FormData();
 
     try {
-      // General info with null checks
-      payload.append('title', formData.title || '');
-      payload.append('titleAr', formData.titleAr || '');
-      payload.append('description', formData.description || '');
-     // payload.append('descriptionAr', formData.descriptionAr || '');
-      payload.append('price', formData.price || '');
-      payload.append('isNegotiable', formData.isNegotiable ? 'true' : 'false');
-     payload.append('realStateTypeId', formData.realStateTypeId || '');
-      payload.append('realStatePurposeId', formData.realStatePurposeId || '');
-     payload.append('realStateRentTypeId', formData.realStateRentTypeId || '');
+      // General info: accept both camelCase and PascalCase coming from previous steps
+      payload.append('title', formData.title || formData.Title || '');
+      payload.append('titleAr', formData.titleAr || formData.TitleAr || '');
+      payload.append('description', formData.description || formData.Description || '');
+      // payload.append('descriptionAr', formData.descriptionAr || '');
+      payload.append('price', formData.price || formData.Price || '');
+      payload.append('isNegotiable', formData.isNegotiable ? 'true' : (formData.IsNegotiable ? 'true' : 'false'));
+      payload.append('realStateTypeId', formData.realStateTypeId || formData.realStateType || '');
+      // Purpose (text) stored under realStatePurposeId
+      payload.append('realStatePurposeId', formData.realStatePurposeId || formData.realStatePurpose || '');
+      payload.append('realStateRentTypeId', formData.realStateRentTypeId || '');
 
-      // Area details
-     // payload.append('area', formData.area || '');
-     // payload.append('bedrooms', formData.bedrooms || '');
-     // payload.append('bathrooms', formData.bathrooms || '');
-     // payload.append('livingRooms', formData.livingRooms || '');
-     // payload.append('kitchens', formData.kitchens || '');
-      // payload.append('floorNumber', formData.floorNumber || '');
-      // payload.append('totalFloors', formData.totalFloors || '');
-      // payload.append('apartmentNumber', formData.apartmentNumber || '');
-
-
-     // payload.append('hasElevator', formData.hasElevator ? 'true' : 'false');
-     // payload.append('hasParking', formData.hasParking ? 'true' : 'false');
-     // payload.append('parkingSpaces', formData.parkingSpaces || '');
-     // payload.append('buildYear', formData.buildYear || '');
-     // payload.append('address', formData.address || '');
-     // payload.append('addressDescription', formData.addressDescription || '');
-     // payload.append('locationDescription', formData.locationDescription || '');
-     payload.append('countryId', formData.countryId || '');
+      // Area details (if present)
+      payload.append('countryId', formData.countryId || '');
       payload.append('cityId', formData.cityId || '');
       payload.append('districtId', formData.districtId || '');
-      payload.append('contactPhone', formData.contactPhone || '');
-     // payload.append('contactEmail', formData.contactEmail || '');
+      payload.append('contactPhone', formData.contactPhone || formData.ContactPhone || '');
 
-
+      // Agent metadata
       payload.append('AgentId', formData.AgentId || '');
       payload.append('InsertedBy', formData.InsertedBy || '');
       payload.append('IsActive', formData.IsActive || '');
       payload.append('InsertedDate', formData.InsertedDate || '');
       payload.append('LocationDiscription', formData.LocationDiscription || '');
 
-
-      // Images and videos with validation
-      //if (formData.images?.imageUrl?.[0] instanceof File) {
-        // payload.append('images.imageUrl', formData.images.imageUrl[0]);
-     // }
-      // payload.append('images.imageTitle', formData.images?.imageTitle || '');
-      // payload.append('images.imageDescription', formData.images?.imageDescription || '');
-      // payload.append('images.isMainImage', formData.images?.isMainImage ? 'true' : 'false');
-      // payload.append('images.displayOrder', formData.images?.displayOrder || '');
-      // payload.append('images.imageType', formData.images?.imageType || '');
+      // Images: append actual File object under multiple keys to match API expectations
+      const imageFile = formData.images?.imageUrl || (Array.isArray(formData.images) && formData.images[0]);
+      if (imageFile) {
+        const file = imageFile;
+        if (file instanceof File) {
+          // Common variants
+          payload.append('images', file);
+          payload.append('images[0]', file);
+          payload.append('images[0].imageUrl', file);
+          payload.append('images.imageUrl', file);
+        } else {
+          payload.append('images.imageUrl', file || '');
+        }
+      }
 
       // Additional features
-      // payload.append('videoUrl', formData.videoUrl || '');
-     // payload.append('threeDTour', formData.threeDTour || '');
-     // payload.append('isFeatured', formData.isFeatured ? 'true' : 'false');
 
       // Handle amenities array
       if (Array.isArray(formData.amenities)) {
@@ -90,26 +80,49 @@ const Review = ({ formData, prevStep }) => {
         });
       }
 
-      // Debug logging
-      console.log('Submitting payload:', Object.fromEntries(payload));
-      console.log('Auth token:', loginData?.token);
+        // Handle dynamic property fields saved from Location.jsx
+      console.log('properties in formData:', formData.properties);
+      const properties = formData.properties || Object.keys(formData)
+        .filter(k => k.startsWith('property_'))
+        .map(k => ({ propertyId: k.replace('property_', ''), value: formData[k] }));
 
-      const response = await axios.post(PROPERTIES_URLS.addproperty, payload, {
-        headers: {
-          'Authorization': loginData?.token ? `Bearer ${loginData.token}` : '',
-          'apiKey': apiKey,
-          'Accept-Language': browserLanguage || 'en',
-          'Content-Type': 'multipart/form-data',
-          'Accept': 'application/json'
-        }
-      });
+      console.log('properties to send:', properties);
 
-      if (response.data) {
-        toast.success("Property added successfully!");
+      if (Array.isArray(properties) && properties.length) {
+        // Add JSON representation (server may accept this)
+        payload.append('propertiesJson', JSON.stringify(properties));
+        // Also append as indexed fields (common form-style)
+        properties.forEach((p, idx) => {
+          payload.append(`properties[${idx}].propertyId`, p.propertyId);
+          payload.append(`properties[${idx}].value`, p.value || '');
+        });
+      }
+
+      // Debug logging — iterate FormData and print file names for clarity
+      for (let pair of payload.entries()) {
+        const [k, v] = pair;
+        if (v instanceof File) console.log('FormData entry:', k, v.name, v.size, v.type);
+        else console.log('FormData entry:', k, v);
+      }
+      console.log('Auth token (session):', sessionStorage.token || loginData?.token);
+
+      // Build headers from AuthorizedToken but remove Content-Type so axios can set the correct multipart boundary
+      const config = { headers: { ...(AuthorizedToken.headers || {}) } };
+      if (config.headers['Content-Type']) delete config.headers['Content-Type'];
+
+      const response = await axios.post(PROPERTIES_URLS.addproperty, payload, config);
+
+      if (response?.data) {
+        console.log(response.data);
+        toast.success('Property added successfully!');
       }
 
     } catch (error) {
-      console.error('Submit error:', error.response || error);
+      console.error('Submit error:', error?.message || error);
+      console.error('Response data:', error.response?.data);
+      console.error('Status:', error.response?.status);
+      console.error('Response headers:', error.response?.headers);
+      console.error('Request config:', error.config);
       toast.error(error.response?.data?.message || 'Error submitting property');
     } finally {
       setIsSubmitting(false);

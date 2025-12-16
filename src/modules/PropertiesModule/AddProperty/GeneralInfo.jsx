@@ -1,78 +1,108 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";  
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { AuthorizedToken } from "../../../constants/Validations";
+import axios from 'axios';
+import { AuthorizedToken } from '../../../constants/Validations';
 
-export default function AddProperty() {
+const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
-const apiKey = 'Home@@3040';
-  const [browserLanguage, setBrowserLanguage] = useState("en");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      Title: formData.Title || "",
+      TitleAr: formData.TitleAr || "",
+      Description: formData.Description || "",
+      Address: formData.Address || "",
+      Price: formData.Price || "",
+      ContactPhone: formData.ContactPhone || "",
+      AgentId: formData.AgentId || "",
+      InsertedBy: formData.InsertedBy || "",
+      IsActive: formData.IsActive || false,
+      InsertedDate: formData.InsertedDate || "",
+      LocationDiscription: formData.LocationDiscription || "",
+      countryId: formData.countryId || '',
+      cityId: formData.cityId || '',
+      districtId: formData.districtId || '',
+      realStateRentTypeId: formData.realStateRentTypeId || '',
+      realStatePurposeId: formData.realStatePurpose || formData.realStatePurposeId || ''
+    },
+  });
+
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  //const [realestateTypes, setRealestateTypes] = useState([]);
+  const [realestateRentTypeId, setRealestateRentTypeId] = useState(formData.realStateRentTypeId || '');
+  const [selectedCountry, setSelectedCountry] = useState(formData.countryId || '');
+  const [selectedCity, setSelectedCity] = useState(formData.cityId || '');
 
   useEffect(() => {
-    setBrowserLanguage(navigator.language || "en");
+    const fetchCountries = async () => {
+      try {
+        const res = await axios.get('https://realstate.niledevelopers.com/Api/Locations/Countries', AuthorizedToken);
+        setCountries(res.data);
+      } catch (err) {
+        console.error('Error fetching countries:', err.response?.data || err.message);
+      }
+    };
+
+   
+
+    fetchCountries();
   }, []);
 
-  
-  const appendToFormData = (data) => {
-    const fd = new FormData();
-
-    fd.append("Title", data.Title);
-    fd.append("TitleAr", data.TitleAr);
-    fd.append("Description", data.Description);
-    fd.append("Address", data.Address);
-    fd.append("Price", data.Price);
-    fd.append("IsNegotiable", false);
-    fd.append("ContactPhone", data.ContactPhone);
-
-    fd.append("RealStatePurposeId", 1);
-    fd.append("RealStateTypeId", 1);
-    fd.append("RealStateRentTypeId", 2);
-    fd.append("CountryId", 1);
-    fd.append("CityId", 2);
-    fd.append("DistrictId", 3);
-
-    return fd;
-  };
-
-  const onSubmit = async (data) => {
-        let userData = appendToFormData(data);   
-    try {
-    
-
-      
-      console.log([...userData.entries()]);
-
-      const response = await axios.post(
-        "https://realstate.niledevelopers.com/api/agent/property/add",
-        userData,
-      {
-         headers: { 
-        Authorization: `Bearer ${sessionStorage.token}`,
-        'apiKey': apiKey,
-        "Content-Type": 'multipart/form-data',
-           'Accept-Language': 'browserLanguage',
-          },
-      }
-      );
-
-      toast.success("Property Added Successfully");
-      console.log("Response:", response.data);
-
-    } catch (error) {
-      toast.error(
-        error.response?.data?.message || "Something went wrong"
-      );
-      console.error(error);
+  useEffect(() => {
+    if (!selectedCountry) {
+      setCities([]);
+      setSelectedCity('');
+      setDistricts([]);
+      return;
     }
+
+    const fetchCities = async () => {
+      try {
+        const res = await axios.get(`https://realstate.niledevelopers.com/Api/Locations/Cities?id=${selectedCountry}`, AuthorizedToken);
+        setCities(res.data);
+      } catch (err) {
+        console.error('Error fetching cities:', err.response?.data || err.message);
+        setCities([]);
+      }
+    };
+
+    fetchCities();
+  }, [selectedCountry]);
+
+  useEffect(() => {
+    if (!selectedCity) {
+      setDistricts([]);
+      return;
+    }
+
+    const fetchDistricts = async () => {
+      try {
+        const res = await axios.get(`https://realstate.niledevelopers.com/Api/Locations/Districts?id=${selectedCity}`, AuthorizedToken);
+        setDistricts(res.data);
+      } catch (err) {
+        console.error('Error fetching districts:', err.response?.data || err.message);
+        setDistricts([]);
+      }
+    };
+
+    fetchDistricts();
+  }, [selectedCity]);
+
+  const onSubmit = (data) => {
+    savePartialData(data);   
+    nextStep();
   };
 
   return (
     <div className="container mt-4">
-      <h3>Add Property</h3>
+      <h3>General Information</h3>
 
-      <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+      <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
 
         <div className="mb-3">
           <label className="form-label">Title</label>
@@ -80,7 +110,9 @@ const apiKey = 'Home@@3040';
             className="form-control"
             {...register("Title", { required: "Title is required" })}
           />
-          {errors.Title && <small className="text-danger">{errors.Title.message}</small>}
+          {errors.Title && (
+            <small className="text-danger">{errors.Title.message}</small>
+          )}
         </div>
 
         <div className="mb-3">
@@ -112,7 +144,7 @@ const apiKey = 'Home@@3040';
           <input
             type="number"
             className="form-control"
-            {...register("Price", { required: true })}
+            {...register("Price", { required: "Price is required" })}
           />
         </div>
 
@@ -124,10 +156,140 @@ const apiKey = 'Home@@3040';
           />
         </div>
 
-        <button type="submit" className="btn btn-info text-white">
-          Submit
-        </button>
+        <div className="mb-3">
+          <label className="form-label">Country</label>
+          <select
+            className="form-control"
+            {...register('countryId', {
+              onChange: (e) => {
+                setSelectedCountry(e.target.value);
+              }
+            })}
+          >
+            <option value="">Select Country</option>
+            {countries.map(c => (
+              <option key={c.id} value={c.id}>{c.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">City</label>
+          <select
+            className="form-control"
+            {...register('cityId', {
+              onChange: (e) => setSelectedCity(e.target.value)
+            })}
+          >
+            <option value="">Select City</option>
+            {cities.map(c => (
+              <option key={c.id} value={c.id}>{c.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">District</label>
+          <select
+            className="form-control"
+            {...register('districtId')}
+          >
+            <option value="">Select District</option>
+            {districts.map(d => (
+              <option key={d.id} value={d.id}>{d.name}</option>
+            ))}
+          </select>
+        </div>
+
+       
+
+        <div className="mb-3">
+          <label className="form-label">Rent Type</label>
+          {
+            (() => {
+              const rentReg = register('realStateRentTypeId');
+              return (
+                <input
+                  type="text"
+                  className="form-control"
+                  {...rentReg}
+                  value={realestateRentTypeId}
+                  onChange={(e) => { rentReg.onChange && rentReg.onChange(e); setRealestateRentTypeId(e.target.value); }}
+                />
+              );
+            })()
+          }
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Purpose</label>
+          <input
+            type="text"
+            className="form-control"
+            {...register('realStatePurposeId')}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Agent ID</label>
+          <input
+            className="form-control"
+            {...register("AgentId")}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Inserted By</label>
+          <input
+            className="form-control"
+            {...register("InsertedBy")}
+          />
+        </div>
+
+        <div className="mb-3 form-check">
+          <input
+            type="checkbox"
+            className="form-check-input"
+            {...register("IsActive")}
+            id="isActiveCheck"
+          />
+          <label className="form-check-label" htmlFor="isActiveCheck">Is Active</label>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Inserted Date</label>
+          <input
+            type="datetime-local"
+            className="form-control"
+            {...register("InsertedDate")}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Location Description</label>
+          <textarea
+            className="form-control"
+            {...register("LocationDiscription")}
+          />
+        </div>
+
+        <div className="navigation mt-4 d-flex justify-content-between">
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={prevStep}
+          >
+            Previous
+          </button>
+
+          <button type="submit" className="btn btn-info text-white">
+            Next
+          </button>
+        </div>
+
       </form>
     </div>
   );
-}
+};
+
+export default GeneralInfo;
