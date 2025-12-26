@@ -5,21 +5,21 @@ import { Authorization } from "./Validations";
 const baseURL = "https://realstate.niledevelopers.com";
 
 export const USERS_URLs = {
-  Login: `${baseURL}/api/account/login`,
-  Register: `${baseURL}/Api/Account/Register`,
-  Update: `${baseURL}/Api/Account/UpdateProfilePhoto`,
-  AgentRegister :  `${baseURL}/Api/Agent/Register`,
-  Profile : `${baseURL}/Api/Agent/Profile`
+  Login: `${baseURL}/Account/Login`,
+  Register: `${baseURL}/Account/Register`,
+  Update: `${baseURL}/Account/UpdateProfilePhoto`,
+  AgentRegister :  `${baseURL}/Agent/Register`,
+  Profile : `${baseURL}/Agent/Profile`
 };
 
 export const PROPERTIES_URLS = {
-  addproperty: `${baseURL}/api/agent/property/add`,
-  allProperties: `${baseURL}/Api/Agent/properties`,
+  addproperty: `${baseURL}/agent/property/add`,
+  allProperties: `${baseURL}/Agent/properties`,
   // propertyDetails: `${baseURL}/api/agent/property/${propertyId}`,
 };
 
 export const LOCATIONS_URLs = {
-  Countries: `${baseURL}/Api/Locations/Countries`,
-  Cities: `${baseURL}/Api/Locations/Cities?id=`,
+  Countries: `${baseURL}/Locations/Countries`,
+  Cities: `${baseURL}/Locations/Cities?id=`,
   
 };

@@ -1,12 +1,13 @@
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import '/src/modules/UsersModule/RealEstateAgents/AgentPannel.css';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../AuthModule/context/AuthContext';
 
 export default function SideBar({ collapsed, setCollapsed }) {
   const toggleSidebar = () => setCollapsed(!collapsed);
-
- let { logOut } = useContext(AuthContext);
+const navigate = useNavigate();
+let { logOut } = useContext(AuthContext);
  
   return (
     <Sidebar
@@ -28,8 +29,8 @@ export default function SideBar({ collapsed, setCollapsed }) {
 
       <Menu className='sidebar-menu'>
         <div className="submenu1">
-          <MenuItem><i className="fa-solid fa-grip"></i> Overview </MenuItem>
-          <MenuItem><i className="fa-solid fa-house-chimney"></i> Property </MenuItem>
+          <MenuItem onClick={() => navigate('overview')}><i className="fa-solid fa-grip"></i> Overview </MenuItem>
+          <MenuItem onClick={() => navigate('propertieslist')}><i className="fa-solid fa-house-chimney"></i> Properties </MenuItem>
           <MenuItem><i className="fa-solid fa-file-signature"></i> Contract </MenuItem>
           <MenuItem><i className="fa-solid fa-envelope"></i> Messages </MenuItem>
         </div>

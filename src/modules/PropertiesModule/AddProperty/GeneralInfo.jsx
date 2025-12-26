@@ -17,10 +17,6 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
       Address: formData.Address || "",
       Price: formData.Price || "",
       ContactPhone: formData.ContactPhone || "",
-      AgentId: formData.AgentId || "",
-      InsertedBy: formData.InsertedBy || "",
-      IsActive: formData.IsActive || false,
-      InsertedDate: formData.InsertedDate || "",
       LocationDiscription: formData.LocationDiscription || "",
       countryId: formData.countryId || '',
       cityId: formData.cityId || '',
@@ -34,22 +30,18 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
   const [cities, setCities] = useState([]);
   const [districts, setDistricts] = useState([]);
   //const [realestateTypes, setRealestateTypes] = useState([]);
-  const [realestateRentTypeId, setRealestateRentTypeId] = useState(formData.realStateRentTypeId || '');
   const [selectedCountry, setSelectedCountry] = useState(formData.countryId || '');
   const [selectedCity, setSelectedCity] = useState(formData.cityId || '');
 
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const res = await axios.get('https://realstate.niledevelopers.com/Api/Locations/Countries', AuthorizedToken);
+        const res = await axios.get('https://realstate.niledevelopers.com/Locations/Countries', AuthorizedToken);
         setCountries(res.data);
       } catch (err) {
         console.error('Error fetching countries:', err.response?.data || err.message);
       }
     };
-
-   
-
     fetchCountries();
   }, []);
 
@@ -63,7 +55,7 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
 
     const fetchCities = async () => {
       try {
-        const res = await axios.get(`https://realstate.niledevelopers.com/Api/Locations/Cities?id=${selectedCountry}`, AuthorizedToken);
+        const res = await axios.get(`https://realstate.niledevelopers.com/Locations/Cities?id=${selectedCountry}`, AuthorizedToken);
         setCities(res.data);
       } catch (err) {
         console.error('Error fetching cities:', err.response?.data || err.message);
@@ -82,7 +74,7 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
 
     const fetchDistricts = async () => {
       try {
-        const res = await axios.get(`https://realstate.niledevelopers.com/Api/Locations/Districts?id=${selectedCity}`, AuthorizedToken);
+        const res = await axios.get(`https://realstate.niledevelopers.com/Locations/Districts?id=${selectedCity}`, AuthorizedToken);
         setDistricts(res.data);
       } catch (err) {
         console.error('Error fetching districts:', err.response?.data || err.message);
@@ -97,6 +89,36 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
     savePartialData(data);   
     nextStep();
   };
+
+
+
+  const [rentTypes, setRentTypes] = useState([]);
+  useEffect(() => {
+    const fetchRentTypes = async () => {
+      try {
+        const res = await axios.get('https://realstate.niledevelopers.com/General/RentTypes', AuthorizedToken);
+;        setRentTypes(res.data);
+      } catch (err) {
+        console.error('Error fetching RentTypes:', err.response?.data || err.message);
+      }
+    };
+    fetchRentTypes();
+  }, []);
+
+
+  
+  const [purpose, setPurpose] = useState([]);
+  useEffect(() => {
+    const fetchPurpose = async () => {
+      try {
+        const res = await axios.get('https://realstate.niledevelopers.com/General/PurposeTypes', AuthorizedToken);
+;        setPurpose(res.data);
+      } catch (err) {
+        console.error('Error fetching purpose types:', err.response?.data || err.message);
+      }
+    };
+    fetchPurpose();
+  }, []);
 
   return (
     <div className="container mt-4">
@@ -205,65 +227,33 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
 
         <div className="mb-3">
           <label className="form-label">Rent Type</label>
-          {
-            (() => {
-              const rentReg = register('realStateRentTypeId');
-              return (
-                <input
-                  type="text"
-                  className="form-control"
-                  {...rentReg}
-                  value={realestateRentTypeId}
-                  onChange={(e) => { rentReg.onChange && rentReg.onChange(e); setRealestateRentTypeId(e.target.value); }}
-                />
-              );
-            })()
-          }
+          <select
+            className="form-control"
+            {...register('realStateRentTypeId')}
+          >
+            <option value="">Select rent type</option>
+            {rentTypes.map(d => (
+              <option key={d.id} value={d.id}>{d.name}</option>
+            ))}
+          </select>
         </div>
 
         <div className="mb-3">
           <label className="form-label">Purpose</label>
-          <input
-            type="text"
+          <select
             className="form-control"
             {...register('realStatePurposeId')}
-          />
+          >
+            <option value="">Select Purpose</option>
+            {purpose.map(p => (
+              <option key={p.id} value={p.id}>{p.name}</option>
+            ))}
+          </select>
         </div>
 
-        <div className="mb-3">
-          <label className="form-label">Agent ID</label>
-          <input
-            className="form-control"
-            {...register("AgentId")}
-          />
-        </div>
 
-        <div className="mb-3">
-          <label className="form-label">Inserted By</label>
-          <input
-            className="form-control"
-            {...register("InsertedBy")}
-          />
-        </div>
 
-        <div className="mb-3 form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            {...register("IsActive")}
-            id="isActiveCheck"
-          />
-          <label className="form-check-label" htmlFor="isActiveCheck">Is Active</label>
-        </div>
 
-        <div className="mb-3">
-          <label className="form-label">Inserted Date</label>
-          <input
-            type="datetime-local"
-            className="form-control"
-            {...register("InsertedDate")}
-          />
-        </div>
 
         <div className="mb-3">
           <label className="form-label">Location Description</label>

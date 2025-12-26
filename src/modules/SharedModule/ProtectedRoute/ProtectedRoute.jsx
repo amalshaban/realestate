@@ -1,16 +1,19 @@
-import React from 'react'
-import { Navigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Navigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 
+export default function ProtectedRoute({ children }) {
+  const token = sessionStorage.getItem("token");
 
+  useEffect(() => {
+    if (!token) {
+      toast.error("You must log in first!");
+    }
+  }, [token]);
 
-export default function ProtectedRoute({loginData, children}) {
-if(sessionStorage.getItem('token')||loginData) return children;
-else return(
-    <>
-<Navigate to="/home" />
- {toast.success("you must log in first !")};
- </>
-)
+  if (!token) {
+    return <Navigate to="/home" replace />;
+  }
+
+  return children;
 }
-

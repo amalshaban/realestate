@@ -23,9 +23,10 @@ import Step1 from "./modules/AuthModule/AgentRegProccess/Step1.jsx";
 import Step2 from "./modules/AuthModule/AgentRegProccess/Step2.jsx";
 import Step3 from "./modules/AuthModule/AgentRegProccess/Step3.jsx";
 import Review from "./modules/AuthModule/AgentRegProccess/Review.jsx";
+import Overview from "./modules/UsersModule/RealEstateAgents/Overview/Overview.jsx";
 import AgentPannel from "./modules/UsersModule/RealEstateAgents/AgentPannel/AgentPannel.jsx";
 import SideBar from "./modules/UsersModule/RealEstateAgents/SideBar/SideBar.jsx";
-import AgentList from "./modules/UsersModule/RealEstateAgents/AgentList/AgentList.jsx";
+import PropertiesList from "./modules/UsersModule/RealEstateAgents/PropertiesList/PropertiesList.jsx";
 import Join from "./modules/AuthModule/Join/Join.jsx";
 import AuthRight from "./modules/AuthModule/AuthRight/AuthRight.jsx";
 import PropertyLayout from "./modules/SharedModule/PropertyLayout/PropertyLayout.jsx";
@@ -85,9 +86,10 @@ function App() {
         <AgentPannel />
       </ProtectedRoute> ,
       children: [
-        { index: true, element: <AgentPannel /> },
+        { index: true, element: <Overview /> },
+        { path: "overview", element: <Overview /> },
         { path: "sidebar", element: <SideBar /> },
-        { path: "agentlist", element: <AgentList /> },
+        { path: "propertieslist", element: <PropertiesList /> },
       ],
     },
     {
@@ -97,7 +99,7 @@ function App() {
       children: [
         { index: true, element: <ViewProperties /> },
         { path: "viewproperties", element: <ViewProperties /> },
-        { path: "property/:id", element: <PropertyDetails />},
+         { path: "property/:id", element: <PropertyDetails /> },
         { path: "editProperty", element: <EditProperty /> },
         { path: "deleteProperty", element: <DeleteProperty /> },
         { path: "addproperty", element: <AddProperty />,

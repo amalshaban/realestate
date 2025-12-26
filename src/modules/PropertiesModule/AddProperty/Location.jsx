@@ -21,7 +21,7 @@ const Location = ({ formData, savePartialData, nextStep, prevStep }) => {
     const getRealestateTypes = async () => {
       try {
         const response = await axios.get(
-          'https://realstate.niledevelopers.com/Api/General/RealStateTypes',
+          'https://realstate.niledevelopers.com/General/RealStateTypes',
           AuthorizedToken
         );
         setRealestateTypes(response.data);
@@ -43,7 +43,7 @@ useEffect(() => {
   const getProperties = async () => {
     try {
       const response = await axios.get(
-        `https://realstate.niledevelopers.com/api/general/realstatetypeproperties/${selectedTypeId}`,
+        `https://realstate.niledevelopers.com/general/realstatetypeproperties/${selectedTypeId}`,
         AuthorizedToken
       );
 
@@ -62,9 +62,9 @@ useEffect(() => {
       return (
         <input
           type="text"
-          name='text1'
+          name={`input${field.id}`}
           className="form-control"
-          {...register(`property_${field.id}`)}
+          {...register(`input${field.id}`)}
         />
       );
 
@@ -72,9 +72,9 @@ useEffect(() => {
       return (
         <input
           type="number"
-          name='number1'
+          name={`input${field.id}`}
           className="form-control"
-          {...register(`property_${field.id}`)}
+          {...register(`input${field.id}`)}
         />
       );
 
@@ -82,18 +82,18 @@ useEffect(() => {
       return (
         <input
           type="checkbox"
-          name='chekbox1'
+          name={`input${field.id}`}
           className="form-check-input"
-          {...register(`property_${field.id}`)}
+          {...register(`input${field.id}`)}
         />
       );
 
       case "Select":
   return (
     <select
-    name='select1'
+      name={`input${field.id}`}
       className="form-control"
-      {...register(`property_${field.id}`)}
+      {...register(`input${field.id}`)}
     >
       <option value="">Select</option>
       {field.values.map(v => (
@@ -112,17 +112,37 @@ useEffect(() => {
 
 
 const onSubmit = (data) => {
-  // Format dynamic fields into an array of { propertyId, value }
-  const formattedData = dynamicFields.map((field) => ({
-    propertyId: field.id,
-    value: data[`property_${field.id}`] ?? ''
-  }));
+  // Normalize dynamic fields into an array of { propertyId, value } with scalar values
+  const formattedData = dynamicFields.map((field) => {
+    const rawValue = data[`input${field.id}`];
+    let value = '';
 
-  // Save both the raw data and the formatted dynamic properties
-  console.log('Location onSubmit - raw data:', data, 'formatted properties:', formattedData);
+    if (Array.isArray(rawValue)) {
+      // If multiple values are present, take the first one (change to join if you prefer)
+      value = rawValue[0] ?? '';
+    } else if (typeof rawValue === 'boolean') {
+      // Keep checkboxes as booleans
+      value = rawValue;
+    } else {
+      value = rawValue ?? '';
+    }
+
+    return {
+      propertyId: field.id,
+      value,
+    };
+  });
+
+  // Remove dynamic input keys from saved partial data so they don't remain as arrays
+  const cleanedData = { ...data };
+  dynamicFields.forEach((field) => {
+    delete cleanedData[`input${field.id}`];
+  });
+
+  console.log('Location onSubmit - raw data:', data, 'cleaned data:', cleanedData, 'formatted properties:', formattedData);
   savePartialData({
-    ...data,
-    properties: formattedData
+    ...cleanedData,
+    properties: formattedData,
   });
 
   console.log('Ready for API:', formattedData);

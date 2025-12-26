@@ -37,8 +37,8 @@ const navigate = useNavigate();
       sessionStorage.setItem('token', response.data.token);
       toast.success("Welcome Back !");
       
-      navigate('/home');
-    window.location.reload();
+      navigate('/agentLayout');
+  
       console.log(response.data.token);
     
   } catch (error) {

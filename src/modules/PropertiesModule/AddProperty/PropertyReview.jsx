@@ -49,11 +49,7 @@ const Review = ({ formData, prevStep }) => {
       payload.append('districtId', formData.districtId || '');
       payload.append('contactPhone', formData.contactPhone || formData.ContactPhone || '');
 
-      // Agent metadata
-      payload.append('AgentId', formData.AgentId || '');
-      payload.append('InsertedBy', formData.InsertedBy || '');
-      payload.append('IsActive', formData.IsActive || '');
-      payload.append('InsertedDate', formData.InsertedDate || '');
+      // Agent metadata (removed AgentId / InsertedBy / IsActive fields)
       payload.append('LocationDiscription', formData.LocationDiscription || '');
 
       // Images: append actual File object under multiple keys to match API expectations
