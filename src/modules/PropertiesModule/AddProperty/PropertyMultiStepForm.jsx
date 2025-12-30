@@ -79,7 +79,7 @@ const MultiStepForm = () => {
   };
 
   return (
-    <div className="form-container">
+    <div className="form-container-fluid">
       <div className="step-container">
         {[...Array(totalSteps)].map((_, index) => {
           const stepNumber = index + 1;

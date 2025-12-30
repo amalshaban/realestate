@@ -99,9 +99,9 @@ const navigate = useNavigate();
  
   <div className="col-12 d-flex justify-content-between">
     <button type="submit" className="btn btn-info px-4">Sign In</button>
-    <Link className="text-info fw-100">Forget password ?</Link>
+   
   </div>
-
+ <Link className="text-info fw-100">Forget password ?</Link>
 </form>
       </div>
       </>

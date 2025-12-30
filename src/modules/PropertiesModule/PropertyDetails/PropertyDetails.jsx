@@ -4,7 +4,7 @@ import axios from "axios";
 import { AuthorizedToken } from "../../../constants/Validations";
 
 export default function PropertyDetails() {
-  // 1. Destructure id and clean it just in case a colon was passed
+  
   const { id: rawId } = useParams();
   const id = rawId?.startsWith(":") ? rawId.slice(1) : rawId;
 
@@ -12,11 +12,12 @@ export default function PropertyDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [watchPreview , setWatchPreview] = useState(null);
+
+
   useEffect(() => {
     const getProperty = async () => {
-      // Don't fetch if id is missing
       if (!id) return;
-
       try {
         setLoading(true);
         const response = await axios.get(
@@ -37,6 +38,8 @@ console.log(response.data);
 
     getProperty();
   }, [id]);
+
+
 
  return (
     <div className="container py-5">
@@ -94,7 +97,7 @@ console.log(response.data);
                 <div className="d-flex align-items-center mb-4">
                   <div className="bg-light rounded-circle p-3 me-3">
                 
-                    <i class="fa-brands fa-magento fs-2 text-primary"></i>
+                    <i className="fa-brands fa-magento fs-2 text-primary"></i>
                   </div>
                   <div>
                     <h6 className="mb-0 fw-bold">{property.agentName || "Agent name not available"}</h6>
@@ -117,8 +120,8 @@ console.log(response.data);
 
                 <div className="mt-4 pt-3 border-top">
                   <div className="d-flex justify-content-between mb-2">
-                    <span className="text-muted">Area:</span>
-                    <span className="fw-bold">{property.area} m²</span>
+                    <button type="button" className="btn btn-primary"
+                     data-bs-toggle="previewmodal" data-bs-target="#previewmodal">Ask to preview</button>
                   </div>
                 </div>
               </div>
@@ -126,6 +129,29 @@ console.log(response.data);
           </div>
         </div>
       )}
+
+    <div className="modal fade" id="previewmodal" tabindex="-1" aria-labelledby="previewmodalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h1 className="modal-title fs-5" id="previewmodalLabel">Modal title</h1>
+        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="modal-body">
+        ...
+      </div>
+      <div className="modal-footer">
+        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" className="btn btn-primary">Save changes</button>
+      </div>
     </div>
+  </div>
+</div>
+
+
+    </div>
+
+
+
   );
 }
