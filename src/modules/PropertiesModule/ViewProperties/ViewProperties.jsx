@@ -5,10 +5,12 @@ import Search from '../../SharedModule/Search/Search.jsx';
 import ArcGISMap from '../../SharedModule/ArcGISMap/ArcGISMap.jsx';
 import Footer from '../../SharedModule/Footer/Footer.jsx';
 import { PROPERTIES_URLS } from '../../../constants/EndPoints.js';
-import { AuthorizedToken } from '../../../constants/Validations.js';
+import { apiKey, AuthorizedToken } from '../../../constants/Validations.js';
 import axios from 'axios';
 import PropertyDetails from '../PropertyDetails/PropertyDetails.jsx';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 export default function ViewProperties() {
 
@@ -35,9 +37,39 @@ useEffect(() => {
 const navigate = useNavigate();
 
 const handelviewproperty = (id) => {
-  console.log("Clicked property ID:", id);  
+  console.log("Clicked property ID:", id); 
+  sendView(id); 
   navigate(`/properties/property/${id}`); 
 };
+
+
+
+
+
+ let {
+      register,
+      handleSubmit,
+      formState: {errors}
+    } = useForm();
+    let sendView = async (id) =>{
+  try {
+    let response = await axios.post("https://realstate.niledevelopers.com/User/add-new-watch", 
+   {
+    propertyId: id
+  }
+  ,{
+      headers: { 
+  Authorization: `Bearer ${sessionStorage.token}`,
+  'apiKey': apiKey,
+  "Content-Type": 'application/json',
+     'Accept-Language': 'browserLanguage',
+    } 
+  },
+    );
+  } catch (error) {
+      console.log('Error:', error.response?.data || error.message);
+  }
+    };
   return (
     <>
   
@@ -102,7 +134,7 @@ const handelviewproperty = (id) => {
             <div className="">
             <span  style={{fontSize:'13px'}} className=' text-muted mx-1'> <i className="fa-solid fa-bed"></i> {property.bedrooms} rooms</span>
             <span  style={{fontSize:'13px'}} className=' text-muted mx-1'><i className="fa-solid fa-bath"></i> {property.bathrooms} douche</span>
-            <span style={{fontSize:'13px'}} className=' text-muted mx-1'><i class="fa-solid fa-layer-group"></i>{property.area} mm</span>
+            <span style={{fontSize:'13px'}} className=' text-muted mx-1'><i className="fa-solid fa-layer-group"></i>{property.area} mm</span>
    
 <button onClick={() => handelviewproperty(property.id)}
    style={{

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { AuthorizedToken } from "../../../constants/Validations";
+import { apiKey, AuthorizedToken } from "../../../constants/Validations";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function PropertyDetails() {
   
@@ -12,7 +14,8 @@ export default function PropertyDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [watchPreview , setWatchPreview] = useState(null);
+
+
 
 
   useEffect(() => {
@@ -40,6 +43,42 @@ console.log(response.data);
   }, [id]);
 
 
+
+ let {
+      register,
+      handleSubmit,
+      formState: {errors}
+    } = useForm();
+    let sendRequest = async (data) =>{
+  try {
+    console.log(data);
+    let response = await axios.post("https://realstate.niledevelopers.com/User/request-visit", 
+   {
+    propertyId: property.id 
+  }
+  
+  ,{
+    
+      headers: { 
+  Authorization: `Bearer ${sessionStorage.token}`,
+  'apiKey': apiKey,
+  "Content-Type": 'application/json',
+     'Accept-Language': 'browserLanguage',
+     
+    } 
+  }
+     ,
+     
+    );
+  
+      toast.success("request sent !");
+
+      console.log(response.data);
+    
+  } catch (error) {
+      toast.error('Error:', error.response?.data || error.message);
+  }
+    };
 
  return (
     <div className="container py-5">
@@ -119,10 +158,15 @@ console.log(response.data);
                 </div>
 
                 <div className="mt-4 pt-3 border-top">
-                  <div className="d-flex justify-content-between mb-2">
-                    <button type="button" className="btn btn-primary"
-                     data-bs-toggle="previewmodal" data-bs-target="#previewmodal">Ask to preview</button>
-                  </div>
+        
+<button type="button" className="btn btn-primary"
+onClick={sendRequest}
+>
+  Ask to preview
+</button>
+
+
+
                 </div>
               </div>
             </div>
@@ -130,25 +174,44 @@ console.log(response.data);
         </div>
       )}
 
-    <div className="modal fade" id="previewmodal" tabindex="-1" aria-labelledby="previewmodalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+   
+{/* 
+<div className="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+  <div className="modal-dialog">
     <div className="modal-content">
       <div className="modal-header">
-        <h1 className="modal-title fs-5" id="previewmodalLabel">Modal title</h1>
+        <h1 className="modal-title fs-5" id="previewModalLabel">Modal title</h1>
         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div className="modal-body">
-        ...
-      </div>
-      <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" className="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
+                 <form onSubmit={handleSubmit(onSubmit)} autocomplete="off" className="row g-3">
+ 
+
+  <div className="col-md-12">
+  <label htmlFor="inputEmail4" className="form-label">propertyId</label>
+  <input 
+    type="text" 
+    className="form-control" 
+    placeholder="Enter propertyId" 
+    {...register("propertyId", { required: "This field is required" })} 
+  />
 </div>
 
+{errors.propertyId && (
+  <span className="text-danger">{errors.propertyId.message}</span>
+)}
 
+  <div className="col-12 d-flex justify-content-between">
+    <button type="submit" className="btn btn-info px-4">Send Request</button>
+   
+  </div>
+ 
+</form>
+      </div>
+      
+    </div>
+  </div>
+</div> */}
     </div>
 
 

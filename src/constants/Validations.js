@@ -26,6 +26,7 @@ headers: {
   'apiKey': apiKey,
   "Content-Type": 'multipart/form-data',
      'Accept-Language': 'browserLanguage',
+     
     } };
 
 export const EmailValidation = {
