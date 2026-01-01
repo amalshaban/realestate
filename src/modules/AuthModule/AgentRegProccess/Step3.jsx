@@ -72,7 +72,7 @@ const [cities, setCities] = useState([]);
             setDistricts([]);
        if (watchedCountryId && watchedCountryId !== 0) { 
             try {
-                let response = await axios.get(`https://realstate.niledevelopers.com/Api/Locations/Cities?id=${watchedCountryId}`,
+                let response = await axios.get(`https://realstate.niledevelopers.com/Locations/Cities?id=${watchedCountryId}`,
                 Authorization
                 );
                 setCities(response.data);
@@ -94,7 +94,7 @@ const getDistricts = async ()=> {
             setDistricts([]);
          if (watchedCityId && watchedCityId !== 0){ // Added condition to prevent fetching on initial render when selectedCity is empty
             try {
-                let response = await axios.get(`https://realstate.niledevelopers.com/Api/Locations/Districts?id=${watchedCityId}`,
+                let response = await axios.get(`https://realstate.niledevelopers.com/Locations/Districts?id=${watchedCityId}`,
                 Authorization
                 );
                 setDistricts(response.data);

@@ -58,7 +58,6 @@ function App() {
       children: [
         { index: true, element: <LogIn /> },
         { path: "login", element: <LogIn /> },
-      
         { path: "join" , element: <Join/>,
           children: [
             

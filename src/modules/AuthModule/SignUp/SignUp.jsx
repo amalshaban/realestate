@@ -64,27 +64,31 @@ try {
         'Content-Type': 'application/json',
         'Accept-Language': browserLanguage,
         },
-    } ,
+    },
   );
      console.log('Success:', response.data);
      loginData ?   toast.success("congratulations, your account was Updated successfully !")
      :toast.success("congratulations, your account was created successfully !");  
-     sessionStorage.setItem('token', response.data.token);
-         window.location.reload();
+   
+     if (response.data.token) {
+      sessionStorage.setItem('token', response.data.token);
+      loginData.saveloginData();
+    }    
   }
- 
 }
  catch (error) {
         toast.error( error.response.data.message  || error.message);
 }
   };
-
    const handleClickAgent = () => { 
-    navigate('/auth/signupagent', { replace: true }); 
+    navigate('/auth/join/signupagent', { replace: true }); 
     window.location.reload();
 };
 
-
+const navigatetologin = () => {
+  
+      navigate('/auth/join');
+}
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const toggleVisibility = (setterFunction) => {
       setterFunction((prevState) => !prevState);
@@ -217,7 +221,7 @@ try {
         <>
          <div className="col-md-6">
     <label htmlFor="inputFirstName" className="form-label"> photo </label>
-    <input type="text"   className={`mt-1 form-control ${errors.photo ? 'input-error' : ''}`}
+    <input type="file"   className={`mt-1 form-control ${errors.photo ? 'input-error' : ''}`}
     placeholder={errors.photo ? errors.photo.message : ' photo'}
     {...register("photo", {required:'photo is required !'})}
     />
@@ -228,7 +232,7 @@ try {
         </>
       ) : (
         // If loginData IS empty/falsy
-    <button type="submit" className="btn btn-info px-4 my-2">Sign up</button>
+    <button onClick={navigatetologin} type="submit" className="btn btn-info px-4 my-2">Sign up</button>
       )}
       
     <button onClick={backhome} className="btn btn-outline-info my-2 ms-2">Back to Home</button>

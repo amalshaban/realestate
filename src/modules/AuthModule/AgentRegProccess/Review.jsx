@@ -125,8 +125,9 @@ navigate('/home');
 
 
   return (
-    <>
-    <div>
+    <div className="overflow-auto " style={{ height: "50vh" }}>
+    <div className="">
+      <div>
       <h3 className='text-danger'>Revise Your Data</h3>
 <div className="">
   
@@ -170,7 +171,8 @@ navigate('/home');
           <button onClick={prevStep}>Go Back</button>
         <button onClick={handleSubmit}>Submit</button>
       </div>
-      </>
+      </div>
+      </div>
 
 
 

@@ -23,7 +23,7 @@ export default function NavBar() {
       i18n.changeLanguage(lng);
     }
    const handleClick = () => { 
-    navigate('/auth/signup', { replace: true }); 
+    navigate('/auth/join/signup', { replace: true }); 
     window.location.reload();
 };
 
