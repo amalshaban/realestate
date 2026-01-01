@@ -162,7 +162,7 @@ console.log(response.data);
 <button type="button" className="btn btn-primary"
 onClick={sendRequest}
 >
-  Ask to preview
+  Ask for a visit
 </button>
 
 
