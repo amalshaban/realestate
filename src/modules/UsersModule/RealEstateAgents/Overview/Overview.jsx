@@ -37,10 +37,7 @@ useEffect(() => {
 }, []);
 
 
-const navigate = useNavigate()
-const navigateProperty =()=>{
-navigate('/properties/addproperty')
-}
+
   return (
     <div>
  <div className="container-fluid">
@@ -125,7 +122,6 @@ navigate('/properties/addproperty')
                   <div className="upper d-flex justify-content-between">
                     <h1 className="">Overview</h1>
                     
-          <button onClick={navigateProperty} className="btn btn-primary">new property</button>
                     <p className="my-3">Last Updated: 20 Mins ago</p>
                   </div>
 

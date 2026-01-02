@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { USERS_URLs } from "../../../../constants/EndPoints";
+import { useNavigate } from "react-router-dom";
 
 
 export default function PropertiesList() {
@@ -35,14 +36,21 @@ export default function PropertiesList() {
     };
     getProperties();
   }, []);
-  
+
+
+  const navigate = useNavigate()
+const navigateProperty =()=>{
+navigate('/properties/addproperty')
+}
 
   return (
     <>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-12">
+          <div className="col-12 d-flex justify-content-between">
             <h2 className="mb-4">Properties List</h2>
+            
+          <button onClick={navigateProperty} className="btn btn-primary">new property</button>
           </div>
         </div>
 
@@ -80,6 +88,7 @@ export default function PropertiesList() {
             <div className="row search-property">
               <div className="col-md-4">
                 <h3 className="">My Properties</h3>
+                
               </div>
               <div className="col-md-8 d-flex justify-content-end align-items-center">
                 <div className="search-side w-50 me-1">
