@@ -21,8 +21,7 @@ import { AuthorizedToken } from "../../../constants/Validations.js";
 
 
 export default function Home() {
-  
-  console.log('Home component rendered');
+
   
   // Check auth
   const token = sessionStorage.getItem("token");
@@ -45,6 +44,8 @@ export default function Home() {
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-12">
+        
+  
         <div className="slidersection">
           <div className="col-md-8 col-sm-12 mx-auto">
                  <div className="slidertext">
@@ -109,6 +110,10 @@ export default function Home() {
        </div>
            
           </div>
+
+
+
+
 {/* 
           <div className="col-md-4 overlap-img">
             <img className="h-100 w-100" src={slider} />
