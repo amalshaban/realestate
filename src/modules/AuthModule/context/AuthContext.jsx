@@ -1,52 +1,41 @@
 import { jwtDecode } from "jwt-decode";
-import { useEffect, useState, createContext } from "react";
-import NavBar from "../../SharedModule/NavBar/NavBar";
-import { useNavigate } from "react-router-dom";
-
+import { useEffect, useState, createContext, useCallback } from "react";
 
 export const AuthContext = createContext(null);
 
-export default function AuthContextProvider(props){
+export default function AuthContextProvider({ children }) {
+  const [loginData, setLoginData] = useState(null);
 
-  let [loginData, setLoginData ]= useState(null);
-   const logOut = () => {
-       sessionStorage.removeItem('token');
-       setLoginData("");
-       
-      };
-  let saveLoginData=() => {
-    let encodedToken = sessionStorage.getItem('token');
+  // 1. Logic to decode and save user data
+  const saveLoginData = useCallback(() => {
+    const encodedToken = sessionStorage.getItem("token");
     if (encodedToken) {
       try {
-        let decodedToken = jwtDecode(encodedToken);
-        setLoginData(decodedToken); 
-
-console.log(decodedToken);
+        const decodedToken = jwtDecode(encodedToken);
+        setLoginData(decodedToken);
       } catch (error) {
-        console.error("Error decoding token:", error);
-        sessionStorage.removeItem('token');
-        setLoginData(null);
+        console.error("Invalid token format:", error);
+        logOut(); // Clear storage if the token is corrupted
       }
     } else {
-        setLoginData(null);
+      setLoginData(null);
     }
-}
+  }, []);
 
+  // 2. Logic to log out
+  const logOut = () => {
+    sessionStorage.removeItem("token");
+    setLoginData(null); 
+  };
+
+  // 3. Sync state with sessionStorage on load
   useEffect(() => {
-    // Check if a token exists in localStorage on component mount
-    if (sessionStorage?.getItem("token")) {
-      saveLoginData(); // Call saveLoginData to decode and set the user data
-    }
-    // No cleanup needed for this specific effect, so an empty return is fine
-    return () => {
-      // Optional: Cleanup if there were event listeners or subscriptions
-    };
-  }, []); // Empty dependency array means this effect runs once after the initial render
+    saveLoginData();
+  }, [saveLoginData]);
 
   return (
-    <AuthContext.Provider value={{ saveLoginData, loginData , logOut}}>
-      {props.children}
-      
+    <AuthContext.Provider value={{ saveLoginData, loginData, logOut }}>
+      {children}
     </AuthContext.Provider>
   );
 }

@@ -27,11 +27,15 @@ border-radius: 15px;
   }
 
 /*NAVBAR*/
-.navbar{
+.navbar {
+    position: relative;
     padding: 0.5rem 5rem !important;
+    pointer-events: all !important;
 }
+
 .nav-link{
     border-bottom: 2px solid var(--primary-color);
+    pointer-events: auto !important;
 }
 .nav-item{
 font-family: Montserrat;

@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify';
 import { apiKey ,  EmailValidation, PasswordValidation} from '../../../constants/Validations.js';
 import {  USERS_URLs } from '../../../constants/EndPoints.js';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext.jsx';
 
 
 
 
 export default function LogIn() {
+
+  const { loginData, saveLoginData } = useContext(AuthContext);
+      const role = loginData?.role || 'anonymous';
+      
+  
+
+
+console.log("Current Role:", role);
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const toggleVisibility = (setterFunction) => {
@@ -33,19 +42,41 @@ const navigate = useNavigate();
     },
      }
     );
-    console.log('Success:', response);
-      sessionStorage.setItem('token', response.data.token);
-      toast.success("Welcome Back !");
-      
-      navigate('/agentLayout');
-  
-      console.log(response.data.token);
+  sessionStorage.setItem('token', response.data.token);
+toast.success("Welcome Back !");
+
+saveLoginData();
+
+// Navigate to home after successful login
+navigate("/home", { replace: true });
+console.log(role);
     
   } catch (error) {
       toast.error('Error:', error.response?.data || error.message);
   }
     };
-  
+
+
+    // Remove the useEffect that was navigating based on role
+  /*  useEffect(() => {
+    console.log("ROLE:", role); // 👈 مهم جدًا
+
+    if (!role) return; // استنى لما ييجي
+
+    switch (role) {
+      case "Normal":
+        navigate("/homeSeekerLayout", { replace: true });
+        break;
+
+      case "Agent":
+        navigate("/agentLayout", { replace: true });
+        break;
+
+      default:
+    
+    }
+  }, [role, navigate]); */
+
   return (
     <>
      <div className="container">

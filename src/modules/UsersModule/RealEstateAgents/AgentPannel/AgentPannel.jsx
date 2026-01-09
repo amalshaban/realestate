@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import SideBar from '../SideBar/SideBar.jsx';
 import '/src/modules/UsersModule/RealEstateAgents/AgentPannel.css';
 import AgentNav from '../AgentNav/AgentNav.jsx';
+import NavBar from '../../../SharedModule/NavBar/NavBar.jsx';
 
 export default function AgentPannel() {
  
@@ -14,7 +15,7 @@ export default function AgentPannel() {
 
   return (
     <div style={{ display: "flex" }}>
-      
+    
       <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
 
       <div

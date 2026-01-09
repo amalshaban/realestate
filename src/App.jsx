@@ -1,9 +1,8 @@
-
 import "./App.css";
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
-import { BrowserRouter,createHashRouter, HashRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider, Outlet } from "react-router-dom";
 import MasterLayout from "./modules/SharedModule/MasterLayout/MasterLayout";
 import Home from "./modules/SharedModule/Home/Home.jsx";
 import LogIn from "./modules/AuthModule/LogIn/LogIn.jsx"
@@ -15,7 +14,6 @@ import EditProperty from "./modules/PropertiesModule/EditProperty/EditProperty.j
 import DeleteProperty from "./modules/PropertiesModule/DeleteProperty/DeleteProperty.jsx";
 import SignUpAgent from "./modules/AuthModule/SignUpAgent/SignUpAgent.jsx";
 import AuthContextProvider from "./modules/AuthModule/context/AuthContext.jsx";
-import NavBar from "./modules/SharedModule/NavBar/NavBar.jsx";
 import ProtectedRoute from "./modules/SharedModule/ProtectedRoute/ProtectedRoute.jsx";
 
 import MultiStepForm from "./modules/AuthModule/AgentRegProccess/MultiStepForm.jsx"
@@ -36,103 +34,108 @@ import AreaandDesc from "./modules/PropertiesModule/AddProperty/AreaandDesc.jsx"
 import PhotosandVideos from "./modules/PropertiesModule/AddProperty/PhotosandVideos.jsx"
 import PropertyReview from "./modules/PropertiesModule/AddProperty/PropertyReview.jsx"
 import PropertyDetails from "./modules/PropertiesModule/PropertyDetails/PropertyDetails.jsx";
+import VisitRequestAgent from "./modules/UsersModule/RealEstateAgents/visitRequestAgent/visitRequestAgent.jsx";
+import HomeSeekerPannel from "./modules/UsersModule/HomeSeekers/HomeSeekerPannel/HomeSeekerPannel.jsx";
+import VisitRequestUser from "./modules/UsersModule/HomeSeekers/VisitRequestUser/VisitRequestUser.jsx";
+import HomeSeekerLayout from "./modules/SharedModule/HomeSeekerLayout/HomeSeekerLayout.jsx";
+import AgentLayout from "./modules/SharedModule/AgentLayout/AgentLayout.jsx";
+
 function App() {
-  
- 
+  console.log('App component loaded');
   const routes = createHashRouter([
+    // 1. مسارات المستخدم العادي (الموقع الرئيسي)
     {
-      path: "",
-      element:
-         <MasterLayout />
-      ,
+      path: "/",
+      element: <MasterLayout />,
       errorElement: <NotFound />,
       children: [
         { index: true, element: <Home /> },
-        { path: "home", element:  <Home /> },
+        { path: "home", element: <Home /> },
       ],
     },
+    // 2. مسارات الـ Agent (مستقلة تماماً)
     {
-      path: "auth",
+      path: "/agentLayout",
+      element: (
+        <ProtectedRoute>
+          <AgentLayout />
+        </ProtectedRoute>
+      ),
       errorElement: <NotFound />,
-      element: <MasterLayout />,
-      children: [
-        { index: true, element: <LogIn /> },
-        { path: "login", element: <LogIn /> },
-        { path: "join" , element: <Join/>,
-          children: [
-            
-                  { path: "", element: <AuthRight /> },
-                  { path: "signup", element: <SignUp /> },
-                  { path: "signupagent", element: <SignUpAgent /> },
-          ]
-        },
-      
-        
-  
-        
-        { path: "multistepform", element: <MultiStepForm /> },
-        { path: "step1", element: <Step1 /> },
-        { path: "step2", element: <Step2 /> },
-        { path: "step3", element: <Step3 /> },
-        { path: "review", element: <Review /> },
-      ],
-    },
-     {
-      path: "agentLayout",
-      errorElement: <NotFound />,
-      element: 
-      <ProtectedRoute>
-        <AgentPannel />
-      </ProtectedRoute> ,
       children: [
         { index: true, element: <Overview /> },
         { path: "overview", element: <Overview /> },
-        { path: "sidebar", element: <SideBar /> },
+        { path: "visitrequestagent", element: <VisitRequestAgent /> },
         { path: "propertieslist", element: <PropertiesList /> },
       ],
     },
+    // 3. مسارات الـ Home Seeker (مستقلة تماماً)
     {
-      path: "properties",
+      path: "/homeSeekerLayout",
+      element: (
+        <ProtectedRoute>
+          <HomeSeekerLayout />
+        </ProtectedRoute>
+      ),
       errorElement: <NotFound />,
-      element:  <PropertyLayout />,
+      children: [
+        { index: true, element: <HomeSeekerPannel /> },
+        { path: "visitrequestuser", element: <VisitRequestUser /> },
+      ],
+    },
+    // 4. مسارات الـ Auth
+    {
+      path: "/auth",
+      element: <Outlet />, // No layout for auth pages
+      errorElement: <NotFound />,
+      children: [
+        { index: true, element: <LogIn /> },
+        { path: "login", element: <LogIn /> },
+        { 
+          path: "join", 
+          element: <Join />,
+          children: [
+            { index: true, element: <AuthRight /> },
+            { path: "signup", element: <SignUp /> },
+            { path: "signupagent", element: <SignUpAgent /> },
+          ]
+        },
+        { path: "multistepform", element: <MultiStepForm /> },
+      ],
+    },
+    // 5. مسارات الخصائص (Properties)
+    {
+      path: "/properties",
+      element: <PropertyLayout />,
+      errorElement: <NotFound />,
       children: [
         { index: true, element: <ViewProperties /> },
         { path: "viewproperties", element: <ViewProperties /> },
-         { path: "property/:id", element: <PropertyDetails /> },
-        { path: "editProperty", element: <EditProperty /> },
-        { path: "deleteProperty", element: <DeleteProperty /> },
-        { path: "addproperty", element: <AddProperty />,
+        { path: "property/:id", element: <PropertyDetails /> },
+        { 
+          path: "addproperty", 
+          element: <AddProperty />,
           children: [
-            
-        { index: "propertymultistepform", element: <PropertyMultiStepForm /> },
-        { path: "location", element: <Location /> },
-        { path: "areaanddescrp", element: <AreaandDesc /> },
-        { path: "photosandvideos", element: <PhotosandVideos /> },
-        { path: "propertyreview", element: <PropertyReview /> },
+            { index: true, element: <PropertyMultiStepForm /> },
+            { path: "location", element: <Location /> },
+            { path: "areaanddescrp", element: <AreaandDesc /> },
           ]
-         },
+        },
       ],
     },
-    
-    {
-      path: "",
-      errorElement: <NotFound />,
-      element: <MasterLayout />,
-      children: [
-      ],
-    },
+    // مسار الـ 404 النهائي
+    { path: "*", element: <NotFound /> }
   ]);
 
   return (
-  <>
+    <>
       <AuthContextProvider>
-      <ToastContainer />
-      <RouterProvider router = {routes}>
-      <NavBar/>
-      </RouterProvider>    
+        <ToastContainer />
+        {console.log('About to render RouterProvider')}
+        <RouterProvider router={routes} />
       </AuthContextProvider>
-
-  </>);
+    </>
+  );
 }
 
 export default App;

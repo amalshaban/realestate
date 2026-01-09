@@ -44,12 +44,7 @@ console.log(response.data);
 
 
 
- let {
-      register,
-      handleSubmit,
-      formState: {errors}
-    } = useForm();
-    let sendRequest = async (data) =>{
+    let sendVisitRequest = async (data) =>{
   try {
     console.log(data);
     let response = await axios.post("https://realstate.niledevelopers.com/User/request-visit", 
@@ -79,6 +74,42 @@ console.log(response.data);
       toast.error('Error:', error.response?.data || error.message);
   }
     };
+
+
+     let sendPurchaseRequests = async (data) =>{
+  try {
+    console.log(data);
+    let response = await axios.post("https://realstate.niledevelopers.com/User/PurchaseRequests", 
+   {
+    propertyId: property.id,
+    offeredPrice: property.price,
+    notes:"interseted in purchasing this propertry"
+  }
+  
+  ,{
+    
+      headers: { 
+  Authorization: `Bearer ${sessionStorage.token}`,
+  'apiKey': apiKey,
+  "Content-Type": 'application/json',
+     'Accept-Language': 'browserLanguage',
+     
+    } 
+  }
+     ,
+     
+    );
+  
+      toast.success("request sent !");
+
+      console.log(response.data);
+    
+  } catch (error) {
+      toast.error('Error:', error.response?.data || error.message);
+  }
+    };
+
+
 
  return (
     <div className="container py-5">
@@ -160,11 +191,16 @@ console.log(response.data);
                 <div className="mt-4 pt-3 border-top">
         
 <button type="button" className="btn btn-primary"
-onClick={sendRequest}
+onClick={sendVisitRequest}
 >
   Ask for a visit
 </button>
 
+<button type="button" className="btn btn-primary mx-1"
+onClick={sendPurchaseRequests}
+>
+   Purchase Request
+</button>
 
 
                 </div>

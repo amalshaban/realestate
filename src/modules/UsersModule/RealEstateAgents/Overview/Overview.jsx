@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import propertyImg from "../../../../assets/imgs/rightoverview.png";
 import profileImg from "../../../../assets/imgs/profile.png";
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { USERS_URLs } from '../../../../constants/EndPoints';
+import { AuthorizedToken } from '../../../../constants/Validations';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Overview() {
+
+
  const [browserLanguage, setBrowserLanguage] = useState(null);
   useEffect(() => {
     const language = navigator.language || navigator.userLanguage;
@@ -36,6 +39,29 @@ useEffect(() => {
   getAgentProfile();
 }, []);
 
+ const [visitRequests, setVisitRequests] = useState([]);
+  useEffect(() => {
+    const getVisitRequests = async () => {
+      try {
+        const response = await axios.get(
+          'https://realstate.niledevelopers.com/Agent/VisitRequests',
+          AuthorizedToken
+        );
+        setVisitRequests(response.data);
+  
+      } catch (error) {
+        console.error(error.response?.data || error.message);
+      }
+    };
+
+    getVisitRequests();
+  }, []);
+
+  const navigate = useNavigate();
+ const navigatetovisit =  () => {
+  navigate("/agentLayout/visitrequestagent");
+ }
+
 
 
   return (
@@ -59,55 +85,38 @@ useEffect(() => {
             <div className="requests">
               <div className="requests-head d-flex justify-content-between">
                 <h4 className="">Requests (12)</h4>
-                <span className="">See All</span>
+                <button className="btn btn-primary" 
+                onClick={navigatetovisit}
+>
+                  See All
+                </button>
               </div>
 
-               <div className="d-flex pt-2 justify-content-between">
+
+        {visitRequests.length > 0 ? (
+  visitRequests.slice(0, 3).map((visitRequest) => (
+     <div className="d-flex pt-2 justify-content-between">
                 <div className="d-flex  justify-content-between">
-              <img className="msgImg" src={profileImg} alt="Profile" />
+              <img className="msgImg" src={profileImg} alt="Profile" />                  
                   <div className="">
-                    <h6>Karim Kamal</h6>
-                    <p className="">12-06-2025 at 11:30PM</p>
+                    <h6>{visitRequest.userName}</h6>
+                    <p className="">{visitRequest.requestDate}</p>
                   </div>
                 </div>
                 
-                <p className="pt-1">P004</p>
+                <p className="pt-1">{visitRequest.propertyId}</p>
                 <i className="fa-solid fa-envelope pt-1"></i>
                 
+              
+              
+              <hr/>
               </div>
 
-              <hr/>
-            
-                <div className="d-flex pt-2 justify-content-between">
-                <div className="d-flex  justify-content-between">
-              <img className="msgImg" src={profileImg} alt="Profile" />
-                  <div className="">
-                    <h6>Karim Kamal</h6>
-                    <p className="">12-06-2025 at 11:30PM</p>
-                  </div>
-                </div>
-                
-                <p className="pt-1">P004</p>
-                <i className="fa-solid fa-envelope pt-1"></i>
-                
-              </div>
+   ))
+      ) : (
+        ""
+      )}
 
-              <hr/>
-                <div className="d-flex pt-2 justify-content-between">
-                <div className="d-flex  justify-content-between">
-              <img className="msgImg" src={profileImg} alt="Profile" />
-                  <div className="">
-                    <h6>Karim Kamal</h6>
-                    <p className="">12-06-2025 at 11:30PM</p>
-                  </div>
-                </div>
-                
-                <p className="pt-1">P004</p>
-                <i className="fa-solid fa-envelope pt-1"></i>
-                
-              </div>
-
-              <hr/>
             </div>
           </div>
 

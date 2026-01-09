@@ -9,8 +9,7 @@ import { apiKey, AuthorizedToken } from '../../../constants/Validations.js';
 import axios from 'axios';
 import PropertyDetails from '../PropertyDetails/PropertyDetails.jsx';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+
 
 export default function ViewProperties() {
 
@@ -46,11 +45,7 @@ const handelviewproperty = (id) => {
 
 
 
- let {
-      register,
-      handleSubmit,
-      formState: {errors}
-    } = useForm();
+ 
     let sendView = async (id) =>{
   try {
     let response = await axios.post("https://realstate.niledevelopers.com/User/add-new-watch", 
@@ -70,7 +65,9 @@ const handelviewproperty = (id) => {
       console.log('Error:', error.response?.data || error.message);
   }
     };
-  return (
+
+
+    return (
     <>
   
     <div className="p-5">

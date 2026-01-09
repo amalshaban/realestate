@@ -10,23 +10,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Modal } from 'bootstrap';
 import { AuthContext } from '../../AuthModule/context/AuthContext';
 import profileimg  from '../../../assets/imgs/profile.png'
+import Home from '../Home/Home';
 export default function NavBar() {
-
-  
-
 
     let { loginData } = useContext(AuthContext);
     let { logOut } = useContext(AuthContext);
   const { t, i18n } = useTranslation();
   
+  const navigate = useNavigate();
+  
+  const handlelogout = () =>{
+    logOut();
+    navigate("/home");
+  }
     const changeLanguage = (lng) => {
       i18n.changeLanguage(lng);
     }
-   const handleClick = () => { 
-    navigate('/auth/join/signup', { replace: true }); 
-    window.location.reload();
-};
-
      
       const [activeTab, setActiveTab] = useState('home'); 
     
@@ -35,9 +34,16 @@ export default function NavBar() {
       };
 
 
-  const navigate = useNavigate();
+
+   
   const navigatetoauth =()=>{
     navigate('/auth/join');
+  }
+
+  const navigateToHome = () => {
+    console.log('Home button clicked');
+    console.log('Current path:', window.location.hash);
+    window.location.href = '#/';
   }
 //   const handleClickSeeker = () => { 
 //     navigate('/auth/signup', { replace: true }); 
@@ -52,7 +58,7 @@ console.log(loginData);
      const name = loginData?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] || 'Guest';
  // const userId = loginData?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] || null;
   let photo = loginData?.Photo || "";
-  //const role = loginData?.role || 'anonymous';
+const role = loginData?.role || 'anonymous';
 
 
 let photoLink;
@@ -63,14 +69,25 @@ if (photo === "") {
 }
 
 
+console.log(role);
   console.log(`${photo}`);
+
+
+
+  const handleClick = () => { 
+    if(role === 'Normal')
+    navigate('/homeSeekerLayout'); 
+   else if(role === 'Agent')
+    navigate('/agentlayout/overview');
+    
+};
   return (
    
     <>
 
  <nav className="navbar bg-transparent navbar-expand-lg ">
   <div className="container-fluid">
-    <a className="navbar-brand" href="#">LOGO</a>
+    <Link className="navbar-brand" to="#">LOGO</Link>
     <img className="navbar-brand"/>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
@@ -78,46 +95,98 @@ if (photo === "") {
 
 
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-        <li className="nav-item">
-          <a className="nav-link active" aria-current="page" href="#">{t('home')}</a>
-        </li>
-        <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          {t('properties')}
-          </a>
-          <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href="#">one</a></li>
-            <li><a className="dropdown-item" href="#">two</a></li>
-            <li><hr className="dropdown-divider"/></li>
-            <li><a className="dropdown-item" href="#">three</a></li>
-          </ul>
-        </li>
-        <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Our Parteners
-          </a>
-          <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href="#">one</a></li>
-            <li><a className="dropdown-item" href="#">two</a></li>
-            <li><hr className="dropdown-divider"/></li>
-            <li><a className="dropdown-item" href="#">three</a></li>
-          </ul>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link " aria-disabled="true">Contact Us</a>
-        </li>
+     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+  {/* رابط الهوم - تم تغيير المسار لـ "/" ليتناسب مع index: true */}
+  <li className="nav-item">
+    <button 
+      type="button"
+      onClick={navigateToHome}
+      className="nav-link" 
+      style={{ 
+        border: 'none', 
+        background: 'transparent', 
+        cursor: 'pointer'
+      }}
+    >
+      <i className="fa-solid fa-house me-2"></i>
+      Home
+    </button>
+  </li>
 
-        <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          {t('language')}
-          </a>
-          <ul className="dropdown-menu">
-            <li><a onClick={() => changeLanguage('en')} className="dropdown-item" href="#">English</a></li>
-            <li><a onClick={() => changeLanguage('ar')} className="dropdown-item" href="#">العربيه</a></li>
-          </ul>
-        </li>
-      </ul>
+  {/* رابط العقارات */}
+  <li className="nav-item dropdown">
+    <button 
+      className="nav-link dropdown-toggle" 
+      onClick={() => navigate('/properties/viewproperties')} 
+      role="button" 
+      data-bs-toggle="dropdown" 
+      aria-expanded="false"
+    >
+      Properties
+    </button>
+    <ul className="dropdown-menu">
+      <li><Link className="dropdown-item" to="/properties/one">one</Link></li>
+      <li><Link className="dropdown-item" to="/properties/two">two</Link></li>
+      <li><hr className="dropdown-divider"/></li>
+      <li><Link className="dropdown-item" to="/properties/three">three</Link></li>
+    </ul>
+  </li>
+
+  {/* رابط الشركاء - تحويله لـ span أو div لتجنب الـ href */}
+  <li className="nav-item dropdown">
+    <span 
+      className="nav-link dropdown-toggle" 
+      role="button" 
+      data-bs-toggle="dropdown" 
+      aria-expanded="false"
+      style={{ cursor: 'pointer' }}
+    >
+      Our Parteners
+    </span>
+    <ul className="dropdown-menu">
+      <li><button className="dropdown-item border-0 bg-transparent">one</button></li>
+      <li><button className="dropdown-item border-0 bg-transparent">two</button></li>
+      <li><hr className="dropdown-divider"/></li>
+      <li><button className="dropdown-item border-0 bg-transparent">three</button></li>
+    </ul>
+  </li>
+
+  {/* تواصل معنا - تحويله لـ Link أو Span */}
+  <li className="nav-item">
+    <Link to="/contact" className="nav-link">Contact Us</Link>
+  </li>
+
+  {/* تغيير اللغة - استخدام أزرار (Buttons) لأنها عمليات وليست روابط */}
+  <li className="nav-item dropdown">
+    <span 
+      className="nav-link dropdown-toggle" 
+      role="button" 
+      data-bs-toggle="dropdown" 
+      aria-expanded="false"
+      style={{ cursor: 'pointer' }}
+    >
+      {t('language')}
+    </span>
+    <ul className="dropdown-menu">
+      <li>
+        <button 
+          onClick={() => changeLanguage('en')} 
+          className="dropdown-item border-0 bg-transparent"
+        >
+          English
+        </button>
+      </li>
+      <li>
+        <button 
+          onClick={() => changeLanguage('ar')} 
+          className="dropdown-item border-0 bg-transparent"
+        >
+          العربيه
+        </button>
+      </li>
+    </ul>
+  </li>
+</ul>
 
       <div className="d-flex">
        
@@ -129,7 +198,7 @@ if (photo === "") {
         <div> 
          Welcome,  <button onClick={handleClick}>{name} </button>
           { <img className='profile' src={photoLink} alt="Profile" />}
-           <button className="btn btn-outline-info px-3" onClick={logOut} >LogOut</button>
+           <button className="btn btn-outline-info px-3" onClick={handlelogout} >LogOut</button>
         </div>
         :
         <div className="">

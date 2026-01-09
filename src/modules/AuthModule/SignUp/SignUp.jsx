@@ -72,7 +72,7 @@ try {
    
      if (response.data.token) {
       sessionStorage.setItem('token', response.data.token);
-      loginData.saveloginData();
+      loginData.saveloginData(response.data.userData);
     }    
   }
 }

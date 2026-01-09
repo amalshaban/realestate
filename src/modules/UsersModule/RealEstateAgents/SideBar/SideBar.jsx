@@ -7,8 +7,11 @@ import { AuthContext } from '../../../AuthModule/context/AuthContext';
 export default function SideBar({ collapsed, setCollapsed }) {
   const toggleSidebar = () => setCollapsed(!collapsed);
 const navigate = useNavigate();
-let { logOut } = useContext(AuthContext);
- 
+    let { logOut } = useContext(AuthContext);
+ const handleLogout = () => {
+    logOut(); 
+    navigate("/home");
+  };
   return (
     <Sidebar
       collapsed={collapsed}
@@ -41,7 +44,7 @@ let { logOut } = useContext(AuthContext);
         </div>
 
         <div className="text-danger">
-          <MenuItem><i className="fa-solid fa-right-from-bracket" onClick={logOut}></i> LogOut </MenuItem>
+          <MenuItem  onClick={handleLogout}><i className="fa-solid fa-right-from-bracket"></i> LogOut </MenuItem>
         </div>
       </Menu>
     </Sidebar>

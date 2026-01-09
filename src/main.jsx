@@ -8,14 +8,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './i18n/i18next.js';
 
-//import { AuthContextProvider } from './context/authcontext.jsx'
-
-const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(
-  
-    
-    <App />
-    
-
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App /> 
+  </React.StrictMode>
 );
 

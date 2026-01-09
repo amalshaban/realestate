@@ -1,10 +1,8 @@
-import React, {  useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
-import NavBar from "../NavBar/NavBar";
+import React, {   useState } from "react";
+import { Link, Outlet } from "react-router-dom";
 import Search from "../Search/Search.jsx";
 // import cardimg from "../../../assets/imgs/7da51552e8fc95cb3bd8bf2bf2d6ce580258031a.jpg";
 import UserLocation from "../../../../public/userLocation/UserLocation.jsx";
-import ContactBar from "../ContactBar/ContactBar.jsx";
 import Services from "../Services/Services.jsx";
 import Footer from "../Footer/Footer.jsx";
 // import { Card, CardMedia, IconButton, Box } from '@mui/material';
@@ -14,6 +12,8 @@ import Footer from "../Footer/Footer.jsx";
 import { LOCATIONS_URLs, USERS_URLs } from "../../../constants/EndPoints.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import MultiStepForm from "../../AuthModule/AgentRegProccess/MultiStepForm.jsx";
+import { AuthorizedToken } from "../../../constants/Validations.js";
+
 
 
 // import { useTranslation } from 'react-i18next';
@@ -21,22 +21,12 @@ import MultiStepForm from "../../AuthModule/AgentRegProccess/MultiStepForm.jsx";
 
 
 export default function Home() {
-
-
   
-
-  // const { t, i18n } = useTranslation();
-
-  // const changeLanguage = (lng) => {
-  //   i18n.changeLanguage(lng);
-  // }
-
+  console.log('Home component rendered');
   
-  const [activeTab, setActiveTab] = useState('home'); // State to manage the active tab
-
-  const handleTabClick = (tabId) => {
-    setActiveTab(tabId);
-  };
+  // Check auth
+  const token = sessionStorage.getItem("token");
+  console.log('Home - Token exists:', !!token);
 
   return (
     <>
@@ -49,10 +39,7 @@ export default function Home() {
     </div> */}
 
 {/* <UserLocation/> */}
-      <ContactBar/>
-  
-               <NavBar />
-    
+   
    
 {/* slider section */}
       <div className="container-fluid">
@@ -80,28 +67,22 @@ export default function Home() {
              <ul className="nav nav-tabs" id="myTab" role="tablist">
         <li className="nav-item" role="presentation">
           <button
-         style={activeTab === 'home' ? { borderBottom: '2px solid #0088BD', color:'#0088BD' } : {}}
-  
-            className={`nav-link ${activeTab === 'home' ? 'active' : ''}`}
+        
             id="home-tab"
             type="button"
             role="tab"
             aria-controls="home"
-            aria-selected={activeTab === 'home'}
-            onClick={() => handleTabClick('home')} 
+            
           >
             Buy
           </button>
         </li>
         <li className="nav-item" role="presentation">
           <button
-            className={`nav-link ${activeTab === 'profile' ? 'active' : ''}`}
             id="profile-tab"
             type="button"
             role="tab"
-            aria-controls="profile"
-            aria-selected={activeTab === 'profile'}
-            onClick={() => handleTabClick('profile')} // Handle click with React state
+            aria-controls="profile"Handle click with React state
           >
             Rent
           </button>
@@ -110,7 +91,6 @@ export default function Home() {
 
       <div className="tab-content" id="myTabContent">
         <div
-          className={`tab-pane fade ${activeTab === 'home' ? 'show active' : ''}`}
           id="home"
           role="tabpanel"
           aria-labelledby="home-tab"
@@ -118,7 +98,6 @@ export default function Home() {
           <Search />
         </div>
         <div
-          className={`tab-pane fade ${activeTab === 'profile' ? 'show active' : ''}`}
           id="profile"
           role="tabpanel"
           aria-labelledby="profile-tab"
