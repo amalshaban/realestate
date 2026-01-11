@@ -35,6 +35,10 @@ const Review = ({ formData, prevStep }) => {
       payload.append('title', formData.title || formData.Title || '');
       payload.append('titleAr', formData.titleAr || formData.TitleAr || '');
       payload.append('description', formData.description || formData.Description || '');
+      
+      
+       payload.append('ForRent', formData.ForRent || false);
+      
       // payload.append('descriptionAr', formData.descriptionAr || '');
       payload.append('price', formData.price || formData.Price || '');
       payload.append('isNegotiable', formData.isNegotiable ? 'true' : (formData.IsNegotiable ? 'true' : 'false'));
@@ -102,8 +106,15 @@ const Review = ({ formData, prevStep }) => {
       }
       console.log('Auth token (session):', sessionStorage.token || loginData?.token);
 
-      // Build headers from AuthorizedToken but remove Content-Type so axios can set the correct multipart boundary
-      const config = { headers: { ...(AuthorizedToken.headers || {}) } };
+      // Build headers dynamically so we use the current session token (avoid stale import-time token)
+      const token = sessionStorage.token || loginData?.token;
+      const config = {
+        headers: {
+          ...(AuthorizedToken.headers || {}),
+          Authorization: token ? `Bearer ${token}` : '',
+        },
+      };
+      // Let axios set the correct multipart Content-Type (with boundary)
       if (config.headers['Content-Type']) delete config.headers['Content-Type'];
 
       const response = await axios.post(PROPERTIES_URLS.addproperty, payload, config);

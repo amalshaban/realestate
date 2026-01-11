@@ -6,18 +6,15 @@ import AgentNav from '../AgentNav/AgentNav.jsx';
 import NavBar from '../../../SharedModule/NavBar/NavBar.jsx';
 
 export default function AgentPannel() {
- 
 
   const [collapsed, setCollapsed] = useState(false);
-  
   useEffect(() => {
   }, []);
 
   return (
     <div style={{ display: "flex" }}>
-    
+      
       <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
-
       <div
         style={{
           marginLeft: collapsed ? '80px' : '250px',
@@ -28,7 +25,6 @@ export default function AgentPannel() {
         className="container-fluid"
       >
       <AgentNav/>
-
         <div className="row mt-3">
           <div className="col-12">
             <Outlet />

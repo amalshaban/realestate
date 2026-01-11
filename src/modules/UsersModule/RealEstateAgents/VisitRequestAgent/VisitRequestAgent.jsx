@@ -124,8 +124,7 @@ const suggestVisitDate = async (visitRequestId) => {
         Authorization: `Bearer ${sessionStorage.token}`,
         'apiKey': apiKey,
         "Content-Type": 'application/json',
-           'Accept-Language': 'browserLanguage',
-           
+           'Accept-Language': 'browserLanguage',    
           } }
     );
     setSuggestVisitDateforonerequest(response.data);
@@ -136,10 +135,9 @@ const suggestVisitDate = async (visitRequestId) => {
 };
 
 
-
   return (
     <div>
-              <h2 className="py-3">Your Requests</h2>
+              <h2 className="py-3">Your Visit Requests</h2>
 <table className="table">
   <thead>
     <tr>
@@ -192,7 +190,6 @@ const suggestVisitDate = async (visitRequestId) => {
     </tr>
   </thead>
  <tbody>
-  {/* 1. عرض البيانات القادمة من الـ API إن وجدت */}
   {suggestVisitDateforonerequest.length > 0 ? (
     suggestVisitDateforonerequest.map((suggestDate) => (
       <tr key={suggestDate.id}>
@@ -218,7 +215,7 @@ const suggestVisitDate = async (visitRequestId) => {
       </tr>
     ))
   ) : (
-    /* 2. هذا السطر يظهر فقط إذا كان الـ API راجع ببيانات فاضية */
+    
     <tr>
       <td>
         <input

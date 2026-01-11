@@ -62,6 +62,9 @@ useEffect(() => {
   navigate("/agentLayout/visitrequestagent");
  }
 
+ const navigatetopurchase =  () => {
+  navigate("/agentLayout/purchaserequestsagent");
+ }
 
 
   return (
@@ -186,7 +189,7 @@ useEffect(() => {
       </div>
 
 
-
+<button onClick={navigatetopurchase}>Purchase Requests</button>
     </div>
   )
 }

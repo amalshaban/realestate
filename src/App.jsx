@@ -39,6 +39,7 @@ import HomeSeekerPannel from "./modules/UsersModule/HomeSeekers/HomeSeekerPannel
 import VisitRequestUser from "./modules/UsersModule/HomeSeekers/VisitRequestUser/VisitRequestUser.jsx";
 import HomeSeekerLayout from "./modules/SharedModule/HomeSeekerLayout/HomeSeekerLayout.jsx";
 import AgentLayout from "./modules/SharedModule/AgentLayout/AgentLayout.jsx";
+import PurchaseRquestsAgent from "./modules/UsersModule/RealEstateAgents/PurchaseRquestsAgent/PurchaseRquestsAgent.jsx";
 
 function App() {
   console.log('App component loaded');
@@ -66,6 +67,7 @@ function App() {
         { index: true, element: <Overview /> },
         { path: "overview", element: <Overview /> },
         { path: "visitrequestagent", element: <VisitRequestAgent /> },
+        { path: "purchaserequestsagent", element: <PurchaseRquestsAgent /> },
         { path: "propertieslist", element: <PropertiesList /> },
       ],
     },
@@ -112,6 +114,8 @@ function App() {
         { index: true, element: <ViewProperties /> },
         { path: "viewproperties", element: <ViewProperties /> },
         { path: "property/:id", element: <PropertyDetails /> },
+        { path: "sidebar", element: <SideBar /> },
+
         { 
           path: "addproperty", 
           element: <AddProperty />,

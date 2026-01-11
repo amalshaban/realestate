@@ -71,7 +71,10 @@ console.log(response.data);
       console.log(response.data);
     
   } catch (error) {
-      toast.error('Error:', error.response?.data || error.message);
+      console.error('Full error:', error);
+      console.error('Error response:', error.response?.data);
+      const errorMsg = error.response?.data?.message || error.response?.data?.error || JSON.stringify(error.response?.data) || error.message;
+      toast.error(errorMsg);
   }
     };
 
@@ -81,34 +84,29 @@ console.log(response.data);
     console.log(data);
     let response = await axios.post("https://realstate.niledevelopers.com/User/PurchaseRequests", 
    {
-    propertyId: property.id,
-    offeredPrice: property.price,
+    propertyId: (property.id),
+    offeredPrice: 990,
     notes:"interseted in purchasing this propertry"
-  }
-  
-  ,{
-    
+  },
+  {
       headers: { 
   Authorization: `Bearer ${sessionStorage.token}`,
   'apiKey': apiKey,
   "Content-Type": 'application/json',
-     'Accept-Language': 'browserLanguage',
-     
+  'Accept-Language': 'browserLanguage',
     } 
-  }
-     ,
-     
+  },
     );
-  
       toast.success("request sent !");
-
-      console.log(response.data);
-    
   } catch (error) {
-      toast.error('Error:', error.response?.data || error.message);
+    
+      const errorMsg = error.response?.data?.message || error.response?.data?.error.generalErrors || JSON.stringify(error.response?.data) || error.message;
+      toast.error(errorMsg);
   }
     };
 
+  
+ 
 
 
  return (

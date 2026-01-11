@@ -1,4 +1,3 @@
-import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import '/src/modules/UsersModule/RealEstateAgents/AgentPannel.css';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -6,47 +5,73 @@ import { AuthContext } from '../../../AuthModule/context/AuthContext';
 
 export default function SideBar({ collapsed, setCollapsed }) {
   const toggleSidebar = () => setCollapsed(!collapsed);
-const navigate = useNavigate();
-    let { logOut } = useContext(AuthContext);
- const handleLogout = () => {
+  const navigate = useNavigate();
+  let { logOut } = useContext(AuthContext);
+  
+  const handleLogout = () => {
     logOut(); 
     navigate("/home");
   };
   return (
-    <Sidebar
-      collapsed={collapsed}
-     className={`sidebar ${collapsed ? 'collapsed' : 'expanded'}`}
+    <div 
+      className={`custom-sidebar ${collapsed ? 'collapsed' : ''}`}
       style={{
         position: 'fixed',
         top: 0,
         left: 0,
         height: '100vh',
-        zIndex: 1000,
-       
+        width: collapsed ? '80px' : '250px',
         backgroundColor: '#fff',
+        boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
+        transition: 'width 0.3s ease',
+        zIndex: 1000,
+        overflow: 'hidden'
       }}
     >
-      <div className="toggle-btn" onClick={toggleSidebar}>
-        <h3 className='text-center px-1 py-4'> LOGO </h3>
+      <div className="toggle-btn" onClick={toggleSidebar} style={{ cursor: 'pointer', borderBottom: '1px solid #e0e0e0' }}>
+        <h3 className='text-center px-1 py-4' style={{ margin: 0 }}> 
+          {collapsed ? 'L' : 'LOGO'} 
+        </h3>
       </div>
 
-      <Menu className='sidebar-menu'>
+      <div className="sidebar-menu" style={{ padding: '20px 0' }}>
         <div className="submenu1">
-          <MenuItem onClick={() => navigate('overview')}><i className="fa-solid fa-grip"></i> Overview </MenuItem>
-          <MenuItem onClick={() => navigate('propertieslist')}><i className="fa-solid fa-house-chimney"></i> Properties </MenuItem>
-          <MenuItem><i className="fa-solid fa-file-signature"></i> Contract </MenuItem>
-          <MenuItem><i className="fa-solid fa-envelope"></i> Messages </MenuItem>
+          <div className="sidebar-menu-item" onClick={() => navigate('overview')}>
+            <i className="fa-solid fa-grip"></i>
+            {!collapsed && <span>Overview</span>}
+          </div>
+          <div className="sidebar-menu-item" onClick={() => navigate('propertieslist')}>
+            <i className="fa-solid fa-house-chimney"></i>
+            {!collapsed && <span>Properties</span>}
+          </div>
+          <div className="sidebar-menu-item">
+            <i className="fa-solid fa-file-signature"></i>
+            {!collapsed && <span>Contract</span>}
+          </div>
+          <div className="sidebar-menu-item">
+            <i className="fa-solid fa-envelope"></i>
+            {!collapsed && <span>Messages</span>}
+          </div>
         </div>
 
-        <div className="submenu2">
-          <MenuItem><i className="fa-solid fa-flag"></i> Reports </MenuItem>
-          <MenuItem><i className="fa-solid fa-gear"></i> Settings </MenuItem>
+        <div className="submenu2" style={{ marginTop: '2rem' }}>
+          <div className="sidebar-menu-item">
+            <i className="fa-solid fa-flag"></i>
+            {!collapsed && <span>Reports</span>}
+          </div>
+          <div className="sidebar-menu-item">
+            <i className="fa-solid fa-gear"></i>
+            {!collapsed && <span>Settings</span>}
+          </div>
         </div>
 
-        <div className="text-danger">
-          <MenuItem  onClick={handleLogout}><i className="fa-solid fa-right-from-bracket"></i> LogOut </MenuItem>
+        <div className="text-danger" style={{ marginTop: '0.2rem' }}>
+          <div className="sidebar-menu-item" onClick={handleLogout}>
+            <i className="fa-solid fa-right-from-bracket"></i>
+            {!collapsed && <span>LogOut</span>}
+          </div>
         </div>
-      </Menu>
-    </Sidebar>
+      </div>
+    </div>
   );
 }

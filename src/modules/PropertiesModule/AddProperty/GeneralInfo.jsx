@@ -21,7 +21,9 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
       cityId: formData.cityId || '',
       districtId: formData.districtId || '',
       realStateRentTypeId: formData.realStateRentTypeId || '',
-      realStatePurposeId: formData.realStatePurpose || formData.realStatePurposeId || ''
+      realStatePurposeId: formData.realStatePurpose || formData.realStatePurposeId || '',
+      
+      ForRent: formData.ForRent || false,
     },
   });
 
@@ -33,7 +35,7 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
   const [selectedCountry, setSelectedCountry] = useState(formData.countryId || '');
   const [selectedCity, setSelectedCity] = useState(formData.cityId || '');
 
-  // Fetching Logic (نفس المنطق الخاص بك بدون تغيير لضمان عمل الـ API)
+  
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
@@ -187,6 +189,12 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
               <div className="col-md-6">
                 <label className="form-label fw-semibold">Description</label>
                 <textarea rows="1" className="form-control" placeholder="Brief about the property" {...register("Description")} />
+              </div>
+
+
+               <div className="col-md-6">
+                <label className="form-label fw-semibold"> For Rent </label>
+                <input type="checkbox" className="form-check-input" {...register("ForRent")} defaultChecked={formData.ForRent} />
               </div>
             </div>
 

@@ -5,7 +5,7 @@ import Search from '../../SharedModule/Search/Search.jsx';
 import ArcGISMap from '../../SharedModule/ArcGISMap/ArcGISMap.jsx';
 import Footer from '../../SharedModule/Footer/Footer.jsx';
 import { PROPERTIES_URLS } from '../../../constants/EndPoints.js';
-import { apiKey, AuthorizedToken } from '../../../constants/Validations.js';
+import { apiKey, Authorization, AuthorizedToken } from '../../../constants/Validations.js';
 import axios from 'axios';
 import PropertyDetails from '../PropertyDetails/PropertyDetails.jsx';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +17,15 @@ export default function ViewProperties() {
        const [myData, setMyData] = useState([]);
        const getmydata = async ()=> {
         try {  
-         let response = await axios.get("https://realstate.niledevelopers.com/properties/active", AuthorizedToken);
+         let response = await axios.get("https://realstate.niledevelopers.com/agent/properties", 
+         {   headers: { 
+  Authorization: `Bearer ${sessionStorage.token}`,
+  'apiKey': apiKey,
+  "Content-Type": 'application/json',
+     'Accept-Language': 'browserLanguage',
+     
+    } },
+         );
         console.log(response.data);
       setMyData(response.data.properties);
           
