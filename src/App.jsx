@@ -40,6 +40,8 @@ import VisitRequestUser from "./modules/UsersModule/HomeSeekers/VisitRequestUser
 import HomeSeekerLayout from "./modules/SharedModule/HomeSeekerLayout/HomeSeekerLayout.jsx";
 import AgentLayout from "./modules/SharedModule/AgentLayout/AgentLayout.jsx";
 import PurchaseRquestsAgent from "./modules/UsersModule/RealEstateAgents/PurchaseRquestsAgent/PurchaseRquestsAgent.jsx";
+import PurchaseRequestsUser from "./modules/UsersModule/HomeSeekers/PurchaseRequestsUser/PurchaseRequestsUser.jsx";
+import RentalRequestsUser from "./modules/UsersModule/HomeSeekers/RentalRequestsUser/RentalRequestsUser.jsx";
 
 function App() {
   console.log('App component loaded');
@@ -83,6 +85,8 @@ function App() {
       children: [
         { index: true, element: <HomeSeekerPannel /> },
         { path: "visitrequestuser", element: <VisitRequestUser /> },
+        { path: "purchaserequestsuser", element: <PurchaseRequestsUser /> },
+        { path: "rentalrequestsuser", element: <RentalRequestsUser /> },
       ],
     },
     // 4. مسارات الـ Auth

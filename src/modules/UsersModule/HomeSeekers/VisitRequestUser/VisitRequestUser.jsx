@@ -92,7 +92,15 @@ const viewSuggestedDates = async (visitRequestId) => {
         <td>{visitRequest.requestId}</td>
         <td>{visitRequest.agentId}</td>
         <td>{visitRequest.propertyName}</td>
-        <td>{visitRequest.status}</td>
+        <td>
+  {visitRequest.status === 1 ? (
+    <span style={{ color: 'green' }}>Accepted</span>
+  ) : visitRequest.status === 2 ? (
+    <span style={{ color: 'red' }}>Rejected</span>
+  ) : (
+    visitRequest.status 
+  )}
+</td>
         <td>
           <button 
           onClick={() => viewSuggestedDates(visitRequest.requestId)}

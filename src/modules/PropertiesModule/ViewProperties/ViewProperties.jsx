@@ -17,14 +17,8 @@ export default function ViewProperties() {
        const [myData, setMyData] = useState([]);
        const getmydata = async ()=> {
         try {  
-         let response = await axios.get("https://realstate.niledevelopers.com/agent/properties", 
-         {   headers: { 
-  Authorization: `Bearer ${sessionStorage.token}`,
-  'apiKey': apiKey,
-  "Content-Type": 'application/json',
-     'Accept-Language': 'browserLanguage',
-     
-    } },
+         let response = await axios.get("https://realstate.niledevelopers.com/properties/active", 
+         AuthorizedToken, 
          );
         console.log(response.data);
       setMyData(response.data.properties);
@@ -79,7 +73,7 @@ const handelviewproperty = (id) => {
     <>
   
     <div className="p-5">
-          <h3 className="headertxtstyle">Properties For Rent</h3>
+          <h3 className="headertxtstyle">All Properties</h3>
           <p className="">1873 Property was Found</p>
           <div className="w-100 mb-3">
             <Search/>

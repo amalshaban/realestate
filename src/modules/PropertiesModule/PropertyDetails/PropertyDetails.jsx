@@ -15,6 +15,8 @@ export default function PropertyDetails() {
   const [error, setError] = useState(null);
 
 
+  const [offeredPrice, setOfferedPrice] = useState("");
+  const [notes, setNotes] = useState("");
 
 
 
@@ -28,7 +30,7 @@ export default function PropertyDetails() {
           AuthorizedToken
         );
         
-console.log(response.data);
+console.log(response.data.property);
         setProperty(response.data.property);
         setError(null);
       } catch (err) {
@@ -38,7 +40,6 @@ console.log(response.data);
         setLoading(false);
       }
     };
-
     getProperty();
   }, [id]);
 
@@ -54,22 +55,16 @@ console.log(response.data);
   
   ,{
     
-      headers: { 
+  headers: { 
   Authorization: `Bearer ${sessionStorage.token}`,
   'apiKey': apiKey,
   "Content-Type": 'application/json',
-     'Accept-Language': 'browserLanguage',
-     
+  'Accept-Language': 'browserLanguage',  
     } 
-  }
-     ,
-     
+  },
     );
-  
       toast.success("request sent !");
-
       console.log(response.data);
-    
   } catch (error) {
       console.error('Full error:', error);
       console.error('Error response:', error.response?.data);
@@ -77,16 +72,17 @@ console.log(response.data);
       toast.error(errorMsg);
   }
     };
-
-
      let sendPurchaseRequests = async (data) =>{
+      if(property.forRent === true){
+        toast.warning("This property is for rent only !");
+      }
   try {
     console.log(data);
     let response = await axios.post("https://realstate.niledevelopers.com/User/PurchaseRequests", 
    {
     propertyId: (property.id),
-    offeredPrice: 990,
-    notes:"interseted in purchasing this propertry"
+    offeredPrice: offeredPrice,
+    notes:notes
   },
   {
       headers: { 
@@ -101,11 +97,37 @@ console.log(response.data);
   } catch (error) {
     
       const errorMsg = error.response?.data?.message || error.response?.data?.error.generalErrors || JSON.stringify(error.response?.data) || error.message;
-      toast.error(errorMsg);
+    
   }
     };
-
-  
+     let sendRentalRequests = async (data) =>{
+      if(property.forRent === false){
+        toast.warning("This property is for Purchase only !");
+      }
+  try {
+    console.log(data);
+    let response = await axios.post("https://realstate.niledevelopers.com/User/RentalRequests", 
+   {
+    propertyId: (property.id),
+    rentTypeId: (property.realStateRentTypeId),
+    offeredPrice: offeredPrice,
+    notes:notes
+  },
+  {
+  headers: { 
+  Authorization: `Bearer ${sessionStorage.token}`,
+  'apiKey': apiKey,
+  "Content-Type": 'application/json',
+  'Accept-Language': 'browserLanguage',
+    } 
+  },
+    );
+      toast.success("request sent !");
+  } catch (error) {
+      const errorMsg = error.response?.data?.message || error.response?.data?.error.generalErrors || JSON.stringify(error.response?.data) || error.message;
+ 
+    }
+    };
  
 
 
@@ -117,7 +139,6 @@ console.log(response.data);
           <p className="mt-2">Loading proerty details ......</p>
         </div>
       )}
-
       {error && (
         <div className="alert alert-danger text-center" role="alert">
           {error}
@@ -153,6 +174,40 @@ console.log(response.data);
                 <p className="text-secondary leading-relaxed">
                   {property.description || "No description available for this property !"}
                 </p>
+
+                  <hr />
+                <div className="mt-2">
+                  
+                  <input
+                  className="mt-2"
+  type="text"
+  placeholder=" Offered Price"
+   value={offeredPrice}
+    onChange={(e) => setOfferedPrice(e.target.value)}
+/>
+<input 
+className="mt-2"
+type="text" 
+value={notes} 
+onChange={(e) => setNotes(e.target.value)} 
+placeholder="Notes"/>
+
+                  
+<button
+type="button" 
+className="btn btn-primary  mt-2"
+onClick={sendPurchaseRequests}
+>
+  Send Purchase Request
+</button>
+
+<button type="button" 
+className="btn btn-primary mx-1 mt-2"
+onClick={sendRentalRequests}
+>
+  Ask to Rent
+</button>
+                </div>
               </div>
             </div>
           </div>
@@ -194,11 +249,7 @@ onClick={sendVisitRequest}
   Ask for a visit
 </button>
 
-<button type="button" className="btn btn-primary mx-1"
-onClick={sendPurchaseRequests}
->
-   Purchase Request
-</button>
+
 
 
                 </div>
