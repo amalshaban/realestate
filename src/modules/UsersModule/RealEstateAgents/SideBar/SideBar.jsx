@@ -2,6 +2,9 @@ import '/src/modules/UsersModule/RealEstateAgents/AgentPannel.css';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../AuthModule/context/AuthContext';
+import Dropdown from 'react-bootstrap/Dropdown';
+
+
 
 export default function SideBar({ collapsed, setCollapsed }) {
   const toggleSidebar = () => setCollapsed(!collapsed);
@@ -12,6 +15,23 @@ export default function SideBar({ collapsed, setCollapsed }) {
     logOut(); 
     navigate("/home");
   };
+
+
+
+   
+ const navigatetovisit =  () => {
+  navigate("/agentLayout/visitrequestagent");
+ }
+
+ const navigatetopurchase =  () => {
+  navigate("/agentLayout/purchaserequestsagent");
+ }
+
+ const navigatetorent =  () => {
+  navigate("/agentLayout/rentrequestsagent");
+ }
+
+ 
   return (
     <div 
       className={`custom-sidebar ${collapsed ? 'collapsed' : ''}`}
@@ -48,11 +68,29 @@ export default function SideBar({ collapsed, setCollapsed }) {
             <i className="fa-solid fa-file-signature"></i>
             {!collapsed && <span>Contract</span>}
           </div>
-          <div className="sidebar-menu-item">
+          {/* <div className="sidebar-menu-item">
             <i className="fa-solid fa-envelope"></i>
             {!collapsed && <span>Messages</span>}
+          </div> */}
+           <div className="sidebar-menu-item">
+            <i className="fa-solid fa-person-circle-question"></i>
+            {!collapsed && <span>
+              <Dropdown>
+   <Dropdown.Toggle variant="info"> Requests
+   </Dropdown.Toggle> <Dropdown.Menu>
+   <Dropdown.Item
+       onClick={navigatetovisit}>Visit Requests</Dropdown.Item> 
+   <Dropdown.Item 
+   onClick={navigatetopurchase}
+   >Purchase Requests</Dropdown.Item> 
+   <Dropdown.Item onClick={navigatetorent}>Rental Requests</Dropdown.Item>
+    </Dropdown.Menu> 
+</Dropdown>
+              </span>}
           </div>
         </div>
+
+
 
         <div className="submenu2" style={{ marginTop: '2rem' }}>
           <div className="sidebar-menu-item">

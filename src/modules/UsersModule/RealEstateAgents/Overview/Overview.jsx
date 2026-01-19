@@ -57,18 +57,7 @@ useEffect(() => {
     getVisitRequests();
   }, []);
 
-  const navigate = useNavigate();
- const navigatetovisit =  () => {
-  navigate("/agentLayout/visitrequestagent");
- }
-
- const navigatetopurchase =  () => {
-  navigate("/agentLayout/purchaserequestsagent");
- }
-
- const navigatetorent =  () => {
-  navigate("/agentLayout/rentrequestsagent");
- }
+ 
   return (
     <div>
  <div className="container-fluid">
@@ -91,7 +80,7 @@ useEffect(() => {
               <div className="requests-head d-flex justify-content-between">
                 <h4 className="">Requests (12)</h4>
                 <button className="btn btn-primary" 
-                onClick={navigatetovisit}
+            
 >
                   See All
                 </button>
@@ -191,8 +180,6 @@ useEffect(() => {
       </div>
 
 
-<button onClick={navigatetopurchase}>Purchase Requests</button>
-<button onClick={navigatetorent}>Rental Requests</button>
     </div>
   )
 }
