@@ -66,7 +66,9 @@ useEffect(() => {
   navigate("/agentLayout/purchaserequestsagent");
  }
 
-
+ const navigatetorent =  () => {
+  navigate("/agentLayout/rentrequestsagent");
+ }
   return (
     <div>
  <div className="container-fluid">
@@ -190,6 +192,7 @@ useEffect(() => {
 
 
 <button onClick={navigatetopurchase}>Purchase Requests</button>
+<button onClick={navigatetorent}>Rental Requests</button>
     </div>
   )
 }

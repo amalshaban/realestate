@@ -47,13 +47,15 @@ useEffect(() => {
         <td>{purchaseRequest.requestDate}</td>
         <td>{purchaseRequest.offeredPrice}</td>
              <td>
-  {purchaseRequest.status === 1 ? (
-    <span style={{ color: 'green' }}>Accepted</span>
-  ) : purchaseRequest.status === 2 ? (
-    <span style={{ color: 'red' }}>Rejected</span>
-  ) : (
-    purchaseRequest.status 
-  )}
+ {purchaseRequest.status === 1 ? (
+  <span style={{ color: 'orange' }}>Pending</span>
+) : purchaseRequest.status === 2 ? (
+  <span style={{ color: 'green' }}>Accepted</span>
+) : purchaseRequest.status === 3 ? (
+  <span style={{ color: 'red' }}>Rejected</span>
+) : (
+  purchaseRequest.status // This is the final fallback
+)}
 </td>
         <td>{purchaseRequest.notes}</td>
         <td>

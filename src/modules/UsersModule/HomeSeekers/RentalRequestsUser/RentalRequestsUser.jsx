@@ -37,21 +37,31 @@ useEffect(() => {
       <th scope="col">notes</th>
     </tr>
   </thead>
-  {/* <tbody>
-  {purchaseRequests.length > 0 &&
-    purchaseRequests.map((purchaseRequest) => (
-      <tr key={purchaseRequest.requestId}>
-        <td>{purchaseRequest.propertyName}</td>
-        <td>{purchaseRequest.requestDate}</td>
-        <td>{purchaseRequest.offeredPrice}</td>
-        <td>{purchaseRequest.status}</td>
-        <td>{purchaseRequest.notes}</td>
+  <tbody>
+  {rentalRequests.length > 0 &&
+    rentalRequests.map((rentalRequest) => (
+      <tr key={rentalRequest.requestId}>
+        <td>{rentalRequest.propertyName}</td>
+        <td>{rentalRequest.requestDate}</td>
+        <td>{rentalRequest.offeredPrice}</td>
+        <td>
+           {rentalRequest.status === 1 ? (
+  <span style={{ color: 'orange' }}>Pending</span>
+) : rentalRequest.status === 2 ? (
+  <span style={{ color: 'green' }}>Accepted</span>
+) : rentalRequest.status === 3 ? (
+  <span style={{ color: 'red' }}>Rejected</span>
+) : (
+  rentalRequest.status // This is the final fallback
+)}
+        </td>
+        <td>{rentalRequest.notes}</td>
         <td>
         
           </td>      
       </tr>
     ))}
-</tbody> */}
+</tbody>
 </table>
 </>
 

@@ -42,6 +42,7 @@ import AgentLayout from "./modules/SharedModule/AgentLayout/AgentLayout.jsx";
 import PurchaseRquestsAgent from "./modules/UsersModule/RealEstateAgents/PurchaseRquestsAgent/PurchaseRquestsAgent.jsx";
 import PurchaseRequestsUser from "./modules/UsersModule/HomeSeekers/PurchaseRequestsUser/PurchaseRequestsUser.jsx";
 import RentalRequestsUser from "./modules/UsersModule/HomeSeekers/RentalRequestsUser/RentalRequestsUser.jsx";
+import RentRequestsAgent from "./modules/UsersModule/RealEstateAgents/RentRequestsAgent/RentRequestsAgent.jsx";
 
 function App() {
   console.log('App component loaded');
@@ -70,6 +71,7 @@ function App() {
         { path: "overview", element: <Overview /> },
         { path: "visitrequestagent", element: <VisitRequestAgent /> },
         { path: "purchaserequestsagent", element: <PurchaseRquestsAgent /> },
+        { path: "rentrequestsagent", element: <RentRequestsAgent /> },
         { path: "propertieslist", element: <PropertiesList /> },
       ],
     },
