@@ -17,9 +17,7 @@ export default function SideBar({ collapsed, setCollapsed }) {
   };
 
 
-const navigatetorent =  () => {
-  navigate("/agentLayout/rents");
- }
+
    
  const navigatetovisit =  () => {
   navigate("/agentLayout/visitrequestagent");
@@ -29,7 +27,7 @@ const navigatetorent =  () => {
   navigate("/agentLayout/purchaserequestsagent");
  }
 
- const navigatetorentsrequests =  () => {
+ const navigatetorent =  () => {
   navigate("/agentLayout/rentrequestsagent");
  }
 
@@ -68,15 +66,13 @@ const navigatetorent =  () => {
           </div>
           <div className="sidebar-menu-item">
             <i className="fa-solid fa-file-signature"></i>
-            {!collapsed && <span
-            onClick={navigatetorent}
-            >Rents</span>}
+            {!collapsed && <span>Contract</span>}
           </div>
-          {/* <div className="sidebar-menu-item">
+          <div className="sidebar-menu-item">
             <i className="fa-solid fa-envelope"></i>
             {!collapsed && <span>Messages</span>}
-          </div> */}
-           <div className="sidebar-menu-item">
+          </div>
+           {/* <div className="sidebar-menu-item">
             <i className="fa-solid fa-person-circle-question"></i>
             {!collapsed && <span>
               <Dropdown>
@@ -87,11 +83,11 @@ const navigatetorent =  () => {
    <Dropdown.Item 
    onClick={navigatetopurchase}
    >Purchase Requests</Dropdown.Item> 
-   <Dropdown.Item onClick={navigatetorentsrequests}>Rental Requests</Dropdown.Item>
+   <Dropdown.Item onClick={navigatetorent}>Rental Requests</Dropdown.Item>
     </Dropdown.Menu> 
 </Dropdown>
               </span>}
-          </div>
+          </div> */}
         </div>
 
 

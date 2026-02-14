@@ -36,7 +36,7 @@ export default function Search() {
     <div className="col-md-3">
     <div className='formsearchitems'>
     <label>Location</label>
-   <select className='searchSelect' >
+   <select className='searchSelect mt-0' >
     <option value="" disabled></option>
         {myData.map((country) => 
           <option key={country.id} value={country.id}>
@@ -84,7 +84,10 @@ export default function Search() {
     </div>
   
     <div className="col-md-3">
-<button className='btn btn-info '><i className="fa-solid fa-magnifying-glass"></i> Browse Properties</button>
+<button className='btn btn-info'>
+  <i className="fa-solid fa-magnifying-glass"></i>
+   Browse Properties
+   </button>
 </div>
 
 

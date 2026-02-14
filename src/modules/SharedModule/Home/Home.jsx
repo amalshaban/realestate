@@ -68,7 +68,7 @@ export default function Home() {
              <ul className="nav nav-tabs" id="myTab" role="tablist">
         <li className="nav-item" role="presentation">
           <button
-        
+            className="text-primary"
             id="home-tab"
             type="button"
             role="tab"
@@ -80,6 +80,7 @@ export default function Home() {
         </li>
         <li className="nav-item" role="presentation">
           <button
+          className="text-primary"
             id="profile-tab"
             type="button"
             role="tab"

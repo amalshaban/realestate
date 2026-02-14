@@ -4,96 +4,9 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 export default function VisitRequestAgent() {
-
-
   const apiKey = "Home@@3040";
 
-const handleDateSubmit = async (propertyVisitRequestId) => {
-  if (!dates[propertyVisitRequestId]) {  
-    submitVisitDateWithOutId();
-  }
-    else (dates[propertyVisitRequestId])
-    {
-      submitVisitDateWithId(propertyVisitRequestId);
-    }
-}
-
-
-
-
   
-const submitVisitDateWithOutId = async () => {
-  
-    
-    try{
- await axios.post("https://realstate.niledevelopers.com/Agent/VisitRequests/SuggestedDates", 
-      {
-        propertyVisitRequestId :  crypto.randomUUID(),
-        suggestedDateTime:  new Date().toISOString().slice(0, 16),
-      },
-      { headers: { 
-        Authorization: `Bearer ${sessionStorage.token}`,
-        'apiKey': apiKey,
-        "Content-Type": 'application/json',
-           'Accept-Language': 'browserLanguage',
-           
-          } }
-    );
-
-  
-    toast.success("Date submitted successfully");
-  } catch (error) {
-    console.error(error);
-    toast.error("Error submitting date ❌");
-  }
-};
-      
-    // toast.warn("Please select a date first");
-    // return;
-
-const submitVisitDateWithId = async (propertyVisitRequestId) => {
-  try{
- await axios.post("https://realstate.niledevelopers.com/Agent/VisitRequests/SuggestedDates", 
-      {
-        propertyVisitRequestId,
-        suggestedDateTime: dates[propertyVisitRequestId]
-      },
-      { headers: { 
-        Authorization: `Bearer ${sessionStorage.token}`,
-        'apiKey': apiKey,
-        "Content-Type": 'application/json',
-           'Accept-Language': 'browserLanguage',
-           
-          } }
-    );
-
-  
-    toast.success("Date submitted successfully");
-  } catch (error) {
-    console.error(error);
-    toast.error("Error submitting date ❌");
-  }
-}
-
-
-
-
-
-
-
-
-
-const [dates, setDates] = useState({});
-const handleDateChange = (requestId, value) => {
-  setDates(prev => ({
-    ...prev,
-    [requestId]: value
-  }));
-};
-
-
-
-
 
  const [visitRequests, setVisitRequests] = useState([]);
   useEffect(() => {
@@ -115,6 +28,83 @@ const handleDateChange = (requestId, value) => {
 
 
 
+
+const [dates, setDates] = useState({});
+const handleDateChange = ( value) => {
+  setDates(value);
+
+};
+
+const handleDateSubmit = async (propertyVisitRequestId) => {
+
+  if (!dates) {  
+    submitVisitDateWithOutId();
+  }
+    else (dates[propertyVisitRequestId])
+    {
+      submitVisitDateWithId(propertyVisitRequestId);
+    }
+}
+
+const submitVisitDateWithOutId = async () => {    
+    try{
+ await axios.post("https://realstate.niledevelopers.com/Agent/VisitRequests/SuggestedDates", 
+      {
+        propertyVisitRequestId :  crypto.randomUUID(),
+        suggestedDateTime:  new Date().toISOString().slice(0, 16),
+      },
+      { headers: { 
+        Authorization: `Bearer ${sessionStorage.token}`,
+        'apiKey': apiKey,
+        "Content-Type": 'application/json',
+           'Accept-Language': 'browserLanguage',
+           
+          } }
+    );
+    toast.success("Date submitted successfully");
+  } catch (error) {
+    console.error(error);
+    toast.error("Error submitting date ❌");
+  }
+};
+      
+    
+
+const submitVisitDateWithId = async (propertyVisitRequestId) => {
+  try{
+ await axios.post("https://realstate.niledevelopers.com/Agent/VisitRequests/SuggestedDates", 
+      {
+        propertyVisitRequestId: propertyVisitRequestId,
+        suggestedDateTime: dates,
+      },
+      { headers: { 
+        Authorization: `Bearer ${sessionStorage.token}`,
+        'apiKey': apiKey,
+        "Content-Type": 'application/json',
+           'Accept-Language': 'browserLanguage',
+           
+          } }
+    );
+
+  
+    toast.success("Date submitted successfully");
+  } catch (error) {
+    console.error(error);
+    toast.error("Error submitting date ❌");
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
  const [suggestVisitDateforonerequest, setSuggestVisitDateforonerequest] = useState([]);
 const suggestVisitDate = async (visitRequestId) => {
   try{
@@ -128,6 +118,30 @@ const suggestVisitDate = async (visitRequestId) => {
           } }
     );
     setSuggestVisitDateforonerequest(response.data);
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+    toast.error("Error loading dates ❌");
+  }
+};
+
+
+
+ const [deleteDate, setDeleteDate] = useState([]);
+const deleteVisitDate = async (suggestedDateId) => {
+  try{
+ let response = await axios.post("https://realstate.niledevelopers.com/Agent/VisitRequests/SuggestedDates/Delete", 
+        { suggestedDateId: suggestedDateId },
+      { headers: { 
+        Authorization: `Bearer ${sessionStorage.token}`,
+        'apiKey': apiKey,
+        "Content-Type": 'application/json',
+           'Accept-Language': 'browserLanguage',    
+          } }
+    );
+    setDeleteDate(response.data);
+  console.log(response.data);
+  suggestVisitDate(suggestedDateId);
   } catch (error) {
     console.error(error);
     toast.error("Error loading dates ❌");
@@ -158,14 +172,11 @@ const suggestVisitDate = async (visitRequestId) => {
         <td>{visitRequest.userPhone}</td>
         <td>
           <button
-          onClick={() => suggestVisitDate(visitRequest.requestId)}
+         onClick={() => suggestVisitDate(visitRequest.requestId)}
           type="button" data-bs-toggle="modal" data-bs-target="#myModal">
           Suggest Dates
           </button>
-          </td>
-
-        
-        
+          </td>        
       </tr>
    ) )}
 </tbody>
@@ -197,21 +208,40 @@ const suggestVisitDate = async (visitRequestId) => {
           <input
             type="datetime-local"
             className="form-control"
-            value={dates[suggestDate.requestId] || ""}
+            value={suggestDate.suggestedDateTime || ""}
             onChange={(e) =>
-              handleDateChange(suggestDate.requestId, e.target.value)
+              handleDateChange(e.target.value)
             }
           />
         </td>
         <td>
-          <button
+        {suggestDate.isAccepted ? "Accepted":(
+          <div className="">
+              <button
             type="button"
-            className="btn btn-sm btn-primary"
+            className="btn btn-sm btn-primary "
             onClick={() => handleDateSubmit(suggestDate.id)}
           >
             Change
           </button>
+
+            <button
+            type="button"
+            className="btn btn-sm btn-primary mx-2"
+            onClick={() => deleteVisitDate(suggestDate.id)}
+          
+          >
+            Delete  
+          </button>
+          </div>
+         
+        
+         )}
+      
+         
+         
         </td>
+        
       </tr>
     ))
   ) : (
@@ -221,16 +251,15 @@ const suggestVisitDate = async (visitRequestId) => {
         <input
           type="datetime-local"
           className="form-control"
-          // هنا نستخدم معرف افتراضي أو نتركه فارغاً للطلب الجديد
-          onChange={(e) => handleDateChange("new", e.target.value)}
+          onChange={(e) => handleDateChange(e.target.value)}
         />
       </td>
       <td>
         <button
           type="button"
           className="btn btn-sm btn-success"
-            onClick={() => handleDateSubmit()} // أو أرسلي المعرف المناسب للجديد
-        >
+            onClick={handleDateSubmit} 
+            >
           Add New Date
         </button>
       </td>
@@ -248,7 +277,6 @@ const suggestVisitDate = async (visitRequestId) => {
 >
   Close
 </button>
-{/* <button type="submit" className="btn btn-primary">Save changes</button> */}
       </div>
     </div>
   </div>

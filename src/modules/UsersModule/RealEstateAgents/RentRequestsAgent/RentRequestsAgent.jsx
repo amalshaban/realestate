@@ -44,6 +44,7 @@ const acceptrentrequest = async (rentRequestId) => {
 
   return (
     <div>
+      <h2 className="mb-4 text-primary">📋 Rent Requests</h2>
 <table className="table">
   <thead>
     <tr>

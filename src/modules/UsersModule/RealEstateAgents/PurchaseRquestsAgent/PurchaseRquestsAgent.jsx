@@ -22,6 +22,12 @@ export default function PurchaseRquestsAgent() {
     getPurchaseRequests();
   }, []);
 
+
+  const [showFirst, setShowFirst] = useState(true); 
+  const handleClick = () => { 
+  setShowFirst((prev) => !prev);
+ };
+
 const acceptpurchaserequest = async (purchaseRequestId) => {
   try{
  let response = await axios.post("https://realstate.niledevelopers.com/Agent/PurchaseRequests/Accept", 
@@ -34,6 +40,7 @@ const acceptpurchaserequest = async (purchaseRequestId) => {
           } }
     );
     toast.success("purchase request accepted successfully ✅");
+    handleClick();
   } catch (error) {
     console.error(error);
     toast.error("Error loading data ❌");
@@ -44,6 +51,7 @@ const acceptpurchaserequest = async (purchaseRequestId) => {
 
   return (
     <div>
+      <h2 className="mb-4 text-primary">📋 Purchase Requests</h2>
 <table className="table">
   <thead>
     <tr>
@@ -65,12 +73,12 @@ const acceptpurchaserequest = async (purchaseRequestId) => {
         <td>{purchaseRequest.userPhone}</td>
         <td>{purchaseRequest.notes}</td>
         <td>
-          <button  onClick={() => acceptpurchaserequest(purchaseRequest.requestId)}>Accept</button>       
-        
-          </td>
-
-        
-        
+          {showFirst ? (
+            <button  onClick={() => acceptpurchaserequest(purchaseRequest.requestId)}>Accept</button>       
+          ) : (
+            <button className='bg-success px-3 py-1'>Accepted</button>
+          )}
+        </td>       
       </tr>
    ) )}
 </tbody>

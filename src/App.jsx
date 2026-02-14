@@ -17,7 +17,7 @@ import DeleteProperty from "./modules/PropertiesModule/DeleteProperty/DeleteProp
 import SignUpAgent from "./modules/AuthModule/SignUpAgent/SignUpAgent.jsx";
 import AuthContextProvider from "./modules/AuthModule/context/AuthContext.jsx";
 import ProtectedRoute from "./modules/SharedModule/ProtectedRoute/ProtectedRoute.jsx";
-
+import SideBarUser from "./modules/UsersModule/HomeSeekers/SideBarUser/SideBarUser.jsx"
 import MultiStepForm from "./modules/AuthModule/AgentRegProccess/MultiStepForm.jsx"
 import Step1 from "./modules/AuthModule/AgentRegProccess/Step1.jsx";
 import Step2 from "./modules/AuthModule/AgentRegProccess/Step2.jsx";
@@ -45,6 +45,8 @@ import PurchaseRquestsAgent from "./modules/UsersModule/RealEstateAgents/Purchas
 import PurchaseRequestsUser from "./modules/UsersModule/HomeSeekers/PurchaseRequestsUser/PurchaseRequestsUser.jsx";
 import RentalRequestsUser from "./modules/UsersModule/HomeSeekers/RentalRequestsUser/RentalRequestsUser.jsx";
 import RentRequestsAgent from "./modules/UsersModule/RealEstateAgents/RentRequestsAgent/RentRequestsAgent.jsx";
+import Rents from "./modules/UsersModule/RealEstateAgents/Rents/Rents.jsx";
+import AddRent from "./modules/UsersModule/RealEstateAgents/AddRent/AddRent.jsx";
 
 function App() {
   console.log('App component loaded');
@@ -75,6 +77,8 @@ function App() {
         { path: "purchaserequestsagent", element: <PurchaseRquestsAgent /> },
         { path: "rentrequestsagent", element: <RentRequestsAgent /> },
         { path: "propertieslist", element: <PropertiesList /> },
+        { path: "rents", element: <Rents /> },
+        { path: "addrent", element: <AddRent /> },
       ],
     },
     // 3. مسارات الـ Home Seeker (مستقلة تماماً)
@@ -91,6 +95,7 @@ function App() {
         { path: "visitrequestuser", element: <VisitRequestUser /> },
         { path: "purchaserequestsuser", element: <PurchaseRequestsUser /> },
         { path: "rentalrequestsuser", element: <RentalRequestsUser /> },
+        { path: "sidebaruser", element: <SideBarUser /> },
       ],
     },
     // 4. مسارات الـ Auth

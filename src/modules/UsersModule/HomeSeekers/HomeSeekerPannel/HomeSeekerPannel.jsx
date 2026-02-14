@@ -4,11 +4,12 @@ import PurchaseRequestsUser from '../PurchaseRequestsUser/PurchaseRequestsUser';
 import RentalRequestsUser from '../RentalRequestsUser/RentalRequestsUser';
 import VisitRequestUser from '../VisitRequestUser/VisitRequestUser.jsx';
 import '../HomeSeekerPannel/homeseekerpannel.css';
+import SideBarUser from '../SideBarUser/SideBarUser.jsx';
 
 export default function HomeSeekerPannel() {
   return (
     <div className="container-fluid py-4 px-lg-5 bg-light min-vh-100">
-      
+
       {/* --- Header Section --- */}
       <div className="row mb-4 align-items-center">
         <div className="col-md-8">

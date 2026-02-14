@@ -71,10 +71,7 @@ const viewSuggestedDates = async (visitRequestId) => {
 
   return (
   <>
-    <div className="container-fluid my-4">
-      <h2 className="mb-4 text-primary">📋 Visit Requests</h2>
- <div>
-              <h3 className="py-3">Your Requests</h3>
+            
 <table className="table">
   <thead>
     <tr>
@@ -100,7 +97,7 @@ const viewSuggestedDates = async (visitRequestId) => {
 ) : visitRequest.status === 3 ? (
   <span style={{ color: 'red' }}>Rejected</span>
 ) : (
-  visitRequest.status // This is the final fallback
+  visitRequest.status 
 )}
       </td>
         <td>
@@ -115,13 +112,6 @@ const viewSuggestedDates = async (visitRequestId) => {
 </tbody>
 
 </table>
-
-
-
-    </div>
-
-
-
 
     <div className="modal fade" id="myModal" tabindex="-1">
   <div className="modal-dialog" role="document">
@@ -170,7 +160,7 @@ const viewSuggestedDates = async (visitRequestId) => {
     </div>
   </div>
 </div>
-    </div>
+    
 </>
   );
 }

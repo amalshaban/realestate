@@ -37,6 +37,12 @@ export const EmailValidation = {
   },
 };
 
+export const FieldValidation = {
+  required: "Field is required",
+  pattern: {
+    message: "Please enter a valid field",
+  },
+};
 const RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{4,}$/;
 
 export const PasswordValidation = {
@@ -46,6 +52,10 @@ export const PasswordValidation = {
     message:
       "Password must be at least 4 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character",
   },
+
+
+ 
+
 };
 
 

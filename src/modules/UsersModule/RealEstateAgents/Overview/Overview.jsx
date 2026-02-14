@@ -14,6 +14,7 @@ export default function Overview() {
   useEffect(() => {
     const language = navigator.language || navigator.userLanguage;
     setBrowserLanguage(language);
+    
   }, []);
   const apiKey = "Home@@3040";
   
@@ -65,8 +66,8 @@ useEffect(() => {
                       <div className="col-sm-12 col-md-8">
                         {agentProfile ? (
   <div>
-    <img src={`https://realstate.niledevelopers.com/images/${agentProfile.logoPath}`}/>
-    <h4>{agentProfile.nameEn}</h4>
+    <h4>Welcome, <span className='text-primary'>{agentProfile.nameEn} </span>to Your Dashboard</h4>
+  
     <p>{agentProfile.nameAr}</p>
   </div>
 ) : (
