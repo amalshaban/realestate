@@ -36,7 +36,7 @@ import AreaandDesc from "./modules/PropertiesModule/AddProperty/AreaandDesc.jsx"
 import PhotosandVideos from "./modules/PropertiesModule/AddProperty/PhotosandVideos.jsx"
 import PropertyReview from "./modules/PropertiesModule/AddProperty/PropertyReview.jsx"
 import PropertyDetails from "./modules/PropertiesModule/PropertyDetails/PropertyDetails.jsx";
-import VisitRequestAgent from "./modules/UsersModule/RealEstateAgents/visitRequestAgent/visitRequestAgent.jsx";
+import VisitRequestAgent from "./modules/UsersModule/RealEstateAgents/VisitRequestAgent/VisitRequestAgent.jsx";
 import HomeSeekerPannel from "./modules/UsersModule/HomeSeekers/HomeSeekerPannel/HomeSeekerPannel.jsx";
 import VisitRequestUser from "./modules/UsersModule/HomeSeekers/VisitRequestUser/VisitRequestUser.jsx";
 import HomeSeekerLayout from "./modules/SharedModule/HomeSeekerLayout/HomeSeekerLayout.jsx";
