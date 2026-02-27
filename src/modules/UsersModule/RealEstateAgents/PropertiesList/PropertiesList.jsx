@@ -20,7 +20,7 @@ export default function PropertiesList() {
   useEffect(() => {
     const getProperties = async () => {
       try {
-        let response = await axios.get('https://realstate.niledevelopers.com/api/agent/properties', {
+        let response = await axios.get('https://realstate.niledevelopers.com/agent/properties', {
           headers: {
             apiKey: apiKey,
             Authorization: `Bearer ${sessionStorage.token}`,
