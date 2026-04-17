@@ -7,11 +7,10 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
   const {
     register,
     handleSubmit,
+    watch, // 1. أضفنا watch هنا
     formState: { errors },
   } = useForm({
     defaultValues: {
-      Title: formData.Title || "",
-      TitleAr: formData.TitleAr || "",
       Description: formData.Description || "",
       Address: formData.Address || "",
       Price: formData.Price || "",
@@ -22,10 +21,12 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
       districtId: formData.districtId || '',
       realStateRentTypeId: formData.realStateRentTypeId || '',
       realStatePurposeId: formData.realStatePurpose || formData.realStatePurposeId || '',
-      
       ForRent: formData.ForRent || false,
     },
   });
+
+  // 2. نقوم بمراقبة قيمة ForRent
+  const isForRent = watch("ForRent");
 
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
@@ -35,7 +36,6 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
   const [selectedCountry, setSelectedCountry] = useState(formData.countryId || '');
   const [selectedCity, setSelectedCity] = useState(formData.cityId || '');
 
-  
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
@@ -84,32 +84,11 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
         <div className="card-body p-4">
           <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
             
-            {/* --- Section 1: Basic Info --- */}
             <div className="row g-3 mb-4">
               <div className="col-md-6">
-                <label className="form-label fw-semibold">Title (English)</label>
-                <input
-                  className={`form-control ${errors.Title ? 'is-invalid' : ''}`}
-                  placeholder="e.g. Luxury Apartment"
-                  {...register("Title", { required: "Title is required" })}
-                />
-                {errors.Title && <div className="invalid-feedback">{errors.Title.message}</div>}
-              </div>
-
-              <div className="col-md-6">
-                <label className="form-label fw-semibold">Title (Arabic)</label>
-                <input
-                  dir="rtl"
-                  className={`form-control ${errors.TitleAr ? 'is-invalid' : ''}`}
-                  placeholder="مثال: شقة فاخرة"
-                  {...register("TitleAr", { required: "Arabic title is required" })}
-                />
-              </div>
-
-              <div className="col-md-4">
                 <label className="form-label fw-semibold">Price</label>
                 <div className="input-group">
-                  <span className="input-group-text">$</span>
+                  <span className="">$</span>
                   <input
                     type="number"
                     className="form-control"
@@ -118,15 +97,7 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
                 </div>
               </div>
 
-              <div className="col-md-4">
-                <label className="form-label fw-semibold">Rent Type</label>
-                <select className="form-select" {...register('realStateRentTypeId')}>
-                  <option value="">Select type</option>
-                  {rentTypes.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
-                </select>
-              </div>
-
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <label className="form-label fw-semibold">Purpose</label>
                 <select className="form-select" {...register('realStatePurposeId')}>
                   <option value="">Select purpose</option>
@@ -137,7 +108,6 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
 
             <hr className="text-muted" />
 
-            {/* --- Section 2: Location --- */}
             <h6 className="mb-3 text-secondary fw-bold">Location Details</h6>
             <div className="row g-1 mb-4">
               <div className="col-md-4">
@@ -179,7 +149,6 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
 
             <hr className="text-muted" />
 
-            {/* --- Section 3: Contact & Description --- */}
             <div className="row g-3">
               <div className="col-md-6">
                 <label className="form-label fw-semibold">Contact Phone</label>
@@ -191,14 +160,29 @@ const GeneralInfo = ({ formData, savePartialData, nextStep, prevStep }) => {
                 <textarea rows="1" className="form-control" placeholder="Brief about the property" {...register("Description")} />
               </div>
 
+              <div className="row g-3 mt-2">
+                <div className="col-md-6">
+                  <label className="form-label fw-semibold"> For Rent </label>
+                  <input 
+                    type="checkbox" 
+                    className="form-check-input ms-2" 
+                    {...register("ForRent")} 
+                  />
+                </div>
 
-               <div className="col-md-6">
-                <label className="form-label fw-semibold"> For Rent </label>
-                <input type="checkbox" className="form-check-input" {...register("ForRent")} defaultChecked={formData.ForRent} />
+                {/* 3. هنا الشرط: إذا كان isForRent قيمته true سيظهر هذا الجزء */}
+                {isForRent && (
+                  <div className="col-md-6">
+                    <label className="form-label fw-semibold">Rent Type</label>
+                    <select className="form-select" {...register('realStateRentTypeId')}>
+                      <option value="">Select type</option>
+                      {rentTypes.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+                    </select>
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* --- Navigation Buttons --- */}
             <div className="d-flex justify-content-between mt-5 pt-3 border-top">
               <button type="button" className="btn btn-secondary px-4" onClick={prevStep}>
                 <i className="bi bi-arrow-left me-2"></i> Previous

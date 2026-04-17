@@ -13,7 +13,8 @@ import { LOCATIONS_URLs, USERS_URLs } from "../../../constants/EndPoints.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import MultiStepForm from "../../AuthModule/AgentRegProccess/MultiStepForm.jsx";
 import { AuthorizedToken } from "../../../constants/Validations.js";
-
+import { Container, Row, Col, Form, Button, InputGroup, Nav } from 'react-bootstrap';
+import ViewProperties from "../../PropertiesModule/ViewProperties/ViewProperties.jsx";
 
 
 // import { useTranslation } from 'react-i18next';
@@ -41,77 +42,22 @@ export default function Home() {
    
    
 {/* slider section */}
-      <div className="container-fluid">
-        <div className="row">
+      <div className="container-fluid p-0">
+      
           <div className="col-md-12">
+        <div className="slidersection text-center text-white d-flex flex-wrap align-items-center">
         
-  
-        <div className="slidersection">
-          <div className="col-md-8 col-sm-12 mx-auto">
-                 <div className="slidertext">
-              <h1 className="">
-                <span className="">Discover</span> high-potential
-                projects, Showcase your properties, and{" "}
-                <span className="">Connect</span> with serious
-                partners.
-              </h1>
-              {/* <p className="pt-3">
-                A smart real estate platform connecting investors, developers,
-                and professionals all in one powerful ecosystem.
-              </p> */}
-         
-            </div>
-
+  <div className="row">
+    <div className="col-md-12">
+         <div className="slidertext">
+           <h1 className="hero-title fw-bold mb-3">Find Your Dream Home in Saudi Arabia</h1>
+           <p className="hero-subtitle ">The Kingdom's Leading Real Estate Platform</p>
           </div>
-       <div className="col-md-8 col-sm-12 mx-auto">
-         <div className="searchsection">
-             <ul className="nav nav-tabs" id="myTab" role="tablist">
-        <li className="nav-item" role="presentation">
-          <button
-            className="text-primary"
-            id="home-tab"
-            type="button"
-            role="tab"
-            aria-controls="home"
-            
-          >
-            Buy
-          </button>
-        </li>
-        <li className="nav-item" role="presentation">
-          <button
-          className="text-primary"
-            id="profile-tab"
-            type="button"
-            role="tab"
-            aria-controls="profile"Handle click with React state
-          >
-            Rent
-          </button>
-        </li>
-      </ul>
+      <Search/>      
+  </div>
+    </div>  
 
-      <div className="tab-content" id="myTabContent">
-        <div
-          id="home"
-          role="tabpanel"
-          aria-labelledby="home-tab"
-        >
-          <Search />
-        </div>
-        <div
-          id="profile"
-          role="tabpanel"
-          aria-labelledby="profile-tab"
-        >
-         <h1 className=""> Content of Rent </h1>
-        </div>
-      </div>
-            </div>
-       </div>
-           
-          </div>
-
+      
 
 
 
@@ -125,10 +71,10 @@ export default function Home() {
 
     
     
+    <ViewProperties/>
     
     
-    
-    
+{/*     
     <Services/>
     
     
@@ -165,11 +111,13 @@ export default function Home() {
         </div>
  
   
-
+ */}
 
     <Footer/>
 
+    <>
     
+    </>
 
     </>
   );

@@ -27,12 +27,7 @@ const MultiStepForm = () => {
     const mapped = {};
     Object.entries(data || {}).forEach(([key, value]) => {
       switch (key) {
-        case 'Title':
-          mapped.title = value;
-          break;
-        case 'TitleAr':
-          mapped.titleAr = value;
-          break;
+       
         case 'Description':
           mapped.description = value;
           break;

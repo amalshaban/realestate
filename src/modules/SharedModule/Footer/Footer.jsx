@@ -1,75 +1,74 @@
-import React from 'react'
-import { Link, Links } from 'react-router-dom'
-import gmailimg from "../../../assets/imgs/Vector.png"
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
+
+// ─── Constants ────────────────────────────────────────────────────────────────
+const FOOTER_LINKS = {
+  Company: [
+    { label: 'About Us', to: '/about'   },
+    { label: 'Careers',  to: '/careers' },
+    { label: 'Contact',  to: '/contact' },
+  ],
+  Services: [
+    { label: 'Buy Property',  to: '/buy'    },
+    { label: 'Rent Property', to: '/rent'   },
+    { label: 'Sell Property', to: '/sell'   },
+    { label: 'Find Agents',   to: '/agents' },
+  ],
+  Support: [
+    { label: 'Help Center',      to: '/help'    },
+    { label: 'Terms of Service', to: '/terms'   },
+    { label: 'Privacy Policy',   to: '/privacy' },
+  ],
+};
+
+// ─── Sub Components ───────────────────────────────────────────────────────────
+const FooterCol = ({ title, links }) => (
+  <Col md={2}>
+    <div className="footer-col">
+      <h6>{title}</h6>
+      <ul>
+        {links.map(link => (
+          <li key={link.label}>
+            <Link to={link.to}>{link.label}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </Col>
+);
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 export default function Footer() {
   return (
-    <>
-      <div className="container-fluid">
-        <div className="footer px-5 py-3">
-          <div className="row py-3">
-            <div className="col-md-12 text-end">
-                    <Link to="" className='footerlink' >Search a home?</Link>
-                    <div className="btn btn-primary px-4">Get Home Now <i className="fa-solid fa-arrow-right"></i></div>
+    <footer className="footer-wrapper">
+      <Container>
+        <Row>
+
+          {/* ── Brand ── */}
+          <Col md={4}>
+            <div className="footer-brand d-flex align-items-center gap-2">
+              <i className="fa-solid fa-house" />
+              <span>Homiom</span>
             </div>
-          </div>
-          <hr/>
-          <div className="row py-3">
-            <div className="col-md-4">
-              <h3 className="">LOGO</h3>
-              <p className="text-primary fs-7">Stay connected to buyers, sellers, and professionals. Discover, market, and invest with ease – all in one platform.</p>
-              <h6 className="py-2 text-primary">Follow Us</h6>
-              <div className="social d-flex align-items-center">
-                <i className="fa-brands fa-facebook f"></i>
-                <i className="fa-brands fa-x-twitter t"></i>
-                <i className="fa-brands fa-linkedin l"></i>
-                <img className="" src={gmailimg}/>
-              </div>
-            </div>
-            <div className="col-md-2">
-              <h6 className="py-2 text-primary">Explore</h6>
-              <ul className="">
-                <li className="">Rent</li>
-                <li className="">Buy</li>
-                <li className="">Marketing Agencies</li>
-                <li className="">Professional Developers</li>
-                <li className="">Photogrphers</li>
-              </ul>
-            </div>
-            <div className="col-md-2">
-              <h6 className="py-2 text-primary">Services</h6>
-              <ul className="">
-                <li className="">Marketing</li>
-                <li className="">Valuation and Pricing</li>
-                <li className="">Advisory and Investment </li>
-                <li className="">Photography</li>
-                <li className="">Sales and Purchase Management</li>
-              </ul>
-            </div>
-            <div className="col-md-2">
-              <h6 className="py-2 text-primary">Contact Information</h6>
-              <div className="">
-            <i className="fa-solid fa-phone text-primary p-1"></i> <Link>+966 155 154 222</Link>
-              </div> <div className="">
-           <i className="fa-solid fa-envelope text-primary p-1"></i><Link> hotmail@gmail.com </Link>
-              </div>
-               <div className="">
-           <i className="fa-solid fa-location-dot text-primary p-1"></i> <Link> Tai’f, Saudi arabia </Link>
-              </div>
-              </div>
-            <div className="col-md-2 d-flex flex-column justify-content-end">
-              <h6 className="py-2 text-primary">Subscribe to our Newsletter</h6>
-               
-<div className="input-group mb-3">
-  <input type="text" className="form-control" placeholder="Email Address" aria-label="Recipient’s 
-  username" aria-describedby="basic-addon2"/>
-  <span className="input-group-text bg-primary" id="basic-addon2">  <i className="fa-solid text-white fa-angle-right"></i></span>
-</div>
-               
-           
-            </div>
-          </div>
+            <p className="footer-desc">
+              Saudi Arabia's leading real estate platform
+            </p>
+          </Col>
+
+          {/* ── Link Columns ── */}
+          {Object.entries(FOOTER_LINKS).map(([title, links]) => (
+            <FooterCol key={title} title={title} links={links} />
+          ))}
+
+        </Row>
+
+        {/* ── Bottom Bar ── */}
+        <div className="footer-bottom">
+          <p>© 2026 Homiom.com. All rights reserved.</p>
         </div>
-      </div>
-    </>
-  )
+
+      </Container>
+    </footer>
+  );
 }

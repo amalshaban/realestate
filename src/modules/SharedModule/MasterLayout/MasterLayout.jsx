@@ -7,7 +7,6 @@ export default function MasterLayout() {
   console.log('MasterLayout rendered');
   return (
     <>
-    <ContactBar/>
     <NavBar/>
     <Outlet/>
     </>

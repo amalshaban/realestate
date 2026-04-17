@@ -32,8 +32,7 @@ const Review = ({ formData, prevStep }) => {
 
     try {
       // General info: accept both camelCase and PascalCase coming from previous steps
-      payload.append('title', formData.title || formData.Title || '');
-      payload.append('titleAr', formData.titleAr || formData.TitleAr || '');
+   payload.append('title', formData.title || formData.Description || 'New Property');
       payload.append('description', formData.description || formData.Description || '');
       
       
