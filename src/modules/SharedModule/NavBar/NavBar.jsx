@@ -82,7 +82,7 @@ export default function NavBar() {
 
   const handleDashboard = useCallback(() => {
     if (role === 'Normal') navigate('/homeSeekerLayout');
-    else if (role === 'Agent') navigate('/agentlayout/overview');
+    else if (role === 'Agent') navigate('/AgentPannel');
   }, [role, navigate]);
 
   return (
@@ -134,13 +134,13 @@ export default function NavBar() {
             {/* Guest */}
             {role === 'anonymous' && <>
               <Nav.Link
-                onClick={() => navigate('/auth/join')}
+                onClick={() => navigate('/auth/LogIn')}
                 className="fw-bold text-dark me-3"
               >
                 {t('login') || 'Login'}
               </Nav.Link>
               <Button
-                onClick={() => navigate('/auth/join/signup')}
+                onClick={() => navigate('/auth/join')}
                 style={{
                   backgroundColor: '#0b0d2a',
                   border: 'none',

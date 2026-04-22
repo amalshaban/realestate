@@ -4,31 +4,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
-import { createHashRouter, RouterProvider, Outlet } from "react-router-dom";
+import { createHashRouter, RouterProvider, Outlet, Navigate } from "react-router-dom";
 import MasterLayout from "./modules/SharedModule/MasterLayout/MasterLayout";
 import Home from "./modules/SharedModule/Home/Home.jsx";
-import LogIn from "./modules/AuthModule/LogIn/LogIn.jsx"
-import SignUp from "./modules/AuthModule/SignUp/SignUp.jsx";
 import ViewProperties from "./modules/PropertiesModule/ViewProperties/ViewProperties.jsx";
 import AddProperty from "./modules/PropertiesModule/AddProperty/AddProperty.jsx";
 import NotFound from "./modules/SharedModule/NotFound/NotFound.jsx";
 import EditProperty from "./modules/PropertiesModule/EditProperty/EditProperty.jsx";
 import DeleteProperty from "./modules/PropertiesModule/DeleteProperty/DeleteProperty.jsx";
-import SignUpAgent from "./modules/AuthModule/SignUpAgent/SignUpAgent.jsx";
 import AuthContextProvider from "./modules/AuthModule/context/AuthContext.jsx";
 import ProtectedRoute from "./modules/SharedModule/ProtectedRoute/ProtectedRoute.jsx";
-import SideBarUser from "./modules/UsersModule/HomeSeekers/SideBarUser/SideBarUser.jsx"
-import MultiStepForm from "./modules/AuthModule/AgentRegProccess/MultiStepForm.jsx"
-import Step1 from "./modules/AuthModule/AgentRegProccess/Step1.jsx";
-import Step2 from "./modules/AuthModule/AgentRegProccess/Step2.jsx";
-import Step3 from "./modules/AuthModule/AgentRegProccess/Step3.jsx";
-import Review from "./modules/AuthModule/AgentRegProccess/Review.jsx";
+import SideBarUser from "./modules/UsersModule/HomeSeekers/SideBarUser/SideBarUser.jsx";
 import Overview from "./modules/UsersModule/RealEstateAgents/Overview/Overview.jsx";
-import AgentPannel from "./modules/UsersModule/RealEstateAgents/AgentPannel/AgentPannel.jsx";
-import SideBar from "./modules/UsersModule/RealEstateAgents/SideBar/SideBar.jsx";
+import AgentPannel from "../src/modules/UsersModule/RealEstateAgents/AgentPannel/AgentPannel.jsx";
 import PropertiesList from "./modules/UsersModule/RealEstateAgents/PropertiesList/PropertiesList.jsx";
 import Join from "./modules/AuthModule/Join/Join.jsx";
-import AuthRight from "./modules/AuthModule/AuthRight/AuthRight.jsx";
 import PropertyLayout from "./modules/SharedModule/PropertyLayout/PropertyLayout.jsx";
 import PropertyMultiStepForm from "./modules/PropertiesModule/AddProperty/PropertyMultiStepForm.jsx"
 import Location from "./modules/PropertiesModule/AddProperty/Location.jsx"
@@ -47,6 +37,11 @@ import RentalRequestsUser from "./modules/UsersModule/HomeSeekers/RentalRequests
 import RentRequestsAgent from "./modules/UsersModule/RealEstateAgents/RentRequestsAgent/RentRequestsAgent.jsx";
 import Rents from "./modules/UsersModule/RealEstateAgents/Rents/Rents.jsx";
 import AddRent from "./modules/UsersModule/RealEstateAgents/AddRent/AddRent.jsx";
+import LogIn from '../src/modules/AuthModule/LogIn/LogIn.jsx';
+import SignUpNormal from '../src/modules/AuthModule/Join/SignUpNormal/SignUpNormal.jsx';
+import AgentSignUp from '../src/modules/AuthModule/Join/SignUpAgent/SignUpAgent.jsx';
+
+
 
 function App() {
   console.log('App component loaded');
@@ -62,25 +57,29 @@ function App() {
       ],
     },
     // 2. مسارات الـ Agent (مستقلة تماماً)
+  {
+  path: 'agentpannel',
+  element: <AgentPannel />,
+  children: [
+    
+    { index: true, element: <Navigate to="overview" replace /> },
     {
-      path: "/agentLayout",
-      element: (
-        <ProtectedRoute>
-          <AgentLayout />
-        </ProtectedRoute>
-      ),
-      errorElement: <NotFound />,
+      path: '',
       children: [
-        { index: true, element: <Overview /> },
-        { path: "overview", element: <Overview /> },
-        { path: "visitrequestagent", element: <VisitRequestAgent /> },
-        { path: "purchaserequestsagent", element: <PurchaseRquestsAgent /> },
-        { path: "rentrequestsagent", element: <RentRequestsAgent /> },
-        { path: "propertieslist", element: <PropertiesList /> },
-        { path: "rents", element: <Rents /> },
-        { path: "addrent", element: <AddRent /> },
+        { index: true,           element: <Navigate to="overview" replace /> },
+       { path: 'property-info', element: <Overview /> },
+      //  { path: 'media-assets',  element: <MediaAssets />  },
+      //  { path: 'ejar-settings', element: <EjarSettings /> },
+      //   { path: 'verification',  element: <Verification /> },
+      //   { path: 'review',        element: <Review />       },
       ],
     },
+    { path: 'overview',   element: <Overview />   },
+    //  { path: 'properties', element: <Properties /> },
+    // { path: 'profile',    element: <Profile />    },
+    // { path: 'help',       element: <Help />       },
+  ],
+},
     // 3. مسارات الـ Home Seeker (مستقلة تماماً)
     {
       path: "/homeSeekerLayout",
@@ -99,25 +98,21 @@ function App() {
       ],
     },
     // 4. مسارات الـ Auth
-    {
-      path: "/auth",
-      element: <Outlet />, // No layout for auth pages
-      errorElement: <NotFound />,
-      children: [
-        { index: true, element: <LogIn /> },
-        { path: "login", element: <LogIn /> },
-        { 
-          path: "join", 
-          element: <Join />,
-          children: [
-            { index: true, element: <AuthRight /> },
-            { path: "signup", element: <SignUp /> },
-            { path: "signupagent", element: <SignUpAgent /> },
-          ]
-        },
-        { path: "multistepform", element: <MultiStepForm /> },
-      ],
-    },
+   {
+  path: "/auth",
+  element: <Outlet />,
+  errorElement: <NotFound />,
+  children: [
+    { index: true, element: <LogIn /> },
+    { path: "login",                    element: <LogIn /> },
+    { path: "join",                     element: <Join /> },
+  
+     { path: "join/signupnormal",       element: <SignUpNormal /> },
+    { path: "join/signupagent",        element: <AgentSignUp /> },
+    // { path: "join/signup/owner",        element: <OwnerSignUp /> },
+    // { path: "join/signup/developer",    element: <DeveloperSignUp /> },
+  ],
+},
     // 5. مسارات الخصائص (Properties)
     {
       path: "/properties",
@@ -127,7 +122,6 @@ function App() {
         { index: true, element: <ViewProperties /> },
         { path: "viewproperties", element: <ViewProperties /> },
         { path: "property/:id", element: <PropertyDetails /> },
-        { path: "sidebar", element: <SideBar /> },
 
         { 
           path: "addproperty", 

@@ -1,37 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { Outlet } from "react-router-dom";
-import SideBar from '../SideBar/SideBar.jsx';
-import '/src/modules/UsersModule/RealEstateAgents/AgentPannel.css';
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 import AgentNav from '../AgentNav/AgentNav.jsx';
-import NavBar from '../../../SharedModule/NavBar/NavBar.jsx';
+import AgentSideBar    from '../AgentSideBar/AgentSideBar.jsx';
+// import AgentRightPanel from './AgentRightPanel/AgentRightPanel.jsx';
+import '../../RealEstateAgents/AgentPannel.css';
 
 export default function AgentPannel() {
-
-  const [collapsed, setCollapsed] = useState(false);
-  useEffect(() => {
-  }, []);
-
   return (
-    <div style={{ display: "flex" }}>
+    <>
       
-      <SideBar collapsed={collapsed} setCollapsed={setCollapsed} />
-      <div
-        style={{
-          marginLeft: collapsed ? '80px' : '250px',
-          transition: 'margin-left 0.3s ease',
-          padding: '20px',
-          width: '100%',
-        }}
-        className="container-fluid"
-      >
-      <AgentNav/>
-        <div className="row mt-3">
-          <div className="col-12">
+       <>
+      <AgentNav />
+      <div className="container-fluid px-0 agent-panel-page">
+        <div className="row g-0 h-100">
+          <div className="col-md-3 agent-panel-sidebar">
+            <AgentSideBar  />
+          </div>
+          <div className="col-md-6 agent-panel-content">
             <Outlet />
           </div>
+          <div className="col-md-3 agent-panel-right">
+            {/* <AgentRightPanel /> */}right
+          </div>
         </div>
-
       </div>
-    </div>
+    </>
+    
+    </>
   );
 }

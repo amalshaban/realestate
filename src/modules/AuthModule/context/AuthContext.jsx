@@ -1,40 +1,50 @@
-import { jwtDecode } from "jwt-decode";
-import { useEffect, useState, createContext, useCallback } from "react";
+import { jwtDecode } from 'jwt-decode';
+import { useEffect, useState, createContext, useCallback } from 'react';
 
 export const AuthContext = createContext(null);
 
 export default function AuthContextProvider({ children }) {
+
   const [loginData, setLoginData] = useState(null);
 
-  // 1. Logic to decode and save user data
-  const saveLoginData = useCallback(() => {
-    const encodedToken = sessionStorage.getItem("token");
-    if (encodedToken) {
-      try {
-        const decodedToken = jwtDecode(encodedToken);
-        setLoginData(decodedToken);
-      } catch (error) {
-        console.error("Invalid token format:", error);
-        logOut(); // Clear storage if the token is corrupted
-      }
-    } else {
-      setLoginData(null);
-    }
+  // ── Logout ──
+  const logOut = useCallback(() => {
+    sessionStorage.removeItem('token');
+    setLoginData(null);
   }, []);
 
-  // 2. Logic to log out
-  const logOut = () => {
-    sessionStorage.removeItem("token");
-    setLoginData(null); 
-  };
+  // ── Decode token and save user data ──
+  const saveLoginData = useCallback(() => {
+    const token = sessionStorage.getItem('token');
 
-  // 3. Sync state with sessionStorage on load
+    if (!token) {
+      setLoginData(null);
+      return;
+    }
+
+    try {
+      const decoded = jwtDecode(token);
+
+      // حماية من التوكن المنتهية صلاحيته
+      const isExpired = decoded.exp && decoded.exp * 1000 < Date.now();
+      if (isExpired) {
+        logOut();
+        return;
+      }
+
+      setLoginData(decoded);
+    } catch {
+      logOut();
+    }
+  }, [logOut]);
+
+  // ── Sync on load ──
   useEffect(() => {
     saveLoginData();
   }, [saveLoginData]);
 
   return (
-    <AuthContext.Provider value={{ saveLoginData, loginData, logOut }}>
+    <AuthContext.Provider value={{ loginData, saveLoginData, logOut }}>
       {children}
     </AuthContext.Provider>
   );

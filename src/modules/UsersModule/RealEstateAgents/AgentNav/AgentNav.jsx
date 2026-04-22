@@ -1,41 +1,66 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../AuthModule/context/AuthContext';
 import profileimg from '../../../../assets/imgs/profile.png';
+import '../../RealEstateAgents/AgentPannel.css';
 
+// ─── Constants ────────────────────────────────────────────────────────────────
+const BASE_URL = 'https://realstate.niledevelopers.com/images/';
+
+const NAV_LINKS = [
+  { label: 'Marketplace', to: '/agentlayout/marketplace' },
+  { label: 'Insights',    to: '/agentlayout/insights'    },
+  { label: 'Concierge',   to: '/agentlayout/concierge'   },
+];
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 export default function AgentNav() {
 
+  const { loginData } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-
-
- const { loginData } = useContext(AuthContext);
-
-  const photo = loginData?.Photo || "";
-  const photoLink = photo === "" 
-    ? profileimg 
-    : `https://realstate.niledevelopers.com/images/${photo}`;
-
+  const photo     = loginData?.Photo || '';
+  const photoLink = photo ? `${BASE_URL}${photo}` : profileimg;
 
   return (
-    <div>
+    <nav className="agent-nav">
 
-        <div className="container-fluid">
+      {/* ── Brand ── */}
+      <Link to="/agentlayout/overview" className="agent-nav-brand">
+        Homiom
+      </Link>
 
-              <div className="row">
-          <div className="pannel-nav p-1 d-flex flex-column flex-md-row justify-content-between w-100">
-            <div className="search-side w-75">
-              <i className="fa-solid fa-magnifying-glass"></i>
-              <span className="ms-1">Search</span>
-            </div>
-            <div className="icons-side w-100 d-flex justify-content-end">
-              <i className="fa-regular fa-bell"></i>
-              <i className="fa-regular fa-envelope"></i>
-              {photoLink && (
-                <img className="profile" src={photoLink} alt="Profile" />
-              )}
-            </div>
-          </div>
-        </div>
-        </div>
-    </div>
-  )
+      {/* ── Center Links ── */}
+      <ul className="agent-nav-links">
+        {NAV_LINKS.map(link => (
+          <li key={link.label}>
+            <Link to={link.to}>{link.label}</Link>
+          </li>
+        ))}
+      </ul>
+
+      {/* ── Right Side ── */}
+      <div className="agent-nav-right">
+
+        {/* Bell */}
+        <button className="agent-nav-bell" title="Notifications">
+          <i className="fa-regular fa-bell" />
+        </button>
+
+        {/* List Property */}
+        <Link to="/agentlayout/addproperty" className="agent-nav-list-btn">
+          List Property
+        </Link>
+
+        {/* Avatar */}
+        <img
+          src={photoLink}
+          alt="Profile"
+          className="agent-nav-avatar"
+          onClick={() => navigate('/agentlayout/profile')}
+        />
+
+      </div>
+    </nav>
+  );
 }

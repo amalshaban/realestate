@@ -11,7 +11,6 @@ import Footer from "../Footer/Footer.jsx";
 // import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import { LOCATIONS_URLs, USERS_URLs } from "../../../constants/EndPoints.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
-import MultiStepForm from "../../AuthModule/AgentRegProccess/MultiStepForm.jsx";
 import { AuthorizedToken } from "../../../constants/Validations.js";
 import { Container, Row, Col, Form, Button, InputGroup, Nav } from 'react-bootstrap';
 import ViewProperties from "../../PropertiesModule/ViewProperties/ViewProperties.jsx";
