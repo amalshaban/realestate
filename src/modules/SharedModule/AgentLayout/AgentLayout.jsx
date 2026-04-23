@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import SideBar from '../../UsersModule/RealEstateAgents/SideBar/SideBar';
 import AgentNav from '../../UsersModule/RealEstateAgents/AgentNav/AgentNav';
 
 export default function AgentLayout() {

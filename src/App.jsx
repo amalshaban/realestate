@@ -26,7 +26,6 @@ import AreaandDesc from "./modules/PropertiesModule/AddProperty/AreaandDesc.jsx"
 import PhotosandVideos from "./modules/PropertiesModule/AddProperty/PhotosandVideos.jsx"
 import PropertyReview from "./modules/PropertiesModule/AddProperty/PropertyReview.jsx"
 import PropertyDetails from "./modules/PropertiesModule/PropertyDetails/PropertyDetails.jsx";
-import VisitRequestAgent from "./modules/UsersModule/RealEstateAgents/VisitRequestAgent/VisitRequestAgent.jsx";
 import HomeSeekerPannel from "./modules/UsersModule/HomeSeekers/HomeSeekerPannel/HomeSeekerPannel.jsx";
 import VisitRequestUser from "./modules/UsersModule/HomeSeekers/VisitRequestUser/VisitRequestUser.jsx";
 import HomeSeekerLayout from "./modules/SharedModule/HomeSeekerLayout/HomeSeekerLayout.jsx";
@@ -40,7 +39,13 @@ import AddRent from "./modules/UsersModule/RealEstateAgents/AddRent/AddRent.jsx"
 import LogIn from '../src/modules/AuthModule/LogIn/LogIn.jsx';
 import SignUpNormal from '../src/modules/AuthModule/Join/SignUpNormal/SignUpNormal.jsx';
 import AgentSignUp from '../src/modules/AuthModule/Join/SignUpAgent/SignUpAgent.jsx';
-
+import AgentRightPanel from "./modules/UsersModule/RealEstateAgents/AgentRightPannel/AgentRightPannel.jsx";
+import UseAgentProfile from "./modules/UsersModule/RealEstateAgents/UseAgentProfile.js";
+import AgentProperties from "./modules/UsersModule/RealEstateAgents/AgentProperties/AgentProperties.jsx";
+import VisitRequests from "./modules/UsersModule/RealEstateAgents/VisitRequests/VisitRequests.jsx";
+import useVisitRequests from "./modules/UsersModule/RealEstateAgents/UseVisitRequests.js";
+import PurchaseRequests from "./modules/UsersModule/RealEstateAgents/PurchaseRequests/PurchaseRequests.jsx";
+import RentalRequests from "./modules/UsersModule/RealEstateAgents/RentalRequests/RentalRequests.jsx";
 
 
 function App() {
@@ -57,27 +62,17 @@ function App() {
       ],
     },
     // 2. مسارات الـ Agent (مستقلة تماماً)
-  {
+ {
   path: 'agentpannel',
   element: <AgentPannel />,
   children: [
-    
-    { index: true, element: <Navigate to="overview" replace /> },
-    {
-      path: '',
-      children: [
-        { index: true,           element: <Navigate to="overview" replace /> },
-       { path: 'property-info', element: <Overview /> },
-      //  { path: 'media-assets',  element: <MediaAssets />  },
-      //  { path: 'ejar-settings', element: <EjarSettings /> },
-      //   { path: 'verification',  element: <Verification /> },
-      //   { path: 'review',        element: <Review />       },
-      ],
-    },
-    { path: 'overview',   element: <Overview />   },
-    //  { path: 'properties', element: <Properties /> },
-    // { path: 'profile',    element: <Profile />    },
-    // { path: 'help',       element: <Help />       },
+    { index: true,                element: <Navigate to="overview" replace /> },
+    { path: 'overview',           element: <Overview />          },
+    { path: 'properties',         element: <AgentProperties />          },
+    { path: 'visitrequests',      element: <VisitRequests />          },
+    { path: 'purchaserequests',   element: <PurchaseRequests />          },
+    { path: 'rentrequests',       element: <RentalRequests />          },
+    { path: 'rents',              element: <Rents />          },
   ],
 },
     // 3. مسارات الـ Home Seeker (مستقلة تماماً)

@@ -1,89 +1,127 @@
-import React, { useEffect, useState } from 'react'
-import { apiKey, AuthorizedToken } from '../../../../constants/Validations';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import useRents from '../useRents.js';
+import '../../RealEstateAgents/AgentPannel.css';
+// ─── Sub Components ───────────────────────────────────────────────────────────
+const SkeletonRows = () => (
+  <tbody>
+    {[1, 2, 3, 4, 5].map(i => (
+      <tr key={i}>
+        <td><div className="rents-skeleton" style={{ width: '60%' }} /></td>
+        <td><div className="rents-skeleton" style={{ width: '70%' }} /></td>
+        <td><div className="rents-skeleton" style={{ width: '40%' }} /></td>
+        <td><div className="rents-skeleton" style={{ width: '50%' }} /></td>
+        <td><div className="rents-skeleton" style={{ width: '40%' }} /></td>
+        <td><div className="rents-skeleton" style={{ width: '30%' }} /></td>
+      </tr>
+    ))}
+  </tbody>
+);
 
+const formatDate = (dateStr) => {
+  if (!dateStr) return '—';
+  return new Date(dateStr).toLocaleDateString('en-US', {
+    year: 'numeric', month: 'short', day: 'numeric',
+  });
+};
+
+const RentRow = ({ rent }) => (
+  <tr>
+    <td>
+      <p className="rents-tenant-name">{rent.fullName}</p>
+      <p className="rents-tenant-phone">{rent.mobile}</p>
+    </td>
+    <td>
+      <p className="rents-property-name">{rent.propertyTitle}</p>
+      <p style={{ fontSize: '12px', color: '#aaa', margin: 0 }}>ID: {rent.propertyId}</p>
+    </td>
+    <td>
+      <span className="rents-badge type">{rent.rentTypeName}</span>
+    </td>
+    <td>
+      <span className="rents-amount">
+        {rent.monthlyAmount?.toLocaleString()} SAR
+      </span>
+      <p style={{ fontSize: '12px', color: '#aaa', margin: 0 }}>
+        Total: {rent.totalAmount?.toLocaleString()} SAR
+      </p>
+    </td>
+    <td>
+      <p className="rents-date">{formatDate(rent.startDate)}</p>
+      <p style={{ fontSize: '12px', color: '#aaa', margin: 0 }}>
+        → {formatDate(rent.endDate)}
+      </p>
+    </td>
+    <td>
+      <span className={`rents-badge ${rent.status === 1 ? 'active' : 'inactive'}`}>
+        {rent.status === 1 ? 'Active' : 'Inactive'}
+      </span>
+    </td>
+  </tr>
+);
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 export default function Rents() {
-   const [rents, setRents] = useState([]);
-  useEffect(() => {
-    const getRents = async () => {
-      try {
-        const response = await axios.get(
-          'https://realstate.niledevelopers.com/Agent/Rents',
-          
-        {
-     headers: { 
-  Authorization: `Bearer ${sessionStorage.token}`,
-  'apiKey': apiKey,
-  "Content-Type": 'application/json'
-    
-     
-    } });
-        setRents(response.data);
-  console.log(response.data);
-      } catch (error) {
-        console.error(error.response?.data || error.message);
-      }
-    };
 
-    getRents();
-  }, []);
-
-
-const navigate=useNavigate();
-const navigatetonewrent = () =>{
-  navigate("/agentlayout/addrent");
-}
+  const { rents, loading, error, refetch } = useRents();
 
   return (
-    <div>
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="text-primary">📋 Rents</h2>
-        <button onClick={navigatetonewrent} className='btn btn-primary'>Add new Rental Contract</button>
+    <div className="rents-page">
+
+      {/* ── Header ── */}
+      <div className="rents-header">
+        <div>
+          <h2 className="rents-title">Rents</h2>
+          <p className="rents-count">{rents.length} active contracts</p>
+        </div>
+        <button className="rents-refetch-btn" onClick={refetch}>
+          <i className="fa-solid fa-rotate-right" /> Refresh
+        </button>
       </div>
-<table className="table">
-  <thead>
-    <tr>
-      <th scope="col">propertyName</th>
-      <th scope="col">monthlyAmount</th>
-      <th scope="col">Tenant Name</th>
-      <th scope="col">Tenant Phone</th>
-      <th scope="col">status</th>
-      <th scope="col">totalAmount</th>
-      
-    </tr>
-  </thead>
-  <tbody>
-  {rents.length > 0 &&
-    rents.map((rent) => (
-      <tr key={rent.id}>
-        <th scope="row">{rent.propertyTitle}</th>
-        <td>{rent.monthlyAmount}</td>
-        <td>{rent.fullName}</td>
-        <td>{rent.mobile}</td>
-       
-       <td> 
-        {rent.status === 2 && ( <span className="badge bg-success px-3 py-2">Accepted</span> )}
-        {rent.status === 1 && ( <span className="badge bg-warning text-dark px-3 py-2">Pending</span> )} 
-        {rent.status === 0 && ( <span className="badge bg-danger px-3 py-2">Rejected</span> )}
-        
-         
-        </td>
-        <td>{rent.totalAmount}</td>
-        {/* <td>
-          <button  onClick={() => acceptrentrequest(rentRequest.requestId)}>Accept</button>       
-        
-          </td> */}
 
-        
-        
-      </tr>
-   ) )}
-</tbody>
+      {/* ── Error ── */}
+      {error && (
+        <div className="rents-error">
+          <i className="fa-solid fa-circle-exclamation" />
+          Failed to load rents.
+          <button onClick={refetch} style={{ background: 'none', border: 'none', color: '#e53e3e', cursor: 'pointer', textDecoration: 'underline' }}>
+            Try again
+          </button>
+        </div>
+      )}
 
-</table>
+      {/* ── Table ── */}
+      <table className="rents-table">
+        <thead>
+          <tr>
+            <th>Tenant</th>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Duration</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        {loading ? <SkeletonRows /> : (
+          <tbody>
+            {rents.length > 0 ? (
+              rents.map(rent => (
+                <RentRow key={rent.id} rent={rent} />
+              ))
+            ) : (
+              <tr>
+                <td colSpan={6}>
+                  <div className="rents-empty">
+                    <i className="fa-solid fa-key" />
+                    <p>No rents found</p>
+                  </div>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        )}
+      </table>
 
     </div>
-  )
+  );
 }

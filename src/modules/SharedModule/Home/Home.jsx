@@ -14,7 +14,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { AuthorizedToken } from "../../../constants/Validations.js";
 import { Container, Row, Col, Form, Button, InputGroup, Nav } from 'react-bootstrap';
 import ViewProperties from "../../PropertiesModule/ViewProperties/ViewProperties.jsx";
-
+import Test from "../../../assets/Test.jsx"
 
 // import { useTranslation } from 'react-i18next';
 
@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <>
     
-    
+    <Test/>
     {/* <div>
       <button className="" onClick={() => changeLanguage('en')}>English</button>
       <button onClick={() => changeLanguage('ar')}>العربية</button>
