@@ -1,5 +1,5 @@
 import React from 'react';
-import useRents from '../useRents.js';
+import {useRents} from '../useAgentData.js';
 import '../../RealEstateAgents/AgentPannel.css';
 // ─── Sub Components ───────────────────────────────────────────────────────────
 const SkeletonRows = () => (

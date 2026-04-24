@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import useAgentStats from '../UseAgentStats.js';
+import {useAgentStats} from '../useAgentData.js';
 import '../../RealEstateAgents/AgentPannel.css';
 
 

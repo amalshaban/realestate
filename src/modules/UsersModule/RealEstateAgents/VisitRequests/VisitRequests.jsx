@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import useVisitRequests from '../useVisitRequests.js';
+import {useVisitRequests} from '../useAgentData.js';
 import '../../RealEstateAgents/AgentPannel.css';
 
 // ─── Sub Components ───────────────────────────────────────────────────────────

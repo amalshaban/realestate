@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAgentProperties from '../UseAgentProperties.js';
+import {useAgentProperties} from '../useAgentData.js';
 import '../../RealEstateAgents/AgentPannel.css';
 
 

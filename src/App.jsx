@@ -17,7 +17,6 @@ import ProtectedRoute from "./modules/SharedModule/ProtectedRoute/ProtectedRoute
 import SideBarUser from "./modules/UsersModule/HomeSeekers/SideBarUser/SideBarUser.jsx";
 import Overview from "./modules/UsersModule/RealEstateAgents/Overview/Overview.jsx";
 import AgentPannel from "../src/modules/UsersModule/RealEstateAgents/AgentPannel/AgentPannel.jsx";
-import PropertiesList from "./modules/UsersModule/RealEstateAgents/PropertiesList/PropertiesList.jsx";
 import Join from "./modules/AuthModule/Join/Join.jsx";
 import PropertyLayout from "./modules/SharedModule/PropertyLayout/PropertyLayout.jsx";
 import PropertyMultiStepForm from "./modules/PropertiesModule/AddProperty/PropertyMultiStepForm.jsx"
@@ -30,7 +29,6 @@ import HomeSeekerPannel from "./modules/UsersModule/HomeSeekers/HomeSeekerPannel
 import VisitRequestUser from "./modules/UsersModule/HomeSeekers/VisitRequestUser/VisitRequestUser.jsx";
 import HomeSeekerLayout from "./modules/SharedModule/HomeSeekerLayout/HomeSeekerLayout.jsx";
 import AgentLayout from "./modules/SharedModule/AgentLayout/AgentLayout.jsx";
-import PurchaseRquestsAgent from "./modules/UsersModule/RealEstateAgents/PurchaseRquestsAgent/PurchaseRquestsAgent.jsx";
 import PurchaseRequestsUser from "./modules/UsersModule/HomeSeekers/PurchaseRequestsUser/PurchaseRequestsUser.jsx";
 import RentalRequestsUser from "./modules/UsersModule/HomeSeekers/RentalRequestsUser/RentalRequestsUser.jsx";
 import RentRequestsAgent from "./modules/UsersModule/RealEstateAgents/RentRequestsAgent/RentRequestsAgent.jsx";
@@ -43,7 +41,6 @@ import AgentRightPanel from "./modules/UsersModule/RealEstateAgents/AgentRightPa
 import UseAgentProfile from "./modules/UsersModule/RealEstateAgents/UseAgentProfile.js";
 import AgentProperties from "./modules/UsersModule/RealEstateAgents/AgentProperties/AgentProperties.jsx";
 import VisitRequests from "./modules/UsersModule/RealEstateAgents/VisitRequests/VisitRequests.jsx";
-import useVisitRequests from "./modules/UsersModule/RealEstateAgents/UseVisitRequests.js";
 import PurchaseRequests from "./modules/UsersModule/RealEstateAgents/PurchaseRequests/PurchaseRequests.jsx";
 import RentalRequests from "./modules/UsersModule/RealEstateAgents/RentalRequests/RentalRequests.jsx";
 

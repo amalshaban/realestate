@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { Row, Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import useRentalRequests from '../useRentalRequests.js';
+import {useRentalRequests} from '../useAgentData.js';
 import '../../RealEstateAgents/AgentPannel.css';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
